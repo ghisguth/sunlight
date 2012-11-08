@@ -42,6 +42,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="gfx" />
     <orderEntry type="module" module-name="wallpaper" />
+    <orderEntry type="module" module-name="shared" />
   </component>
 </module>
 

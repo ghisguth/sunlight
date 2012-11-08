@@ -16,30 +16,30 @@
 
 package com.ghisugth.demo;
 
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.widget.Toast;
 
+import java.io.InputStream;
+
 abstract class RendererBase extends GLSurfaceView implements GLSurfaceView.Renderer {
 
-	public RendererBase(Context context) {
-		super(context);
-	}
+    public RendererBase(Context context) {
+        super(context);
+    }
 
-    /**
-	 * Shows Toast on screen with given message.
-	 */
-	protected void showError(final String errorMsg) {
-		post(new Runnable() {
-			@Override
-			public void run() {
-				Toast.makeText(getContext(), errorMsg, Toast.LENGTH_LONG)
-						.show();
-			}
-		});
-	}
+    protected InputStream openResource(int id) {
+        return getContext().getResources().openRawResource(id);
+    }
+
+    protected void showError(final String errorMsg) {
+        post(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getContext(), errorMsg, Toast.LENGTH_LONG)
+                        .show();
+            }
+        });
+    }
 
 }

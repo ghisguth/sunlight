@@ -7,4 +7,6 @@ wallpaper/bin/
 wallpaper/gen/
 demo/bin/
 demo/gen/
+shared/bin/
+shared/gen/
 .idea/workspace.xml
