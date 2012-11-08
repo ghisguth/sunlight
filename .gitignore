@@ -1,2 +1,6 @@
 out/
+gfx/bin/
+sun/bin/
+wallpaper/bin/
+demo/bin/
 .idea/workspace.xml
