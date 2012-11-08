@@ -1,6 +1,10 @@
 out/
 gfx/bin/
+gfx/gen/
 sun/bin/
+sun/gen/
 wallpaper/bin/
+wallpaper/gen/
 demo/bin/
+demo/gen/
 .idea/workspace.xml
