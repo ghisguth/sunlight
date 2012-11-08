@@ -13,13 +13,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="be5dc1f6-82b4-4da9-976f-8789745cce30" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/sun/src/com/example/MyActivity.java" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/sun/src/com/ghisguth/sun/MyActivity.java" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/wallpaper/src/com/ghisguth/wallpaper/BaseConfigChooser.java" afterPath="$PROJECT_DIR$/wallpaper/src/com/ghisguth/wallpaper/glwallpaperservice/BaseConfigChooser.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/wallpaper/src/com/ghisguth/wallpaper/DefaultContextFactory.java" afterPath="$PROJECT_DIR$/wallpaper/src/com/ghisguth/wallpaper/glwallpaperservice/DefaultContextFactory.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/wallpaper/src/com/ghisguth/wallpaper/DefaultWindowSurfaceFactory.java" afterPath="$PROJECT_DIR$/wallpaper/src/com/ghisguth/wallpaper/glwallpaperservice/DefaultWindowSurfaceFactory.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/wallpaper/src/com/ghisguth/wallpaper/EGLConfigChooser.java" afterPath="$PROJECT_DIR$/wallpaper/src/com/ghisguth/wallpaper/glwallpaperservice/EGLConfigChooser.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/wallpaper/src/com/ghisguth/wallpaper/EGLContextFactory.java" afterPath="$PROJECT_DIR$/wallpaper/src/com/ghisguth/wallpaper/glwallpaperservice/EGLContextFactory.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/wallpaper/src/com/ghisguth/wallpaper/EGLWindowSurfaceFactory.java" afterPath="$PROJECT_DIR$/wallpaper/src/com/ghisguth/wallpaper/glwallpaperservice/EGLWindowSurfaceFactory.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/wallpaper/src/com/ghisguth/wallpaper/EglHelper.java" afterPath="$PROJECT_DIR$/wallpaper/src/com/ghisguth/wallpaper/glwallpaperservice/EglHelper.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/wallpaper/src/com/ghisguth/wallpaper/GLThread.java" afterPath="$PROJECT_DIR$/wallpaper/src/com/ghisguth/wallpaper/glwallpaperservice/GLThread.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/wallpaper/src/com/ghisguth/wallpaper/GLWallpaperService.java" afterPath="$PROJECT_DIR$/wallpaper/src/com/ghisguth/wallpaper/glwallpaperservice/GLWallpaperService.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/wallpaper/src/com/ghisguth/wallpaper/GLWrapper.java" afterPath="$PROJECT_DIR$/wallpaper/src/com/ghisguth/wallpaper/glwallpaperservice/GLWrapper.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/demo/res/values/strings.xml" afterPath="$PROJECT_DIR$/demo/res/values/strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sun/project.properties" afterPath="$PROJECT_DIR$/sun/project.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sun/res/values/strings.xml" afterPath="$PROJECT_DIR$/sun/res/values/strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sun/sun.iml" afterPath="$PROJECT_DIR$/sun/sun.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sun/AndroidManifest.xml" afterPath="$PROJECT_DIR$/sun/AndroidManifest.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sun/gen/com/ghisguth/sun/R.java" afterPath="$PROJECT_DIR$/sun/gen/com/ghisguth/sun/R.java" />
     </list>
     <ignored path="sunlight.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -77,65 +84,49 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="main.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sun/res/layout/main.xml">
+      <file leaf-file-name="GLES20WallpaperService.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/wallpaper/src/com/ghisguth/wallpaper/GLES20WallpaperService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+            <state line="16" column="10" selection-start="631" selection-end="631" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="R.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sun/gen/com/ghisguth/sun/R.java">
+      <file leaf-file-name="Wallpaper.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sun/src/com/ghisguth/sun/Wallpaper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="19" selection-start="228" selection-end="228" vertical-scroll-proportion="0.0">
+            <state line="20" column="0" selection-start="770" selection-end="770" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BuildConfig.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sun/gen/com/ghisguth/sun/BuildConfig.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="19" selection-start="97" selection-end="97" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AndroidManifest.xml" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="AndroidManifest.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sun/AndroidManifest.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+            <state line="14" column="24" selection-start="662" selection-end="662" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="strings.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sun/res/values/strings.xml">
+      <file leaf-file-name="main.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sun/res/xml/main.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="42" selection-start="93" selection-end="93" vertical-scroll-proportion="0.0">
+            <state line="25" column="70" selection-start="990" selection-end="990" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MyActivity.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sun/src/com/ghisguth/sun/MyActivity.java">
+      <file leaf-file-name="SunRenderer.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/sun/src/com/ghisguth/sun/SunRenderer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="13" selection-start="96" selection-end="96" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name=".gitignore" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="4" selection-start="4" selection-end="4" vertical-scroll-proportion="0.0">
-              <folding />
+            <state line="41" column="38" selection-start="1263" selection-end="1263" vertical-scroll-proportion="0.76704544">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -153,9 +144,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/demo/res/values/strings.xml" />
-        <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/sun/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/wallpaper/src/com/ghisguth/wallpaper/EGLConfigChooser.java" />
+        <option value="$PROJECT_DIR$/wallpaper/src/com/ghisguth/wallpaper/EGLContextFactory.java" />
+        <option value="$PROJECT_DIR$/wallpaper/src/com/ghisguth/wallpaper/EGLWindowSurfaceFactory.java" />
+        <option value="$PROJECT_DIR$/wallpaper/src/com/ghisguth/wallpaper/GLThread.java" />
+        <option value="$PROJECT_DIR$/wallpaper/src/com/ghisguth/wallpaper/GLWrapper.java" />
+        <option value="$PROJECT_DIR$/wallpaper/src/com/ghisguth/wallpaper/EglHelper.java" />
+        <option value="$PROJECT_DIR$/wallpaper/src/com/ghisguth/wallpaper/GLWallpaperService.java" />
+        <option value="$PROJECT_DIR$/wallpaper/src/com/ghisguth/wallpaper/BaseConfigChooser.java" />
+        <option value="$PROJECT_DIR$/wallpaper/src/com/ghisguth/wallpaper/DefaultContextFactory.java" />
+        <option value="$PROJECT_DIR$/wallpaper/src/com/ghisguth/wallpaper/DefaultWindowSurfaceFactory.java" />
+        <option value="$PROJECT_DIR$/wallpaper/src/com/ghisguth/wallpaper/WallpaperBase.java" />
+        <option value="$PROJECT_DIR$/wallpaper/src/com/ghisguth/wallpaper/GLES20WallpaperService.java" />
+        <option value="$PROJECT_DIR$/sun/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/sun/res/xml/main.xml" />
+        <option value="$PROJECT_DIR$/sun/src/com/ghisguth/sun/Wallpaper.java" />
+        <option value="$PROJECT_DIR$/sun/src/com/ghisguth/sun/SunRenderer.java" />
       </list>
     </option>
   </component>
@@ -191,17 +195,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sunlight" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -226,11 +219,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="wallpaper" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
+              <option name="myItemId" value="sun" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -238,6 +227,14 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="sunlight" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sun" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="sun" />
@@ -258,7 +255,21 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="values" />
+              <option name="myItemId" value="xml" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sunlight" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sun" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -282,22 +293,33 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sunlight" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="project.structure.last.edited" value="Modules" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="60" />
-    <property name="project.structure.proportion" value="0.15" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="67" />
+    <property name="project.structure.proportion" value="0.15" />
     <property name="options.splitter.main.proportions" value="0.18888889" />
-    <property name="recentsLimit" value="5" />
-    <property name="MemberChooser.sorted" value="false" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="60" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
+    <property name="MemberChooser.sorted" value="false" />
+    <property name="recentsLimit" value="5" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="71" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="750" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="750" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="750" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="71" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="67" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
@@ -306,6 +328,7 @@
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="last_directory_selection" value="$PROJECT_DIR$/wallpaper/src/com/ghisguth/wallpaper" />
     <property name="GoToFile.includeJavaFiles" value="false" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder0" value="0" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
@@ -316,11 +339,38 @@
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="options.searchVisible" value="true" />
   </component>
+  <component name="RecentsManager">
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.ghisguth.wallpaper.glwallpaperservice" />
+    </key>
+  </component>
   <component name="RunManager" selected="Android Application.sun">
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
       <module name="" />
       <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m" />
       <option name="PROGRAM_PARAMETERS" />
+      <method>
+        <option name="AntTarget" enabled="false" />
+        <option name="BuildArtifacts" enabled="false" />
+        <option name="Make" enabled="true" />
+        <option name="Maven.BeforeRunTask" enabled="false" />
+      </method>
+    </configuration>
+    <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
+      <module name="" />
+      <option name="TESTING_TYPE" value="0" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
       <method>
         <option name="AntTarget" enabled="false" />
         <option name="BuildArtifacts" enabled="false" />
@@ -337,6 +387,24 @@
       <method>
         <option name="AntTarget" enabled="false" />
         <option name="BuildArtifacts" enabled="false" />
+        <option name="Maven.BeforeRunTask" enabled="false" />
+      </method>
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method>
+        <option name="AntTarget" enabled="false" />
+        <option name="BuildArtifacts" enabled="false" />
+        <option name="Make" enabled="true" />
         <option name="Maven.BeforeRunTask" enabled="false" />
       </method>
     </configuration>
@@ -365,24 +433,6 @@
       <envs />
       <properties />
       <listeners />
-      <method>
-        <option name="AntTarget" enabled="false" />
-        <option name="BuildArtifacts" enabled="false" />
-        <option name="Make" enabled="true" />
-        <option name="Maven.BeforeRunTask" enabled="false" />
-      </method>
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
       <method>
         <option name="AntTarget" enabled="false" />
         <option name="BuildArtifacts" enabled="false" />
@@ -456,8 +506,8 @@
     </configuration>
     <configuration default="false" name="sun" type="AndroidRunConfigurationType" factoryName="Android Application">
       <module name="sun" />
-      <option name="ACTIVITY_CLASS" value="com.ghisguth.sun.MyActivity" />
-      <option name="MODE" value="specific_activity" />
+      <option name="ACTIVITY_CLASS" value="com.ghisguth.sun.Wallpaper" />
+      <option name="MODE" value="do_nothing" />
       <option name="DEPLOY" value="true" />
       <option name="TARGET_SELECTION_MODE" value="USB_DEVICE" />
       <option name="PREFERRED_AVD" value="" />
@@ -518,6 +568,7 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
+      <changelist id="be5dc1f6-82b4-4da9-976f-8789745cce30" name="Default" comment="" />
       <created>1352342915477</created>
       <updated>1352342915477</updated>
     </task>
@@ -525,31 +576,31 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-2" y="-3" width="1028" height="740" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924336" sideWeight="0.6728499" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3288364" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32715008" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27300614" sideWeight="0.33389544" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3288364" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32715008" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27300614" sideWeight="0.32546374" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24948876" sideWeight="0.6728499" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.272541" sideWeight="0.6728499" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32715008" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Android Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3288364" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924336" sideWeight="0.6728499" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3288364" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3288364" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -611,96 +662,125 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/wallpaper/res/layout/main.xml">
+    <entry file="file://$PROJECT_DIR$/sun/res/values/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="2" column="42" selection-start="93" selection-end="93" vertical-scroll-proportion="0.08042896">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wallpaper/gen/com/ghisguth/wallpaper/R.java">
+    <entry file="file://$PROJECT_DIR$/wallpaper/src/com/ghisguth/wallpaper/glwallpaperservice/EGLWindowSurfaceFactory.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="46" selection-start="463" selection-end="463" vertical-scroll-proportion="0.5630027">
+        <state line="16" column="19" selection-start="640" selection-end="640" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/demo/res/layout/main.xml">
+    <entry file="file://$PROJECT_DIR$/wallpaper/src/com/ghisguth/wallpaper/glwallpaperservice/EGLConfigChooser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="31" selection-start="188" selection-end="188" vertical-scroll-proportion="0.1331361">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/demo/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="41" selection-start="92" selection-end="92" vertical-scroll-proportion="0.08064516">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/demo/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/demo/src/com/ghisugth/demo/MyActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="13" selection-start="97" selection-end="97" vertical-scroll-proportion="0.2016129">
+        <state line="16" column="16" selection-start="637" selection-end="637" vertical-scroll-proportion="0.054945055">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sun/res/layout/main.xml">
+    <entry file="file://$PROJECT_DIR$/wallpaper/src/com/ghisguth/wallpaper/glwallpaperservice/EGLContextFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="23" selection-start="1039" selection-end="1039" vertical-scroll-proportion="0.3095685">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wallpaper/src/com/ghisguth/wallpaper/glwallpaperservice/GLThread.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="0" selection-start="1092" selection-end="1092" vertical-scroll-proportion="0.5451264">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wallpaper/src/com/ghisguth/wallpaper/glwallpaperservice/GLWrapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="0" selection-start="1092" selection-end="1092" vertical-scroll-proportion="0.43140793">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wallpaper/src/com/ghisguth/wallpaper/glwallpaperservice/GLWallpaperService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#0#6103#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wallpaper/src/com/ghisguth/wallpaper/glwallpaperservice/BaseConfigChooser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="26" selection-start="680" selection-end="680" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#0#5085#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wallpaper/src/com/ghisguth/wallpaper/glwallpaperservice/DefaultContextFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="48" selection-start="846" selection-end="846" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sun/gen/com/ghisguth/sun/R.java">
+    <entry file="file://$PROJECT_DIR$/wallpaper/src/com/ghisguth/wallpaper/glwallpaperservice/DefaultWindowSurfaceFactory.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="19" selection-start="228" selection-end="228" vertical-scroll-proportion="0.0">
+        <state line="21" column="48" selection-start="846" selection-end="846" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sun/gen/com/ghisguth/sun/BuildConfig.java">
+    <entry file="file://$PROJECT_DIR$/wallpaper/src/com/ghisguth/wallpaper/glwallpaperservice/EglHelper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="19" selection-start="97" selection-end="97" vertical-scroll-proportion="0.0">
+        <state line="30" column="0" selection-start="1013" selection-end="1013" vertical-scroll-proportion="0.433213">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wallpaper/src/com/ghisguth/wallpaper/GLES20WallpaperService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="10" selection-start="631" selection-end="631" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sun/src/com/ghisguth/sun/MyActivity.java">
+    <entry file="file://$PROJECT_DIR$/sun/res/xml/main.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="13" selection-start="96" selection-end="96" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="4" selection-start="4" selection-end="4" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sun/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="42" selection-start="93" selection-end="93" vertical-scroll-proportion="0.0">
+        <state line="25" column="70" selection-start="990" selection-end="990" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sun/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="14" column="24" selection-start="662" selection-end="662" vertical-scroll-proportion="0.0">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sun/src/com/ghisguth/sun/Wallpaper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="0" selection-start="770" selection-end="770" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sun/src/com/ghisguth/sun/SunRenderer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="41" column="38" selection-start="1263" selection-end="1263" vertical-scroll-proportion="0.76704544">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -768,11 +848,12 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>demo</last-edited>
+          <last-edited>sun</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
                 <option value="0.2" />
+                <option value="0.5" />
               </list>
             </option>
           </splitter-proportions>
