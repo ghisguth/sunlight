@@ -19,8 +19,10 @@
 
 <!-- The attributes in this XML file provide configuration information -->
 
-<!-- android:thumbnail="@drawable/thumbnail"
-android:description="@string/description"
-android:settingsActivity="cxa.gridwallpaper.WallpaperSettings"
+<!--
+
+android:settingsActivity="com.ghisguth.sun.WallpaperSettings"
 -->
-<wallpaper/>
+<wallpaper xmlns:android="http://schemas.android.com/apk/res/android"
+           android:thumbnail="@drawable/thumbnail"
+           android:description="@string/description"/>

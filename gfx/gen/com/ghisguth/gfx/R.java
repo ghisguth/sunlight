@@ -10,11 +10,10 @@ package com.ghisguth.gfx;
 public final class R {
     public static final class attr {
     }
-
     public static final class raw {
-        public static int phenix_line_fragment = 0x7f020000;
-        public static int phenix_line_vertex = 0x7f020001;
-        public static int post_blur_fragment = 0x7f020002;
-        public static int post_blur_vertex = 0x7f020003;
+        public static int phenix_line_fragment=0x7f020000;
+        public static int phenix_line_vertex=0x7f020001;
+        public static int post_blur_fragment=0x7f020002;
+        public static int post_blur_vertex=0x7f020003;
     }
 }
