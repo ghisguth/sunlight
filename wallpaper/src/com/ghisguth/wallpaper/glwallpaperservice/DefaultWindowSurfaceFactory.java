@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.ghisguth.wallpaper;
+package com.ghisguth.wallpaper.glwallpaperservice;
 
 import javax.microedition.khronos.egl.EGL10;
 import javax.microedition.khronos.egl.EGLConfig;

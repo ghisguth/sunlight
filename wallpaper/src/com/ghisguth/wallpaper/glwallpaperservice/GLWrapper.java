@@ -14,22 +14,18 @@
  * limitations under the License.
  */
 
-package com.ghisguth.wallpaper;
+package com.ghisguth.wallpaper.glwallpaperservice;
 
-import javax.microedition.khronos.egl.EGL10;
-import javax.microedition.khronos.egl.EGLConfig;
-import javax.microedition.khronos.egl.EGLContext;
-import javax.microedition.khronos.egl.EGLDisplay;
+import javax.microedition.khronos.opengles.GL;
 
 // Original code provided by Robert Green
 // http://www.rbgrn.net/content/354-glsurfaceview-adapted-3d-live-wallpapers
-class DefaultContextFactory implements EGLContextFactory {
-
-    public EGLContext createContext(EGL10 egl, EGLDisplay display, EGLConfig config) {
-        return egl.eglCreateContext(display, config, EGL10.EGL_NO_CONTEXT, null);
-    }
-
-    public void destroyContext(EGL10 egl, EGLDisplay display, EGLContext context) {
-        egl.eglDestroyContext(display, context);
-    }
+interface GLWrapper {
+    /**
+     * Wraps a gl interface in another gl interface.
+     *
+     * @param gl a GL interface that is to be wrapped.
+     * @return either the input argument or another GL object that wraps the input argument.
+     */
+    GL wrap(GL gl);
 }

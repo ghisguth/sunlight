@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.ghisguth.wallpaper;
+package com.ghisguth.wallpaper.glwallpaperservice;
 
 import android.service.wallpaper.WallpaperService;
 import android.util.Log;
