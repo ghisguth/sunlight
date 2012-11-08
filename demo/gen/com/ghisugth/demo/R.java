@@ -15,5 +15,8 @@ public final class R {
     }
     public static final class string {
         public static final int app_name=0x7f030000;
+        public static final int subtitle=0x7f030002;
+        public static final int tab_test=0x7f030003;
+        public static final int title=0x7f030001;
     }
 }

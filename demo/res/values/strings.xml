@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Sunlight Demo</string>
+    <string name="title">Sunlight Demo</string>
+    <string name="subtitle">Open GL ES 2.0 experiments</string>
+    <string name="tab_test">Test</string>
 </resources>
