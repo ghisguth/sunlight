@@ -15,5 +15,7 @@ public final class R {
         public static int phenix_line_vertex=0x7f020001;
         public static int post_blur_fragment=0x7f020002;
         public static int post_blur_vertex=0x7f020003;
+        public static int sun_fragment=0x7f020004;
+        public static int sun_vertex=0x7f020005;
     }
 }

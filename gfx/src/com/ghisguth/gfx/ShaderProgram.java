@@ -8,12 +8,16 @@ package com.ghisguth.gfx;
 import android.opengl.GLES20;
 import android.util.Log;
 
+import java.util.HashMap;
+
 public class ShaderProgram {
     private static String TAG = "ShaderProgram";
 
     private int program;
     private Shader vertexShader;
     private Shader fragmentShader;
+    private HashMap<String, Integer> uniformLocations = new HashMap<String, Integer>();
+    private HashMap<String, Integer> attributeLocations = new HashMap<String, Integer>();
 
     public ShaderProgram(Shader vertexShader, Shader fragmentShader) {
         this.program = 0;
@@ -42,7 +46,8 @@ public class ShaderProgram {
         }
 
         try {
-            if (!vertexShader.load() || fragmentShader.load()) {
+            if (!vertexShader.load() || !fragmentShader.load()) {
+                Log.e(TAG, "cannot load vertex or fragment shader");
                 return false;
             }
 
@@ -63,11 +68,12 @@ public class ShaderProgram {
                     program = 0;
                 }
             }
-        } finally {
+        } catch(RuntimeException ex) {
             if (program != 0) {
                 GLES20.glDeleteProgram(program);
                 program = 0;
             }
+            throw ex;
         }
 
         return program != 0;
@@ -78,6 +84,17 @@ public class ShaderProgram {
             GLES20.glDeleteProgram(program);
             program = 0;
         }
+        uniformLocations.clear();
+        attributeLocations.clear();
+    }
+
+    public boolean use() {
+        if(!load()) {
+            return false;
+        }
+        GLES20.glUseProgram(program);
+        ErrorHelper.checkGlError(TAG, "glUseProgram");
+        return true;
     }
 
     public int getProgram() {
@@ -88,7 +105,25 @@ public class ShaderProgram {
         return vertexShader;
     }
 
-    private Shader getFragmentShader() {
+    public Shader getFragmentShader() {
         return fragmentShader;
+    }
+
+    public int getUniformLocation(String name) {
+        if(uniformLocations.containsKey(name)) {
+            return uniformLocations.get(name);
+        }
+        int handle = GLES20.glGetUniformLocation(program, name);
+        uniformLocations.put(name, handle);
+        return handle;
+    }
+
+    public int getAttributeLocation(String name) {
+        if(attributeLocations.containsKey(name)) {
+            return attributeLocations.get(name);
+        }
+        int handle = GLES20.glGetAttribLocation(program, name);
+        attributeLocations.put(name, handle);
+        return handle;
     }
 }

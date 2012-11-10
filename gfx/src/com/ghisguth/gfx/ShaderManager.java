@@ -5,6 +5,8 @@
 
 package com.ghisguth.gfx;
 
+import android.opengl.GLES20;
+
 import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.WeakReference;
@@ -33,6 +35,18 @@ public class ShaderManager {
 
     public Object clone() throws CloneNotSupportedException {
         throw new CloneNotSupportedException();
+    }
+
+    public Shader createVertexShader(String source) {
+        return new Shader(GLES20.GL_VERTEX_SHADER, source);
+    }
+
+    public Shader createFragmentShader(String source) {
+        return new Shader(GLES20.GL_FRAGMENT_SHADER, source);
+    }
+
+    public ShaderProgram createShaderProgram(Shader vertexShader, Shader fragmentShader) {
+        return new ShaderProgram(vertexShader, fragmentShader);
     }
 
     public void registerShader(Shader shader) {
