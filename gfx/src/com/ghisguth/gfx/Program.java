@@ -69,7 +69,7 @@ public class Program {
                     program = 0;
                 }
             }
-        } catch(RuntimeException ex) {
+        } catch (RuntimeException ex) {
             if (program != 0) {
                 GLES20.glDeleteProgram(program);
                 program = 0;
@@ -82,7 +82,7 @@ public class Program {
 
     public void unload() {
         if (program != 0) {
-            if(GLES20.glIsProgram(program)) {
+            if (GLES20.glIsProgram(program)) {
                 GLES20.glDeleteProgram(program);
                 ErrorHelper.checkGlError(TAG, "glDeleteProgram");
             } else {
@@ -96,7 +96,7 @@ public class Program {
     }
 
     public boolean use() {
-        if(!load()) {
+        if (!load()) {
             return false;
         }
         GLES20.glUseProgram(program);
@@ -117,7 +117,7 @@ public class Program {
     }
 
     public int getUniformLocation(String name) {
-        if(uniformLocations.containsKey(name)) {
+        if (uniformLocations.containsKey(name)) {
             return uniformLocations.get(name);
         }
         int handle = GLES20.glGetUniformLocation(program, name);
@@ -127,7 +127,7 @@ public class Program {
     }
 
     public int getAttributeLocation(String name) {
-        if(attributeLocations.containsKey(name)) {
+        if (attributeLocations.containsKey(name)) {
             return attributeLocations.get(name);
         }
         int handle = GLES20.glGetAttribLocation(program, name);

@@ -51,11 +51,10 @@ public class Shader {
     public void unload() {
         if (shader != 0) {
 
-            if(GLES20.glIsShader(shader)) {
+            if (GLES20.glIsShader(shader)) {
                 GLES20.glDeleteShader(shader);
                 ErrorHelper.checkGlError(TAG, "glDeleteShader");
-            }
-            else {
+            } else {
                 Log.w(TAG, "unable to delete shader " + shader + " because it is not valid");
             }
             shader = 0;
