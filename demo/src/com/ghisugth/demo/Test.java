@@ -6,8 +6,9 @@
 package com.ghisugth.demo;
 
 import android.content.Context;
-import android.opengl.GLES20;
-import android.opengl.Matrix;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.opengl.*;
 import android.os.SystemClock;
 import android.util.Log;
 import com.ghisguth.gfx.ErrorHelper;
@@ -18,6 +19,8 @@ import com.ghisguth.shared.ResourceHelper;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
@@ -60,6 +63,11 @@ public class Test extends RendererBase {
     private float[] P_matrix = new float[16];
     private float[] M_matrix = new float[16];
     private float[] V_matrix = new float[16];
+
+    private int texture;
+    private int texture2;
+    private int texture3;
+    private int texture4;
 
     public Test(Context context) {
         super(context);
@@ -154,9 +162,10 @@ public class Test extends RendererBase {
                 return;
             }
 
-            float angle = getTimeDeltaByScale(15000L);
+            float angle = getTimeDeltaByScale(200000L);
             //Matrix.setIdentityM(M_matrix, 0);
-            Matrix.setRotateM(M_matrix, 0, 360 * angle, 1, 1, 1);
+            Matrix.setRotateM(M_matrix, 0, 90, 1, 0, 0);
+            Matrix.rotateM(M_matrix, 0, 360 * angle, 0, 0, 1);
             //Matrix.translateM(M_matrix, 0, 0, angle*10-5, 0);
 
             //Matrix.translateM(M_matrix, 0, 0, 0, 1.0f);
@@ -166,10 +175,39 @@ public class Test extends RendererBase {
             Matrix.multiplyMM(MVP_matrix, 0, V_matrix, 0, M_matrix, 0);
             Matrix.multiplyMM(MVP_matrix, 0, P_matrix, 0, MVP_matrix, 0);
 
-            //GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
-            //GLES20.glBindTexture(GLES20.GL_TEXTURE_2D,target_texture_[textureIndex]);
-            //GLES20.glUniform1i(texture_loc_, 0);
-            //GLES20.glUniform1f(blur_handle_, blur_ * blurFactor_);
+
+            GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
+            ErrorHelper.checkGlError(TAG, "glActiveTexture GL_TEXTURE0");
+            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texture);
+            ErrorHelper.checkGlError(TAG, "glBindTexture texture");
+
+            GLES20.glUniform1i(program.getUniformLocation("sTexture"), 0);
+            ErrorHelper.checkGlError(TAG, "glUniform1i sTexture");
+
+            GLES20.glActiveTexture(GLES20.GL_TEXTURE1);
+            ErrorHelper.checkGlError(TAG, "glActiveTexture GL_TEXTURE1");
+            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texture2);
+            ErrorHelper.checkGlError(TAG, "glBindTexture texture2");
+
+            GLES20.glUniform1i(program.getUniformLocation("sTexture2"), 1);
+            ErrorHelper.checkGlError(TAG, "glUniform1i sTexture2");
+
+
+            GLES20.glActiveTexture(GLES20.GL_TEXTURE2);
+            ErrorHelper.checkGlError(TAG, "glActiveTexture GL_TEXTURE2");
+            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texture3);
+            ErrorHelper.checkGlError(TAG, "glBindTexture texture3");
+
+            GLES20.glUniform1i(program.getUniformLocation("sTexture3"), 2);
+            ErrorHelper.checkGlError(TAG, "glUniform1i sTexture3");
+
+            GLES20.glActiveTexture(GLES20.GL_TEXTURE3);
+            ErrorHelper.checkGlError(TAG, "glActiveTexture GL_TEXTURE3");
+            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texture4);
+            ErrorHelper.checkGlError(TAG, "glBindTexture texture4");
+
+            GLES20.glUniform1i(program.getUniformLocation("sTexture4"), 3);
+            ErrorHelper.checkGlError(TAG, "glUniform1i sTexture4");
 
             triangle_vertices.position(TRIANGLE_VERTICES_DATA_POS_OFFSET);
             GLES20.glVertexAttribPointer(program.getAttributeLocation("aPosition"), 3, GLES20.GL_FLOAT, false, TRIANGLE_VERTICES_DATA_STRIDE_BYTES, triangle_vertices);
@@ -184,6 +222,16 @@ public class Test extends RendererBase {
             ErrorHelper.checkGlError(TAG, "glEnableVertexAttribArray aTextureCoord");
 
             GLES20.glUniformMatrix4fv(program.getUniformLocation("uMVPMatrix"), 1, false, MVP_matrix, 0);
+
+
+            float animationTime = getTimeDeltaByScale(250000L);
+            GLES20.glUniform1f(program.getUniformLocation("uAnimationTime"), animationTime);
+
+            float animationTime2 = getTimeDeltaByScale(189000L);
+            GLES20.glUniform1f(program.getUniformLocation("uAnimationTime2"), animationTime2);
+
+            float animationTime3 = getTimeDeltaByScale(157000L);
+            GLES20.glUniform1f(program.getUniformLocation("uAnimationTime3"), animationTime3);
 
             GLES20.glEnable(GLES20.GL_CULL_FACE);
             GLES20.glCullFace(GLES20.GL_BACK);
@@ -230,6 +278,196 @@ public class Test extends RendererBase {
         }
 
         ShaderManager.getSingletonObject().unloadAllShaders();
+
+        int[] textures = new int[1];
+        GLES20.glGenTextures(1, textures, 0);
+
+        texture = textures[0];
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texture);
+
+        GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER,
+                GLES20.GL_NEAREST);
+        GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D,
+                GLES20.GL_TEXTURE_MAG_FILTER,
+                GLES20.GL_LINEAR);
+
+        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_S,
+                GLES20.GL_REPEAT);
+        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T,
+                GLES20.GL_REPEAT);
+
+        InputStream is = getResources()
+                .openRawResource(R.raw.base_etc1);
+        /*Bitmap bitmap;
+        try {
+            bitmap = BitmapFactory.decodeStream(is);
+        } finally {
+            try {
+                is.close();
+            } catch(IOException e) {
+                // Ignore.
+            }
+        }
+
+        GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bitmap, 0);
+        bitmap.recycle();*/
+        try {
+            ETC1Util.loadTexture(GLES20.GL_TEXTURE_2D, 0, 0,
+                    GLES20.GL_RGB, GLES20.GL_UNSIGNED_SHORT_5_6_5, is);
+        } catch (IOException e) {
+            Log.w(TAG, "Could not load texture: " + e);
+        } finally {
+            try {
+                is.close();
+            } catch (IOException e) {
+                // ignore exception thrown from close.
+            }
+        }
+        ErrorHelper.checkGlError(TAG, "texImage2D");
+
+
+
+        // tex 2
+
+        GLES20.glGenTextures(1, textures, 0);
+
+        texture2 = textures[0];
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texture2);
+
+        GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER,
+                GLES20.GL_LINEAR);
+        GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D,
+                GLES20.GL_TEXTURE_MAG_FILTER,
+                GLES20.GL_LINEAR);
+
+        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_S,
+                GLES20.GL_REPEAT);
+        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T,
+                GLES20.GL_REPEAT);
+
+        is = getResources().openRawResource(R.raw.noise_etc1);
+
+        /*try {
+            bitmap = BitmapFactory.decodeStream(is);
+        } finally {
+            try {
+                is.close();
+            } catch(IOException e) {
+                // Ignore.
+            }
+        }
+
+        GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bitmap, 0);
+        bitmap.recycle();*/
+        try {
+            ETC1Util.loadTexture(GLES20.GL_TEXTURE_2D, 0, 0,
+                    GLES20.GL_RGB, GLES20.GL_UNSIGNED_SHORT_5_6_5, is);
+        } catch (IOException e) {
+            Log.w(TAG, "Could not load texture: " + e);
+        } finally {
+            try {
+                is.close();
+            } catch (IOException e) {
+                // ignore exception thrown from close.
+            }
+        }
+        ErrorHelper.checkGlError(TAG, "texImage2D");
+
+
+
+        // tex 3
+
+        GLES20.glGenTextures(1, textures, 0);
+
+        texture3 = textures[0];
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texture3);
+
+        GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER,
+                GLES20.GL_NEAREST);
+        GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D,
+                GLES20.GL_TEXTURE_MAG_FILTER,
+                GLES20.GL_LINEAR);
+
+        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_S,
+                GLES20.GL_REPEAT);
+        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T,
+                GLES20.GL_REPEAT);
+
+        is = getResources().openRawResource(R.raw.noise_etc1);
+
+        /*try {
+            bitmap = BitmapFactory.decodeStream(is);
+        } finally {
+            try {
+                is.close();
+            } catch(IOException e) {
+                // Ignore.
+            }
+        }
+
+        GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bitmap, 0);
+        bitmap.recycle();*/
+        try {
+            ETC1Util.loadTexture(GLES20.GL_TEXTURE_2D, 0, 0,
+                    GLES20.GL_RGB, GLES20.GL_UNSIGNED_SHORT_5_6_5, is);
+        } catch (IOException e) {
+            Log.w(TAG, "Could not load texture: " + e);
+        } finally {
+            try {
+                is.close();
+            } catch (IOException e) {
+                // ignore exception thrown from close.
+            }
+        }
+        ErrorHelper.checkGlError(TAG, "texImage2D");
+
+
+        // tex 4
+
+        GLES20.glGenTextures(1, textures, 0);
+
+        texture4 = textures[0];
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texture4);
+
+        GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER,
+                GLES20.GL_NEAREST);
+        GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D,
+                GLES20.GL_TEXTURE_MAG_FILTER,
+                GLES20.GL_LINEAR);
+
+        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_S,
+                GLES20.GL_REPEAT);
+        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T,
+                GLES20.GL_REPEAT);
+
+        is = getResources().openRawResource(R.raw.noise_etc1);
+
+        /*try {
+            bitmap = BitmapFactory.decodeStream(is);
+        } finally {
+            try {
+                is.close();
+            } catch(IOException e) {
+                // Ignore.
+            }
+        }
+
+        GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bitmap, 0);
+        bitmap.recycle();*/
+        try {
+            ETC1Util.loadTexture(GLES20.GL_TEXTURE_2D, 0, 0,
+                    GLES20.GL_RGB, GLES20.GL_UNSIGNED_SHORT_5_6_5, is);
+        } catch (IOException e) {
+            Log.w(TAG, "Could not load texture: " + e);
+        } finally {
+            try {
+                is.close();
+            } catch (IOException e) {
+                // ignore exception thrown from close.
+            }
+        }
+        ErrorHelper.checkGlError(TAG, "texImage2D");
+
 
         Matrix.setLookAtM(V_matrix, 0, 0, 0, 2.0f, 0f, 0f, 0f, 0f, -1.0f, 0.0f);
     }
