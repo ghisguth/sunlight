@@ -6,7 +6,7 @@ import com.ghisguth.wallpaper.GLES20WallpaperService;
 import com.ghisguth.wallpaper.glwallpaperservice.GLWallpaperService;
 
 public class Wallpaper extends GLES20WallpaperService {
-    private static String TAG = "Sun";
+    private static String TAG = "Sunlight";
     private static final boolean DEBUG = false;
     public static final String SHARED_PREF_NAME = "SunSettings";
 

@@ -13,12 +13,10 @@ import java.lang.ref.WeakReference;
 import java.util.HashSet;
 
 public class ShaderManager {
-    private static String TAG = "ShaderManager";
-
     private HashSet<WeakReference<Shader>> shaders = new HashSet<WeakReference<Shader>>();
     private ReferenceQueue<Shader> shaderReferenceQueue = new ReferenceQueue<Shader>();
-    private HashSet<WeakReference<ShaderProgram>> shaderPrograms = new HashSet<WeakReference<ShaderProgram>>();
-    private ReferenceQueue<ShaderProgram> shaderProgramReferenceQueue = new ReferenceQueue<ShaderProgram>();
+    private HashSet<WeakReference<Program>> shaderPrograms = new HashSet<WeakReference<Program>>();
+    private ReferenceQueue<Program> shaderProgramReferenceQueue = new ReferenceQueue<Program>();
 
 
     private static ShaderManager singletonObject;
@@ -45,8 +43,8 @@ public class ShaderManager {
         return new Shader(GLES20.GL_FRAGMENT_SHADER, source);
     }
 
-    public ShaderProgram createShaderProgram(Shader vertexShader, Shader fragmentShader) {
-        return new ShaderProgram(vertexShader, fragmentShader);
+    public Program createShaderProgram(Shader vertexShader, Shader fragmentShader) {
+        return new Program(vertexShader, fragmentShader);
     }
 
     public void registerShader(Shader shader) {
@@ -57,9 +55,9 @@ public class ShaderManager {
         }
     }
 
-    public void registerShaderProgram(ShaderProgram shaderProgram) {
+    public void registerShaderProgram(Program shaderProgram) {
         synchronized (shaderPrograms) {
-            WeakReference<ShaderProgram> weakReference = new WeakReference<ShaderProgram>(shaderProgram, shaderProgramReferenceQueue);
+            WeakReference<Program> weakReference = new WeakReference<Program>(shaderProgram, shaderProgramReferenceQueue);
             shaderPrograms.add(weakReference);
             processShaderProgramReferenceQueueImpl();
         }
@@ -111,8 +109,8 @@ public class ShaderManager {
 
     public void unloadAllShaderPrograms() {
         synchronized (shaderPrograms) {
-            for (WeakReference<ShaderProgram> shaderProgramWeak : shaderPrograms) {
-                ShaderProgram shaderProgram = shaderProgramWeak.get();
+            for (WeakReference<Program> shaderProgramWeak : shaderPrograms) {
+                Program shaderProgram = shaderProgramWeak.get();
                 if (shaderProgram != null) {
                     shaderProgram.unload();
                 }

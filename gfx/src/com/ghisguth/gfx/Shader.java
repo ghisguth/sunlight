@@ -8,7 +8,7 @@ import android.opengl.GLES20;
 import android.util.Log;
 
 public class Shader {
-    private static String TAG = "Shader";
+    private static String TAG = "Sunlight";
 
     private int shader;
     private int shaderType;
@@ -34,6 +34,7 @@ public class Shader {
         if (shader != 0) {
             GLES20.glShaderSource(shader, source);
             GLES20.glCompileShader(shader);
+
             int[] compiled = new int[1];
             GLES20.glGetShaderiv(shader, GLES20.GL_COMPILE_STATUS, compiled, 0);
             if (compiled[0] == 0) {
@@ -49,7 +50,14 @@ public class Shader {
 
     public void unload() {
         if (shader != 0) {
-            GLES20.glDeleteShader(shader);
+
+            if(GLES20.glIsShader(shader)) {
+                GLES20.glDeleteShader(shader);
+                ErrorHelper.checkGlError(TAG, "glDeleteShader");
+            }
+            else {
+                Log.w(TAG, "unable to delete shader " + shader + " because it is not valid");
+            }
             shader = 0;
         }
     }

@@ -12,7 +12,7 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class SunRenderer implements GLWallpaperService.Renderer {
 
-    private static String TAG = "SunRenderer";
+    private static String TAG = "Sunlight";
 
     private int surface_width_ = 256;
     private int surface_height_ = 256;

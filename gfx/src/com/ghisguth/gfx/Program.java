@@ -10,8 +10,8 @@ import android.util.Log;
 
 import java.util.HashMap;
 
-public class ShaderProgram {
-    private static String TAG = "ShaderProgram";
+public class Program {
+    private static String TAG = "Sunlight";
 
     private int program;
     private Shader vertexShader;
@@ -19,7 +19,7 @@ public class ShaderProgram {
     private HashMap<String, Integer> uniformLocations = new HashMap<String, Integer>();
     private HashMap<String, Integer> attributeLocations = new HashMap<String, Integer>();
 
-    public ShaderProgram(Shader vertexShader, Shader fragmentShader) {
+    public Program(Shader vertexShader, Shader fragmentShader) {
         this.program = 0;
         this.vertexShader = vertexShader;
         this.fragmentShader = fragmentShader;
@@ -47,7 +47,7 @@ public class ShaderProgram {
 
         try {
             if (!vertexShader.load() || !fragmentShader.load()) {
-                Log.e(TAG, "cannot load vertex or fragment shader");
+                Log.e(TAG, "Program cannot load vertex or fragment shader");
                 return false;
             }
 
@@ -55,6 +55,7 @@ public class ShaderProgram {
             if (program != 0) {
                 GLES20.glAttachShader(program, vertexShader.getShader());
                 ErrorHelper.checkGlError(TAG, "glAttachShader vertex");
+
                 GLES20.glAttachShader(program, fragmentShader.getShader());
                 ErrorHelper.checkGlError(TAG, "glAttachShader fragment");
 
@@ -81,7 +82,13 @@ public class ShaderProgram {
 
     public void unload() {
         if (program != 0) {
-            GLES20.glDeleteProgram(program);
+            if(GLES20.glIsProgram(program)) {
+                GLES20.glDeleteProgram(program);
+                ErrorHelper.checkGlError(TAG, "glDeleteProgram");
+            } else {
+                Log.w(TAG, "unable to delete program " + program + " because it is not valid");
+            }
+
             program = 0;
         }
         uniformLocations.clear();
@@ -114,6 +121,7 @@ public class ShaderProgram {
             return uniformLocations.get(name);
         }
         int handle = GLES20.glGetUniformLocation(program, name);
+        ErrorHelper.checkGlError(TAG, "glGetUniformLocation");
         uniformLocations.put(name, handle);
         return handle;
     }
@@ -123,6 +131,7 @@ public class ShaderProgram {
             return attributeLocations.get(name);
         }
         int handle = GLES20.glGetAttribLocation(program, name);
+        ErrorHelper.checkGlError(TAG, "glGetAttribLocation");
         attributeLocations.put(name, handle);
         return handle;
     }

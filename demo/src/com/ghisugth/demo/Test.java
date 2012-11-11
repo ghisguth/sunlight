@@ -12,7 +12,7 @@ import android.util.Log;
 import com.ghisguth.gfx.ErrorHelper;
 import com.ghisguth.gfx.Shader;
 import com.ghisguth.gfx.ShaderManager;
-import com.ghisguth.gfx.ShaderProgram;
+import com.ghisguth.gfx.Program;
 import com.ghisguth.shared.ResourceHelper;
 
 import javax.microedition.khronos.egl.EGLConfig;
@@ -22,9 +22,9 @@ import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
 public class Test extends RendererBase {
-    private static String TAG = "SunTest";
+    private static String TAG = "Sunlight";
 
-    private ShaderProgram program;
+    private Program program;
 
     private static final int FLOAT_SIZE_BYTES = 4;
 
@@ -45,11 +45,8 @@ public class Test extends RendererBase {
     private FloatBuffer triangle_vertices;
 
     private float[] MVP_matrix = new float[16];
-
     private float[] P_matrix = new float[16];
-
     private float[] M_matrix = new float[16];
-
     private float[] V_matrix = new float[16];
 
     public Test(Context context) {

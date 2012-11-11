@@ -26,7 +26,7 @@ import javax.microedition.khronos.opengles.GL10;
 // Original code provided by Robert Green
 // http://www.rbgrn.net/content/354-glsurfaceview-adapted-3d-live-wallpapers
 public class GLWallpaperService extends WallpaperService {
-    private static final String TAG = "GLWallpaperService";
+    private static final String TAG = "Sunlight";
 
     @Override
     public Engine onCreateEngine() {
