@@ -48,10 +48,13 @@ public class Texture {
     }
 
     public boolean load() {
+        if (texture != 0) {
+            return true;
+        }
+
         int[] textures = new int[1];
         GLES20.glGenTextures(1, textures, 0);
         texture = textures[0];
-
         if (texture == 0) {
             return false;
         }
@@ -95,11 +98,15 @@ public class Texture {
 
     public void unload() {
         if (texture != 0) {
-            int[] textures = new int[1];
-            textures[0] = texture;
-            GLES20.glDeleteTextures(1, textures, 0);
+            if (GLES20.glIsTexture(texture)) {
+                int[] textures = new int[1];
+                textures[0] = texture;
+                GLES20.glDeleteTextures(1, textures, 0);
+                ErrorHelper.checkGlError(TAG, "glDeleteTextures");
+            } else {
+                Log.w(TAG, "unable to delete texture " + texture + " because it is not valid");
+            }
             texture = 0;
-            ErrorHelper.checkGlError(TAG, "glDeleteTextures");
         }
     }
 
