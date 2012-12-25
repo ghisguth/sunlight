@@ -137,18 +137,10 @@ public class Test extends RendererBase {
             if(baseTexture == null)
             {
                 baseTexture = textureManager.createTexture(getResources(), R.raw.base_etc1, true, GLES20.GL_NEAREST, GLES20.GL_LINEAR, GLES20.GL_REPEAT, GLES20.GL_REPEAT);
-                if(!baseTexture.load())
-                {
-                    Log.e(TAG, "Unable to load base texture");
-                }
             }
             if(noiseTexture == null)
             {
                 noiseTexture = textureManager.createTexture(getResources(), R.raw.noise_etc1, true, GLES20.GL_NEAREST, GLES20.GL_LINEAR, GLES20.GL_REPEAT, GLES20.GL_REPEAT);
-                if(!noiseTexture.load())
-                {
-                    Log.e(TAG, "Unable to load base texture");
-                }
             }
         } catch (Exception ex) {
             Log.e(TAG, "Unable to load textures from resources " + ex.toString());
@@ -167,7 +159,7 @@ public class Test extends RendererBase {
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 
         if (program != null && baseTexture != null) {
-            if (!program.use() || baseTexture.getTexture() == 0 || noiseTexture.getTexture() == 0) {
+            if (!program.use() || !baseTexture.load() || !noiseTexture.load()) {
                 return;
             }
 
@@ -183,8 +175,8 @@ public class Test extends RendererBase {
             Matrix.multiplyMM(MVP_matrix, 0, P_matrix, 0, MVP_matrix, 0);
 
 
-            baseTexture.bind(GLES20.GL_TEXTURE0, program, "sTexture");
-            noiseTexture.bind(GLES20.GL_TEXTURE1, program, "sTexture2");
+            baseTexture.bind(GLES20.GL_TEXTURE0, program, "sBaseTexture");
+            noiseTexture.bind(GLES20.GL_TEXTURE1, program, "sNoiseTexture");
 
             sphereVertices.bind(program, "aPosition", "aTextureCoord");
 
@@ -192,13 +184,13 @@ public class Test extends RendererBase {
 
 
             float animationTime = getTimeDeltaByScale(790000L);
-            GLES20.glUniform1f(program.getUniformLocation("uAnimationTime"), animationTime);
+            GLES20.glUniform1f(program.getUniformLocation("uTime"), animationTime);
 
             float animationTime2 = getTimeDeltaByScale(669000L);
-            GLES20.glUniform1f(program.getUniformLocation("uAnimationTime2"), animationTime2);
+            GLES20.glUniform1f(program.getUniformLocation("uTime2"), animationTime2);
 
             float animationTime3 = getTimeDeltaByScale(637000L);
-            GLES20.glUniform1f(program.getUniformLocation("uAnimationTime3"), animationTime3);
+            GLES20.glUniform1f(program.getUniformLocation("uTime3"), animationTime3);
 
             GLES20.glEnable(GLES20.GL_CULL_FACE);
             GLES20.glCullFace(GLES20.GL_BACK);
@@ -213,28 +205,22 @@ public class Test extends RendererBase {
                 GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE);
 
                 Matrix.setRotateM(M_matrix, 0, 90, 1, 0, 0);
-                Matrix.rotateM(M_matrix, 0, 360 * angle, 0, 0, 1);
-                float scale = 1.02f;
+                Matrix.rotateM(M_matrix, 0, 360 * getTimeDeltaByScale(400000L), 0, 0, 1);
+                float scale = 1.0f;
                 Matrix.scaleM(M_matrix, 0, scale, scale, scale);
-
                 Matrix.multiplyMM(MVP_matrix, 0, V_matrix, 0, M_matrix, 0);
                 Matrix.multiplyMM(MVP_matrix, 0, P_matrix, 0, MVP_matrix, 0);
 
-                baseTexture.bind(GLES20.GL_TEXTURE0, coronaProgram, "sTexture");
-                noiseTexture.bind(GLES20.GL_TEXTURE1, coronaProgram, "sTexture2");
-                noiseTexture.bind(GLES20.GL_TEXTURE2, coronaProgram, "sTexture3");
-                noiseTexture.bind(GLES20.GL_TEXTURE3, coronaProgram, "sTexture4");
+                baseTexture.bind(GLES20.GL_TEXTURE0, coronaProgram, "sBaseTexture");
+                noiseTexture.bind(GLES20.GL_TEXTURE1, coronaProgram, "sNoiseTexture");
 
                 sphereVertices.bind(coronaProgram, "aPosition", "aTextureCoord");
-
                 GLES20.glUniformMatrix4fv(coronaProgram.getUniformLocation("uMVPMatrix"), 1, false, MVP_matrix, 0);
-
-                GLES20.glUniform1f(coronaProgram.getUniformLocation("uAnimationTime"), animationTime);
-
-                GLES20.glUniform1f(coronaProgram.getUniformLocation("uAnimationTime2"), animationTime2);
-
-                GLES20.glUniform1f(coronaProgram.getUniformLocation("uAnimationTime3"), animationTime3);
-
+                GLES20.glUniform1f(coronaProgram.getUniformLocation("uTime"), animationTime);
+                GLES20.glUniform1f(coronaProgram.getUniformLocation("uTime2"), animationTime2);
+                GLES20.glUniform1f(coronaProgram.getUniformLocation("uTime3"), animationTime3);
+                float animationTime4 = getTimeDeltaByScale(4370000L);
+                GLES20.glUniform1f(coronaProgram.getUniformLocation("uTime4"), animationTime4);
                 GLES20.glUniform1f(coronaProgram.getUniformLocation("uLevel"), 0.5f);
 
                 sphereVertices.draw(GLES20.GL_TRIANGLE_STRIP);
@@ -248,6 +234,7 @@ public class Test extends RendererBase {
 
     @Override
     public void onSurfaceChanged(GL10 unused, int width, int height) {
+        Log.e(TAG, "onSurfaceChanged");
         ShaderManager.getSingletonObject().cleanUp();
 
         GLES20.glViewport(0, 0, width, height);
@@ -259,6 +246,7 @@ public class Test extends RendererBase {
 
     @Override
     public void onSurfaceCreated(GL10 unused, EGLConfig config) {
+        Log.e(TAG, "onSurfaceCreated");
         ShaderManager.getSingletonObject().unloadAll();
         ShaderManager.getSingletonObject().cleanUp();
 
