@@ -18,6 +18,8 @@ public final class R {
         public static int sun_corona_fragment=0x7f020004;
         public static int sun_corona_vertex=0x7f020005;
         public static int sun_fragment=0x7f020006;
-        public static int sun_vertex=0x7f020007;
+        public static int sun_ray_fragment=0x7f020007;
+        public static int sun_ray_vertex=0x7f020008;
+        public static int sun_vertex=0x7f020009;
     }
 }

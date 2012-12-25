@@ -141,8 +141,8 @@ public class Test extends RendererBase {
             fragment = shaderManager.createFragmentShader(ResourceHelper.loadRawString(openResource(R.raw.sun_corona_fragment)));
             coronaProgram = shaderManager.createShaderProgram(vertex, fragment);
 
-            vertex = shaderManager.createVertexShader(ResourceHelper.loadRawString(openResource(R.raw.post_blur_vertex)));
-            fragment = shaderManager.createFragmentShader(ResourceHelper.loadRawString(openResource(R.raw.post_blur_fragment)));
+            vertex = shaderManager.createVertexShader(ResourceHelper.loadRawString(openResource(R.raw.sun_ray_vertex)));
+            fragment = shaderManager.createFragmentShader(ResourceHelper.loadRawString(openResource(R.raw.sun_ray_fragment)));
             postRayProgram = shaderManager.createShaderProgram(vertex, fragment);
         } catch (Exception ex) {
             Log.e(TAG, "Unable to load shaders from resources " + ex.toString());
@@ -231,13 +231,15 @@ public class Test extends RendererBase {
                 GLES20.glUniform1f(coronaProgram.getUniformLocation("uTime"), animationTime);
                 GLES20.glUniform1f(coronaProgram.getUniformLocation("uTime2"), animationTime2);
                 GLES20.glUniform1f(coronaProgram.getUniformLocation("uTime3"), animationTime3);
-                float animationTime4 = getTimeDeltaByScale(4370000L);
+                float animationTime4 = getTimeDeltaByScale(3370000L);
                 GLES20.glUniform1f(coronaProgram.getUniformLocation("uTime4"), animationTime4);
                 GLES20.glUniform1f(coronaProgram.getUniformLocation("uLevel"), 0.5f);
 
                 sphereVertices.draw(GLES20.GL_TRIANGLE_STRIP);
 
                 sphereVertices.unbind(program, "aPosition", "aTextureCoord");
+
+                GLES20.glDisable(GLES20.GL_BLEND);
             }
 
             GLES20.glDisable(GLES20.GL_CULL_FACE);
@@ -265,18 +267,18 @@ public class Test extends RendererBase {
         GLES20.glViewport(0, 0, framebuffer_width_, framebuffer_height_);
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 
-        if (!useOneFramebuffer_) {
-            renderBlurTexture(1 - target_texture_index_);
+        /*if (!useOneFramebuffer_) {
+            renderPostEffect(1 - target_texture_index_);
         } else {
-            renderBlurTexture(target_texture_index_);
-        }
+            renderPostEffect(target_texture_index_);
+        } */
         renderSun();
 
         GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, 0);
         GLES20.glViewport(0, 0, surface_width_, surface_height_);
 
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
-        renderBlurTexture(target_texture_index_);
+        renderPostEffect(target_texture_index_);
 
         if (!useOneFramebuffer_) {
             target_texture_index_ = 1 - target_texture_index_;
@@ -364,7 +366,7 @@ public class Test extends RendererBase {
         Matrix.setLookAtM(V_matrix, 0, 0, 0, 2.0f, 0f, 0f, 0f, 0f, -1.0f, 0.0f);
     }
 
-    private void renderBlurTexture(int textureIndex) {
+    private void renderPostEffect(int textureIndex) {
         if (postRayProgram.use()) {
             GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
             GLES20.glBindTexture(GLES20.GL_TEXTURE_2D,
@@ -378,11 +380,6 @@ public class Test extends RendererBase {
             GLES20.glUniformMatrix4fv(postRayProgram.getUniformLocation("uMVPMatrix"), 1, false, quad_matrix_, 0);
 
             quadVertices.draw(GLES20.GL_TRIANGLE_STRIP);
-
-            /*
-            GLES20.glUniformMatrix4fv(MVP_matrix_handle_, 1, false, quad_matrix_, 0);
-            GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4);
-            ErrorHelper.checkGlError(TAG, "glDrawArrays");*/
         }
     }
 
