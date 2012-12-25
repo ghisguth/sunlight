@@ -5,11 +5,11 @@ varying vec2 vTextureCoord;
 uniform sampler2D sTexture;
 
 void main() {
-  float NUM_SAMPLES = 5.0;
-  float Density = 0.5;
-  float Exposure = 0.9;
-  float Decay = 0.85;
-  float Weight = 0.03;
+  float NUM_SAMPLES = 16.0;
+  float Density = 0.3;
+  float Exposure = 0.65;
+  float Decay = 0.95;
+  float Weight = 0.035;
 
   // Calculate vector from pixel to light source in screen space.
   vec2 deltaTexCoord = vTextureCoord - vec2(0.5, 0.5);
