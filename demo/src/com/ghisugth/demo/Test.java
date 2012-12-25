@@ -34,12 +34,6 @@ public class Test extends RendererBase {
 
     private static final int SHORT_SIZE_BYTES = 2;
 
-    private static final int TRIANGLE_VERTICES_DATA_STRIDE_BYTES = 5 * FLOAT_SIZE_BYTES;
-
-    private static final int TRIANGLE_VERTICES_DATA_POS_OFFSET = 0;
-
-    private static final int TRIANGLE_VERTICES_DATA_UV_OFFSET = 3;
-
     private final float[] triangle_vertices_data = {
             // X, Y, Z, U, V
             1.0f, 0.0f, -1.0f, 1.0f, 0.0f,
@@ -52,11 +46,7 @@ public class Test extends RendererBase {
     private final int verticalResolution = 32;
     private final int verticesCount = horizontalResolution * verticalResolution;
     private final int indicesCount = horizontalResolution * 2 * (verticalResolution-1);
-    //private final int indicesCount = horizontalResolution * (verticalResolution-1) * 3 * 2;
 
-
-    private FloatBuffer triangleVertices;
-    private ShortBuffer triangleIndices;
     private VertexBuffer sphereVertices;
 
     private float[] MVP_matrix = new float[16];
@@ -118,18 +108,6 @@ public class Test extends RendererBase {
                 }
             }
         }
-
-        triangleVertices = ByteBuffer
-                .allocateDirect(
-                        vertices.length * FLOAT_SIZE_BYTES)
-                .order(ByteOrder.nativeOrder()).asFloatBuffer();
-        triangleVertices.put(vertices).position(0);
-
-        triangleIndices = ByteBuffer
-                .allocateDirect(
-                        indices.length * SHORT_SIZE_BYTES)
-                .order(ByteOrder.nativeOrder()).asShortBuffer();
-        triangleIndices.put(indices).position(0);
 
         sphereVertices = new VertexBuffer(vertices, indices, true);
     }
@@ -228,7 +206,8 @@ public class Test extends RendererBase {
             sphereVertices.draw(GLES20.GL_TRIANGLE_STRIP);
 
             sphereVertices.unbind(program, "aPosition", "aTextureCoord");
-            /*if (coronaProgram != null && coronaProgram.use()) {
+
+            if (coronaProgram != null && coronaProgram.use()) {
 
                 GLES20.glEnable(GLES20.GL_BLEND);
                 GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE);
@@ -241,30 +220,12 @@ public class Test extends RendererBase {
                 Matrix.multiplyMM(MVP_matrix, 0, V_matrix, 0, M_matrix, 0);
                 Matrix.multiplyMM(MVP_matrix, 0, P_matrix, 0, MVP_matrix, 0);
 
+                baseTexture.bind(GLES20.GL_TEXTURE0, coronaProgram, "sTexture");
+                noiseTexture.bind(GLES20.GL_TEXTURE1, coronaProgram, "sTexture2");
+                noiseTexture.bind(GLES20.GL_TEXTURE2, coronaProgram, "sTexture3");
+                noiseTexture.bind(GLES20.GL_TEXTURE3, coronaProgram, "sTexture4");
 
-                GLES20.glUniform1i(coronaProgram.getUniformLocation("sTexture"), 0);
-                ErrorHelper.checkGlError(TAG, "glUniform1i sTexture");
-
-                GLES20.glUniform1i(coronaProgram.getUniformLocation("sTexture2"), 1);
-                ErrorHelper.checkGlError(TAG, "glUniform1i sTexture2");
-
-                GLES20.glUniform1i(coronaProgram.getUniformLocation("sTexture3"), 2);
-                ErrorHelper.checkGlError(TAG, "glUniform1i sTexture3");
-
-                GLES20.glUniform1i(coronaProgram.getUniformLocation("sTexture4"), 3);
-                ErrorHelper.checkGlError(TAG, "glUniform1i sTexture4");
-
-                triangleVertices.position(TRIANGLE_VERTICES_DATA_POS_OFFSET);
-                GLES20.glVertexAttribPointer(coronaProgram.getAttributeLocation("aPosition"), 3, GLES20.GL_FLOAT, false, TRIANGLE_VERTICES_DATA_STRIDE_BYTES, triangleVertices);
-                ErrorHelper.checkGlError(TAG, "glVertexAttribPointer aPosition");
-                GLES20.glEnableVertexAttribArray(coronaProgram.getAttributeLocation("aPosition"));
-                ErrorHelper.checkGlError(TAG, "glEnableVertexAttribArray aPosition");
-
-                triangleVertices.position(TRIANGLE_VERTICES_DATA_UV_OFFSET);
-                GLES20.glVertexAttribPointer(coronaProgram.getAttributeLocation("aTextureCoord"), 2, GLES20.GL_FLOAT, false, TRIANGLE_VERTICES_DATA_STRIDE_BYTES, triangleVertices);
-                ErrorHelper.checkGlError(TAG, "glVertexAttribPointer aTextureCoord");
-                GLES20.glEnableVertexAttribArray(coronaProgram.getAttributeLocation("aTextureCoord"));
-                ErrorHelper.checkGlError(TAG, "glEnableVertexAttribArray aTextureCoord");
+                sphereVertices.bind(coronaProgram, "aPosition", "aTextureCoord");
 
                 GLES20.glUniformMatrix4fv(coronaProgram.getUniformLocation("uMVPMatrix"), 1, false, MVP_matrix, 0);
 
@@ -276,9 +237,10 @@ public class Test extends RendererBase {
 
                 GLES20.glUniform1f(coronaProgram.getUniformLocation("uLevel"), 0.5f);
 
-                GLES20.glDrawElements(GLES20.GL_TRIANGLE_STRIP, count, GLES20.GL_UNSIGNED_SHORT, triangleIndices);
-                ErrorHelper.checkGlError(TAG, "glDrawElements");
-            }*/
+                sphereVertices.draw(GLES20.GL_TRIANGLE_STRIP);
+
+                sphereVertices.unbind(program, "aPosition", "aTextureCoord");
+            }
 
             GLES20.glDisable(GLES20.GL_CULL_FACE);
         }
