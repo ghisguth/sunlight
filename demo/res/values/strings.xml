@@ -4,4 +4,5 @@
     <string name="title">Sunlight Demo</string>
     <string name="subtitle">Open GL ES 2.0 experiments</string>
     <string name="tab_test">Test</string>
+    <string name="tab_sunv1">Sun v.1.</string>
 </resources>
