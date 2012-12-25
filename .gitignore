@@ -10,3 +10,4 @@ demo/gen/
 shared/bin/
 shared/gen/
 .idea/workspace.xml
+*~
