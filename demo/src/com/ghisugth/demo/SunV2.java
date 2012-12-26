@@ -16,7 +16,7 @@ import com.ghisguth.shared.ResourceHelper;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-public class Test extends RendererBase {
+public class SunV2 extends RendererBase {
     private static String TAG = "Sunlight";
 
     private Program program;
@@ -28,8 +28,6 @@ public class Test extends RendererBase {
     private Texture baseTexture;
 
     private Texture noiseTexture;
-
-    private Texture colorTexture;
 
     private final float[] quadVericesArray = {
             // X, Y, Z, U, V
@@ -70,9 +68,7 @@ public class Test extends RendererBase {
 
     private boolean resetFramebuffers_ = false;
 
-    private boolean postEffectsEnabled = true;
-
-    public Test(Context context) {
+    public SunV2(Context context) {
         super(context);
 
         setEGLContextClientVersion(2);
@@ -138,11 +134,11 @@ public class Test extends RendererBase {
         try {
             ShaderManager shaderManager = ShaderManager.getSingletonObject();
             Shader vertex = shaderManager.createVertexShader(ResourceHelper.loadRawString(openResource(R.raw.sun_vertex)));
-            Shader fragment = shaderManager.createFragmentShader(ResourceHelper.loadRawString(openResource(R.raw.sun_lookup_fragment)));
+            Shader fragment = shaderManager.createFragmentShader(ResourceHelper.loadRawString(openResource(R.raw.sun_fragment)));
             program = shaderManager.createShaderProgram(vertex, fragment);
 
             vertex = shaderManager.createVertexShader(ResourceHelper.loadRawString(openResource(R.raw.sun_corona_vertex)));
-            fragment = shaderManager.createFragmentShader(ResourceHelper.loadRawString(openResource(R.raw.sun_corona_lookup_fragment)));
+            fragment = shaderManager.createFragmentShader(ResourceHelper.loadRawString(openResource(R.raw.sun_corona_fragment)));
             coronaProgram = shaderManager.createShaderProgram(vertex, fragment);
 
             vertex = shaderManager.createVertexShader(ResourceHelper.loadRawString(openResource(R.raw.sun_ray_vertex)));
@@ -157,13 +153,10 @@ public class Test extends RendererBase {
         try {
             TextureManager textureManager = TextureManager.getSingletonObject();
             if (baseTexture == null) {
-                baseTexture = textureManager.createTexture(getResources(), R.raw.sun_surface_etc1, true, GLES20.GL_NEAREST, GLES20.GL_LINEAR, GLES20.GL_REPEAT, GLES20.GL_REPEAT);
+                baseTexture = textureManager.createTexture(getResources(), R.raw.base_etc1, true, GLES20.GL_NEAREST, GLES20.GL_LINEAR, GLES20.GL_REPEAT, GLES20.GL_REPEAT);
             }
             if (noiseTexture == null) {
                 noiseTexture = textureManager.createTexture(getResources(), R.raw.noise_etc1, true, GLES20.GL_NEAREST, GLES20.GL_LINEAR, GLES20.GL_REPEAT, GLES20.GL_REPEAT);
-            }
-            if (colorTexture == null) {
-                colorTexture = textureManager.createTexture(getResources(), R.raw.star_color_etc1, true, GLES20.GL_NEAREST, GLES20.GL_LINEAR, GLES20.GL_CLAMP_TO_EDGE, GLES20.GL_CLAMP_TO_EDGE);
             }
         } catch (Exception ex) {
             Log.e(TAG, "Unable to load textures from resources " + ex.toString());
@@ -178,7 +171,7 @@ public class Test extends RendererBase {
 
     private void renderSun() {
         if (program != null && baseTexture != null) {
-            if (!program.use() || !baseTexture.load() || !noiseTexture.load() || !colorTexture.load()) {
+            if (!program.use() || !baseTexture.load() || !noiseTexture.load()) {
                 return;
             }
 
@@ -196,7 +189,6 @@ public class Test extends RendererBase {
 
             baseTexture.bind(GLES20.GL_TEXTURE0, program, "sBaseTexture");
             noiseTexture.bind(GLES20.GL_TEXTURE1, program, "sNoiseTexture");
-            colorTexture.bind(GLES20.GL_TEXTURE2, program, "sColorTexture");
 
             sphereVertices.bind(program, "aPosition", "aTextureCoord");
 
@@ -212,20 +204,6 @@ public class Test extends RendererBase {
             float animationTime3 = getTimeDeltaByScale(637000L);
             GLES20.glUniform1f(program.getUniformLocation("uTime3"), animationTime3);
 
-            //float surfaceColorOffset = 0.02734375f;
-            //float surfaceColorAdd = 0.3f;
-            //float surfaceColorMul = 2.0f;
-
-            float surfaceColorOffset = 0.83734375f;
-            float surfaceColorAdd = 0.0f;
-            float surfaceColorMul = 1.0f;
-
-            surfaceColorOffset = getTimeDeltaByScale(19000L);
-
-            GLES20.glUniform1f(program.getUniformLocation("uColorOffset"), surfaceColorOffset);
-            GLES20.glUniform1f(program.getUniformLocation("uColorAdd"), surfaceColorAdd);
-            GLES20.glUniform1f(program.getUniformLocation("uColorMul"), surfaceColorMul);
-
             GLES20.glEnable(GLES20.GL_CULL_FACE);
             GLES20.glCullFace(GLES20.GL_BACK);
 
@@ -239,7 +217,7 @@ public class Test extends RendererBase {
                 GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE);
 
                 Matrix.setRotateM(M_matrix, 0, 90, 1, 0, 0);
-                Matrix.rotateM(M_matrix, 0, 360 * angle, 0, 0, 1);
+                Matrix.rotateM(M_matrix, 0, 360 * getTimeDeltaByScale(400000L), 0, 0, 1);
                 float scale = 1.0f;
                 Matrix.scaleM(M_matrix, 0, scale, scale, scale);
                 Matrix.multiplyMM(MVP_matrix, 0, V_matrix, 0, M_matrix, 0);
@@ -247,7 +225,6 @@ public class Test extends RendererBase {
 
                 baseTexture.bind(GLES20.GL_TEXTURE0, coronaProgram, "sBaseTexture");
                 noiseTexture.bind(GLES20.GL_TEXTURE1, coronaProgram, "sNoiseTexture");
-                colorTexture.bind(GLES20.GL_TEXTURE2, coronaProgram, "sColorTexture");
 
                 sphereVertices.bind(coronaProgram, "aPosition", "aTextureCoord");
                 GLES20.glUniformMatrix4fv(coronaProgram.getUniformLocation("uMVPMatrix"), 1, false, MVP_matrix, 0);
@@ -257,9 +234,6 @@ public class Test extends RendererBase {
                 float animationTime4 = getTimeDeltaByScale(3370000L);
                 GLES20.glUniform1f(coronaProgram.getUniformLocation("uTime4"), animationTime4);
                 GLES20.glUniform1f(coronaProgram.getUniformLocation("uLevel"), 0.5f);
-                GLES20.glUniform1f(coronaProgram.getUniformLocation("uColorOffset"), surfaceColorOffset);
-                GLES20.glUniform1f(coronaProgram.getUniformLocation("uColorAdd"), surfaceColorAdd);
-                GLES20.glUniform1f(coronaProgram.getUniformLocation("uColorMul"), surfaceColorMul);
 
                 sphereVertices.draw(GLES20.GL_TRIANGLE_STRIP);
 
@@ -277,43 +251,37 @@ public class Test extends RendererBase {
         GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 
-        if(postEffectsEnabled) {
-            if (resetFramebuffers_) {
-                resetFramebuffers_ = false;
-
-                if (!useOneFramebuffer_) {
-                    GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER,
-                            framebuffer_[1 - target_texture_index_]);
-                    GLES20.glViewport(0, 0, framebuffer_width_, framebuffer_height_);
-                    GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
-                }
-            }
-
-            GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER,
-                    framebuffer_[target_texture_index_]);
-            GLES20.glViewport(0, 0, framebuffer_width_, framebuffer_height_);
-            GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
-
-            /*if (!useOneFramebuffer_) {
-                renderPostEffect(1 - target_texture_index_);
-            } else {
-                renderPostEffect(target_texture_index_);
-            } */
-            renderSun();
-
-            GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, 0);
-            GLES20.glViewport(0, 0, surface_width_, surface_height_);
-
-            GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
-            renderPostEffect(target_texture_index_);
+        if (resetFramebuffers_) {
+            resetFramebuffers_ = false;
 
             if (!useOneFramebuffer_) {
-                target_texture_index_ = 1 - target_texture_index_;
+                GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER,
+                        framebuffer_[1 - target_texture_index_]);
+                GLES20.glViewport(0, 0, framebuffer_width_, framebuffer_height_);
+                GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
             }
         }
-        else
-        {
-            renderSun();
+
+        GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER,
+                framebuffer_[target_texture_index_]);
+        GLES20.glViewport(0, 0, framebuffer_width_, framebuffer_height_);
+        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
+
+        /*if (!useOneFramebuffer_) {
+            renderPostEffect(1 - target_texture_index_);
+        } else {
+            renderPostEffect(target_texture_index_);
+        } */
+        renderSun();
+
+        GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, 0);
+        GLES20.glViewport(0, 0, surface_width_, surface_height_);
+
+        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
+        renderPostEffect(target_texture_index_);
+
+        if (!useOneFramebuffer_) {
+            target_texture_index_ = 1 - target_texture_index_;
         }
 
     }
