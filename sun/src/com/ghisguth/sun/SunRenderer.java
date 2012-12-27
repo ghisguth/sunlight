@@ -66,7 +66,7 @@ public class SunRenderer implements GLWallpaperService.Renderer {
         GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 
-        if(postEffectsEnabled) {
+        if (postEffectsEnabled) {
             if (resetFrameBuffers) {
                 resetFrameBuffers = false;
 
@@ -97,9 +97,7 @@ public class SunRenderer implements GLWallpaperService.Renderer {
             if (!useOneFrameBuffer) {
                 targetTextureIndex = 1 - targetTextureIndex;
             }
-        }
-        else
-        {
+        } else {
             renderSun();
         }
     }
@@ -109,9 +107,17 @@ public class SunRenderer implements GLWallpaperService.Renderer {
         ShaderManager.getSingletonObject().cleanUp();
 
         GLES20.glViewport(0, 0, width, height);
-        float scale = 0.1f;
-        float ratio = scale * width / height;
-        Matrix.frustumM(P_matrix, 0, -ratio, ratio, -scale, scale, 0.1f, 100.0f);
+        final float scale = 0.1f;
+        float vertical = scale;
+        float horizontal = vertical * width / height;
+
+        if(width < height)
+        {
+            horizontal = scale;
+            vertical = horizontal * height / width;
+        }
+
+        Matrix.frustumM(P_matrix, 0, -horizontal, horizontal, -vertical, vertical, 0.1f, 100.0f);
 
         surfaceWidth = width;
         surfaceHeight = height;
@@ -145,9 +151,6 @@ public class SunRenderer implements GLWallpaperService.Renderer {
             frameBufferHeight >>= 1;
         }
 
-        Log.i("BL***", "frameBufferWidth=" + frameBufferWidth
-                + " frameBufferHeight=" + frameBufferHeight);
-
         renderTextures[0].update(frameBufferWidth, frameBufferHeight);
 
         if (!useOneFrameBuffer) {
@@ -180,18 +183,15 @@ public class SunRenderer implements GLWallpaperService.Renderer {
             postRayProgram.load();
         }
 
-        if(baseTexture != null)
-        {
+        if (baseTexture != null) {
             baseTexture.load();
         }
 
-        if(colorTexture != null)
-        {
+        if (colorTexture != null) {
             colorTexture.load();
         }
 
-        if(noiseTexture != null)
-        {
+        if (noiseTexture != null) {
             noiseTexture.load();
         }
 
@@ -259,16 +259,13 @@ public class SunRenderer implements GLWallpaperService.Renderer {
             }
 
             float angle = getTimeDeltaByScale(600000L);
-            //Matrix.setIdentityM(M_matrix, 0);
+            float scale = 1.25f;
             Matrix.setRotateM(M_matrix, 0, 90, 1, 0, 0);
             Matrix.rotateM(M_matrix, 0, 360 * angle, 0, 0, 1);
-            //Matrix.translateM(M_matrix, 0, 0, angle*10-5, 0);
-
-            //Matrix.translateM(M_matrix, 0, 0, 0, 1.0f);
+            Matrix.scaleM(M_matrix, 0, scale, scale, scale);
 
             Matrix.multiplyMM(MVP_matrix, 0, V_matrix, 0, M_matrix, 0);
             Matrix.multiplyMM(MVP_matrix, 0, P_matrix, 0, MVP_matrix, 0);
-
 
             baseTexture.bind(GLES20.GL_TEXTURE0, sunProgram, "sBaseTexture");
             noiseTexture.bind(GLES20.GL_TEXTURE1, sunProgram, "sNoiseTexture");
@@ -296,7 +293,9 @@ public class SunRenderer implements GLWallpaperService.Renderer {
             float surfaceColorAdd = 0.0f;
             float surfaceColorMul = 1.0f;
 
-            surfaceColorOffset = getTimeDeltaByScale(19000L);
+            //surfaceColorOffset = getTimeDeltaByScale(19000L);
+
+            surfaceColorOffset = (float)(Math.cos(getTimeDeltaByScale(190000L) * Math.PI * 2.0) * 0.5 + 0.5);
 
             GLES20.glUniform1f(sunProgram.getUniformLocation("uColorOffset"), surfaceColorOffset);
             GLES20.glUniform1f(sunProgram.getUniformLocation("uColorAdd"), surfaceColorAdd);
@@ -316,8 +315,8 @@ public class SunRenderer implements GLWallpaperService.Renderer {
 
                 Matrix.setRotateM(M_matrix, 0, 90, 1, 0, 0);
                 Matrix.rotateM(M_matrix, 0, 360 * angle, 0, 0, 1);
-                float scale = 1.0f;
-                Matrix.scaleM(M_matrix, 0, scale, scale, scale);
+                float coronaScale = scale;
+                Matrix.scaleM(M_matrix, 0, coronaScale, coronaScale, coronaScale);
                 Matrix.multiplyMM(MVP_matrix, 0, V_matrix, 0, M_matrix, 0);
                 Matrix.multiplyMM(MVP_matrix, 0, P_matrix, 0, MVP_matrix, 0);
 
@@ -330,7 +329,7 @@ public class SunRenderer implements GLWallpaperService.Renderer {
                 GLES20.glUniform1f(coronaProgram.getUniformLocation("uTime"), animationTime);
                 GLES20.glUniform1f(coronaProgram.getUniformLocation("uTime2"), animationTime2);
                 GLES20.glUniform1f(coronaProgram.getUniformLocation("uTime3"), animationTime3);
-                float animationTime4 = getTimeDeltaByScale(3370000L);
+                float animationTime4 = getTimeDeltaByScale(6370000L);
                 GLES20.glUniform1f(coronaProgram.getUniformLocation("uTime4"), animationTime4);
                 GLES20.glUniform1f(coronaProgram.getUniformLocation("uLevel"), 0.5f);
                 GLES20.glUniform1f(coronaProgram.getUniformLocation("uColorOffset"), surfaceColorOffset);
@@ -363,15 +362,13 @@ public class SunRenderer implements GLWallpaperService.Renderer {
         renderTextures[0] = textureManager.createRenderTexture(frameBufferWidth, frameBufferHeight);
         renderTextures[1] = textureManager.createRenderTexture(frameBufferWidth, frameBufferHeight);
 
-        if(!renderTextures[0].load())
-        {
+        if (!renderTextures[0].load()) {
             Log.e(TAG, "Could not create render texture");
             throw new RuntimeException("Could not create render texture");
         }
 
         if (!useOneFrameBuffer) {
-            if(!renderTextures[1].load())
-            {
+            if (!renderTextures[1].load()) {
                 Log.e(TAG, "Could not create second render texture");
                 throw new RuntimeException("Could not create second render texture");
             }
