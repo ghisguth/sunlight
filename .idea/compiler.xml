@@ -8,6 +8,7 @@
       <directory url="file://$PROJECT_DIR$/demo/gen" includeSubdirectories="true" />
       <directory url="file://$PROJECT_DIR$/sun/gen" includeSubdirectories="true" />
       <directory url="file://$PROJECT_DIR$/shared/gen" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/ux/gen" includeSubdirectories="true" />
     </excludeFromCompile>
     <resourceExtensions />
     <wildcardResourcePatterns>

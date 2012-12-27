@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="default_size">0x000000c8</integer>
+    <integer name="medium">0x0000007f</integer>
+    <integer name="zero">0x00000000</integer>
+    <integer name="max">0x000000ff</integer>
+    <integer name="base_brightness">16</integer>
+</resources>

@@ -24,6 +24,7 @@ public class Wallpaper extends GLES20WallpaperService {
             setEGLConfigChooser(new ConfigChooser(5, 6, 5, 0, 16, 0));
 
             SunRenderer renderer = new SunRenderer(context);
+            renderer.setSharedPreferences(preferences);
             setRenderer(renderer);
             setRenderMode(RENDERMODE_CONTINUOUSLY);
         }

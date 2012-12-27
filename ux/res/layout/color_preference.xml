@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TableLayout
+	xmlns:android="http://schemas.android.com/apk/res/android" 
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:gravity="center_vertical"
+    android:paddingLeft="?android:attr/scrollbarSize"
+    android:paddingRight="?android:attr/scrollbarSize"
+    android:stretchColumns="1">
+        
+	<LinearLayout
+		android:id="@+id/preview_wrapper"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:padding="1dip"
+		android:background="@android:color/black"
+		android:layout_marginBottom="10dip">
+		<SurfaceView
+			android:id="@+id/preview"
+			android:layout_width="fill_parent"
+			android:layout_height="20dip"/>
+	</LinearLayout>
+    
+    <TableRow
+	    android:layout_marginBottom="10dip">
+	    <TextView
+	    	android:id="@+id/red_label"
+	    	android:gravity="center_vertical"
+	    	android:layout_height="fill_parent"
+	    	android:text="R:" />
+	    <SeekBar
+	    	android:id="@+id/red"
+	    	android:layout_marginLeft="5dip"
+	    	android:layout_marginRight="5dip"
+	    	android:layout_width="fill_parent"
+	    	android:max="255"/>
+	    <TextView
+	    	android:id="@+id/red_value"
+	    	android:layout_height="fill_parent"
+	    	android:gravity="center_vertical"
+	    	android:text="255"/>
+    </TableRow>
+    
+    <TableRow
+	    android:layout_marginBottom="10dip">
+	    <TextView
+	    	android:id="@+id/green_label"
+	    	android:gravity="center_vertical"
+	    	android:layout_height="fill_parent"
+	    	android:text="G:" />
+	    <SeekBar
+	    	android:id="@+id/green"
+	    	android:layout_marginLeft="5dip"
+	    	android:layout_marginRight="5dip"
+	    	android:layout_width="fill_parent"
+	    	android:max="255"/>
+	    <TextView
+	    	android:id="@+id/green_value"
+	    	android:layout_height="fill_parent"
+	    	android:gravity="center_vertical"
+	    	android:text="255"/>
+    </TableRow>
+    
+    <TableRow
+	    android:layout_marginBottom="10dip">
+	    <TextView
+	    	android:id="@+id/blue_label"
+	    	android:gravity="center_vertical"
+	    	android:layout_height="fill_parent"
+	    	android:text="B:" />
+	    <SeekBar
+	    	android:id="@+id/blue"
+	    	android:layout_marginLeft="5dip"
+	    	android:layout_marginRight="5dip"
+	    	android:layout_width="fill_parent"
+	    	android:max="255"/>
+	    <TextView
+	    	android:id="@+id/blue_value"
+	    	android:layout_height="fill_parent"
+	    	android:gravity="center_vertical"
+	    	android:text="255"/>
+    </TableRow>
+</TableLayout>

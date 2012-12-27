@@ -6,8 +6,9 @@ uniform mat4 uMVPMatrix;
 uniform float uTime;
 uniform float uTime2;
 uniform float uTime3;
-uniform float uTime4;
-uniform float uLevel;
+
+uniform float uHeight;
+uniform float uTurbulence;
 
 attribute vec4 aPosition;
 attribute vec2 aTextureCoord;
@@ -15,9 +16,6 @@ attribute vec2 aTextureCoord;
 varying vec2 vUv;
 varying vec2 vUv2;
 varying vec2 vUv3;
-varying vec2 vUv4;
-varying vec2 vUv5;
-varying float vLevel;
 
 //
 // Description : Array and textureless GLSL 2D simplex noise function.
@@ -92,14 +90,12 @@ float snoise(vec2 v)
 
 void main() {
     vUv = aTextureCoord;
-    vUv2 = aTextureCoord + vec2(-uTime, 0.0);
-    vUv3 = (aTextureCoord + vec2(-uTime2, 0.0)) * 2.0;
-    vUv4 = (aTextureCoord + vec2(uTime3, 0.0)) * 8.0;
+    vUv2 = (aTextureCoord + vec2(-uTime, 0.0)) * 2.0;
+    vUv3 = (aTextureCoord + vec2(uTime2, 0.0)) * 8.0;
 
-    vec3 heightOff = vec3(   snoise( vec2(aPosition.x * 16.0, uTime4*150.) ),
-                snoise( vec2(aPosition.y * 16.0, uTime4*150.) ),
-                snoise( vec2(aPosition.z * 16.0, uTime4*150.) ) );
-    vec3 finalPosition = aPosition.xyz + heightOff * 0.06;
+    vec3 heightOff = vec3(   snoise( vec2(aPosition.x * uTurbulence, uTime3*150.) ),
+                snoise( vec2(aPosition.y * uTurbulence, uTime3*150.) ),
+                snoise( vec2(aPosition.z * uTurbulence, uTime3*150.) ) );
+    vec3 finalPosition = aPosition.xyz + heightOff * uHeight;
     gl_Position = uMVPMatrix * vec4( finalPosition, aPosition.w );
-    vLevel = uLevel;
 }

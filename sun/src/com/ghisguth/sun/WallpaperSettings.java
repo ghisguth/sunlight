@@ -5,9 +5,11 @@
 
 package com.ghisguth.sun;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
 
 public class WallpaperSettings extends PreferenceActivity implements
         SharedPreferences.OnSharedPreferenceChangeListener {
@@ -17,7 +19,9 @@ public class WallpaperSettings extends PreferenceActivity implements
         super.onCreate(icicle);
         getPreferenceManager().setSharedPreferencesName(
                 Wallpaper.SHARED_PREF_NAME);
+
         addPreferencesFromResource(R.xml.settings);
+
         getPreferenceManager().getSharedPreferences()
                 .registerOnSharedPreferenceChangeListener(this);
     }

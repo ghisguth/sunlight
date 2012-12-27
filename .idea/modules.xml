@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/gfx/gfx.iml" filepath="$PROJECT_DIR$/gfx/gfx.iml" />
       <module fileurl="file://$PROJECT_DIR$/shared/shared.iml" filepath="$PROJECT_DIR$/shared/shared.iml" />
       <module fileurl="file://$PROJECT_DIR$/sun/sun.iml" filepath="$PROJECT_DIR$/sun/sun.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ux/ux.iml" filepath="$PROJECT_DIR$/ux/ux.iml" />
       <module fileurl="file://$PROJECT_DIR$/wallpaper/wallpaper.iml" filepath="$PROJECT_DIR$/wallpaper/wallpaper.iml" />
     </modules>
   </component>
