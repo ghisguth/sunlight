@@ -14,6 +14,11 @@
     <string name="settings_sun">Sun</string>
     <string name="settings_sun_size">Sun size</string>
     <string name="settings_sun_size_summary">Display size of the star</string>
+    <string name="settings_sun_temperature">Temperature</string>
+    <string name="settings_sun_temperature_summary">Star temperature defines its color</string>
+    <string name="settings_sun_temperature_animate">Animate temperature</string>
+    <string name="settings_sun_temperature_animate_summary_on">Change temperature over time</string>
+    <string name="settings_sun_temperature_animate_summary_off">Use static star temperature</string>
     <string name="settings_sun_base_brightness">Base brightness</string>
     <string name="settings_sun_base_brightness_summary">Minimum brightness of the star</string>
     <string name="settings_sun_max_brightness">Brightness</string>

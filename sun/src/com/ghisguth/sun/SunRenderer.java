@@ -76,6 +76,8 @@ public class SunRenderer implements GLWallpaperService.Renderer {
     private float rayExposure = 0.58f;
     private float preferenceRayExposure = 1.0f;
     private int rayQuality = 0;
+    private float preferenceTemperature = 1.0f;
+    private boolean preferenceAnimateTemperature = false;
 
     public SunRenderer(Context context) {
         this.context = context;
@@ -340,15 +342,13 @@ public class SunRenderer implements GLWallpaperService.Renderer {
             GLES20.glUniform1f(sunProgram.getUniformLocation("uTime2"), animationTime2);
             GLES20.glUniform1f(sunProgram.getUniformLocation("uTime3"), animationTime3);
 
-            float surfaceColorOffset = 0.02734375f;
+            float surfaceColorOffset = preferenceTemperature;
             float surfaceColorAdd = colorAdd + preferenceColorAdd;
             float surfaceColorMul = colorMul * preferenceColorMul;
 
-            //float surfaceColorOffset = 0.83734375f;
-
-            //surfaceColorOffset = getTimeDeltaByScale(19000L);
-
-            //surfaceColorOffset = (float) (Math.cos(getTimeDeltaByScale(190000L) * Math.PI * 2.0) * 0.5 + 0.5);
+            if(preferenceAnimateTemperature) {
+                surfaceColorOffset = (float) (Math.cos(getTimeDeltaByScale(190000L) * Math.PI * 2.0) * 0.5 + 0.5);
+            }
 
             GLES20.glUniform1f(sunProgram.getUniformLocation("uColorOffset"), surfaceColorOffset);
             GLES20.glUniform1f(sunProgram.getUniformLocation("uColorAdd"), surfaceColorAdd);
@@ -466,10 +466,21 @@ public class SunRenderer implements GLWallpaperService.Renderer {
                 renderer.setRayExposure(sharedPreferences.getInt("rayExposure", 127));
                 renderer.setRayQuality(Integer.parseInt(sharedPreferences.getString("rayQuality", "0")));
 
+                renderer.setTemperature(sharedPreferences.getInt("temperature", 7));
+                renderer.setTemperatureAnimation(sharedPreferences.getBoolean("animateTemperature", false));
+
             } catch (final Exception e) {
                 Log.e(TAG, "PREF init error: " + e);
             }
         }
+    }
+
+    private void setTemperatureAnimation(boolean animateTemperature) {
+        preferenceAnimateTemperature = animateTemperature;
+    }
+
+    private void setTemperature(int temperature) {
+        preferenceTemperature = getLinearFactor(temperature, 1.0f) * 0.5f + 0.5f;
     }
 
     private void setRayExposure(int value) {

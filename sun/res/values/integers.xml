@@ -5,4 +5,5 @@
     <integer name="zero">0x00000000</integer>
     <integer name="max">0x000000ff</integer>
     <integer name="base_brightness">16</integer>
+    <integer name="sun_temperature">7</integer>
 </resources>
