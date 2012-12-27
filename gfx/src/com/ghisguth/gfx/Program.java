@@ -12,7 +12,6 @@ import java.util.HashMap;
 
 public class Program {
     private static String TAG = "Sunlight";
-
     private int program;
     private Shader vertexShader;
     private Shader fragmentShader;
@@ -38,6 +37,62 @@ public class Program {
     protected void finalize() throws Throwable {
         unload();
         super.finalize();
+    }
+
+    public void unload() {
+        if (program != 0) {
+            if (GLES20.glIsProgram(program)) {
+                GLES20.glDeleteProgram(program);
+                ErrorHelper.checkGlError(TAG, "glDeleteProgram");
+            } else {
+                Log.w(TAG, "unable to delete program " + program + " because it is not valid");
+            }
+
+            program = 0;
+        }
+        uniformLocations.clear();
+        attributeLocations.clear();
+    }
+
+    public int getAttributeLocation(String name) {
+        if (attributeLocations.containsKey(name)) {
+            return attributeLocations.get(name);
+        }
+        int handle = GLES20.glGetAttribLocation(program, name);
+        ErrorHelper.checkGlError(TAG, "glGetAttribLocation");
+        attributeLocations.put(name, handle);
+        return handle;
+    }
+
+    public Shader getFragmentShader() {
+        return fragmentShader;
+    }
+
+    public int getProgram() {
+        return program;
+    }
+
+    public int getUniformLocation(String name) {
+        if (uniformLocations.containsKey(name)) {
+            return uniformLocations.get(name);
+        }
+        int handle = GLES20.glGetUniformLocation(program, name);
+        ErrorHelper.checkGlError(TAG, "glGetUniformLocation");
+        uniformLocations.put(name, handle);
+        return handle;
+    }
+
+    public Shader getVertexShader() {
+        return vertexShader;
+    }
+
+    public boolean use() {
+        if (!load()) {
+            return false;
+        }
+        GLES20.glUseProgram(program);
+        ErrorHelper.checkGlError(TAG, "glUseProgram");
+        return true;
     }
 
     public boolean load() {
@@ -78,61 +133,5 @@ public class Program {
         }
 
         return program != 0;
-    }
-
-    public void unload() {
-        if (program != 0) {
-            if (GLES20.glIsProgram(program)) {
-                GLES20.glDeleteProgram(program);
-                ErrorHelper.checkGlError(TAG, "glDeleteProgram");
-            } else {
-                Log.w(TAG, "unable to delete program " + program + " because it is not valid");
-            }
-
-            program = 0;
-        }
-        uniformLocations.clear();
-        attributeLocations.clear();
-    }
-
-    public boolean use() {
-        if (!load()) {
-            return false;
-        }
-        GLES20.glUseProgram(program);
-        ErrorHelper.checkGlError(TAG, "glUseProgram");
-        return true;
-    }
-
-    public int getProgram() {
-        return program;
-    }
-
-    public Shader getVertexShader() {
-        return vertexShader;
-    }
-
-    public Shader getFragmentShader() {
-        return fragmentShader;
-    }
-
-    public int getUniformLocation(String name) {
-        if (uniformLocations.containsKey(name)) {
-            return uniformLocations.get(name);
-        }
-        int handle = GLES20.glGetUniformLocation(program, name);
-        ErrorHelper.checkGlError(TAG, "glGetUniformLocation");
-        uniformLocations.put(name, handle);
-        return handle;
-    }
-
-    public int getAttributeLocation(String name) {
-        if (attributeLocations.containsKey(name)) {
-            return attributeLocations.get(name);
-        }
-        int handle = GLES20.glGetAttribLocation(program, name);
-        ErrorHelper.checkGlError(TAG, "glGetAttribLocation");
-        attributeLocations.put(name, handle);
-        return handle;
     }
 }

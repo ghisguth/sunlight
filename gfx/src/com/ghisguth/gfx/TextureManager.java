@@ -7,20 +7,17 @@ package com.ghisguth.gfx;
 
 import android.content.res.Resources;
 
-import java.io.FileReader;
 import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.WeakReference;
 import java.util.HashSet;
 
 public class TextureManager {
+    private static TextureManager singletonObject;
     private HashSet<WeakReference<Texture>> textures = new HashSet<WeakReference<Texture>>();
     private ReferenceQueue<Texture> textureReferenceQueue = new ReferenceQueue<Texture>();
-
     private HashSet<WeakReference<FrameBuffer>> frameBuffers = new HashSet<WeakReference<FrameBuffer>>();
     private ReferenceQueue<FrameBuffer> frameBufferReferenceQueue = new ReferenceQueue<FrameBuffer>();
-
-    private static TextureManager singletonObject;
 
     private TextureManager() {
     }
@@ -32,31 +29,14 @@ public class TextureManager {
         return singletonObject;
     }
 
-    public Object clone() throws CloneNotSupportedException {
-        throw new CloneNotSupportedException();
+    public void cleanUp() {
+        processTextureReferenceQueue();
+        processFrameBufferReferenceQueue();
     }
 
-    public Texture createTexture(Resources resources, int resource, boolean compressed, int minFilter, int maxFilter, int wrapS, int wrapT) {
-        return new Texture(resources, resource, compressed, minFilter, maxFilter, wrapS, wrapT);
-    }
-
-    public FrameBuffer createFrameBuffer(RenderTexture renderTexture) {
-        return new FrameBuffer(renderTexture);
-    }
-
-    public void registerTexture(Texture texture) {
-        synchronized (textures) {
-            WeakReference<Texture> weakReference = new WeakReference<Texture>(texture, textureReferenceQueue);
-            textures.add(weakReference);
-            processTextureReferenceQueueImpl();
-        }
-    }
-
-    private void processTextureReferenceQueueImpl() {
-        Reference<?> reference = textureReferenceQueue.poll();
-        while (reference != null) {
-            textures.remove(reference);
-            reference = textureReferenceQueue.poll();
+    private void processFrameBufferReferenceQueue() {
+        synchronized (frameBuffers) {
+            processFrameBufferReferenceQueueImpl();
         }
     }
 
@@ -64,6 +44,22 @@ public class TextureManager {
         synchronized (textures) {
             processTextureReferenceQueueImpl();
         }
+    }
+
+    public Object clone() throws CloneNotSupportedException {
+        throw new CloneNotSupportedException();
+    }
+
+    public FrameBuffer createFrameBuffer(RenderTexture renderTexture) {
+        return new FrameBuffer(renderTexture);
+    }
+
+    public RenderTexture createRenderTexture(int width, int height) {
+        return new RenderTexture(width, height);
+    }
+
+    public Texture createTexture(Resources resources, int resource, boolean compressed, int minFilter, int maxFilter, int wrapS, int wrapT) {
+        return new Texture(resources, resource, compressed, minFilter, maxFilter, wrapS, wrapT);
     }
 
     public void registerFrameBuffer(FrameBuffer frameBuffer) {
@@ -82,31 +78,25 @@ public class TextureManager {
         }
     }
 
-    private void processFrameBufferReferenceQueue() {
-        synchronized (frameBuffers) {
-            processFrameBufferReferenceQueueImpl();
-        }
-    }
-
-    public void cleanUp() {
-        processTextureReferenceQueue();
-        processFrameBufferReferenceQueue();
-    }
-
-    public RenderTexture createRenderTexture(int width, int height)
-    {
-        return new RenderTexture(width, height);
-    }
-
-    public void unloadAllTextures() {
+    public void registerTexture(Texture texture) {
         synchronized (textures) {
-            for (WeakReference<Texture> textureWeak : textures) {
-                Texture texture = textureWeak.get();
-                if (texture != null) {
-                    texture.unload();
-                }
-            }
+            WeakReference<Texture> weakReference = new WeakReference<Texture>(texture, textureReferenceQueue);
+            textures.add(weakReference);
+            processTextureReferenceQueueImpl();
         }
+    }
+
+    private void processTextureReferenceQueueImpl() {
+        Reference<?> reference = textureReferenceQueue.poll();
+        while (reference != null) {
+            textures.remove(reference);
+            reference = textureReferenceQueue.poll();
+        }
+    }
+
+    public void unloadAll() {
+        unloadAllTextures();
+        unloadAllFrameBuffers();
     }
 
     public void unloadAllFrameBuffers() {
@@ -120,9 +110,15 @@ public class TextureManager {
         }
     }
 
-    public void unloadAll() {
-        unloadAllTextures();
-        unloadAllFrameBuffers();
+    public void unloadAllTextures() {
+        synchronized (textures) {
+            for (WeakReference<Texture> textureWeak : textures) {
+                Texture texture = textureWeak.get();
+                if (texture != null) {
+                    texture.unload();
+                }
+            }
+        }
     }
 
 }

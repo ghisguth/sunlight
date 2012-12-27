@@ -13,13 +13,11 @@ import java.lang.ref.WeakReference;
 import java.util.HashSet;
 
 public class ShaderManager {
+    private static ShaderManager singletonObject;
     private HashSet<WeakReference<Shader>> shaders = new HashSet<WeakReference<Shader>>();
     private ReferenceQueue<Shader> shaderReferenceQueue = new ReferenceQueue<Shader>();
     private HashSet<WeakReference<Program>> shaderPrograms = new HashSet<WeakReference<Program>>();
     private ReferenceQueue<Program> shaderProgramReferenceQueue = new ReferenceQueue<Program>();
-
-
-    private static ShaderManager singletonObject;
 
     private ShaderManager() {
     }
@@ -31,12 +29,25 @@ public class ShaderManager {
         return singletonObject;
     }
 
-    public Object clone() throws CloneNotSupportedException {
-        throw new CloneNotSupportedException();
+    public void cleanUp() {
+        processShaderReferenceQueue();
+        processShaderProgramReferenceQueue();
     }
 
-    public Shader createVertexShader(String source) {
-        return new Shader(GLES20.GL_VERTEX_SHADER, source);
+    private void processShaderProgramReferenceQueue() {
+        synchronized (shaderPrograms) {
+            processShaderProgramReferenceQueueImpl();
+        }
+    }
+
+    private void processShaderReferenceQueue() {
+        synchronized (shaderPrograms) {
+            processShaderReferenceQueueImpl();
+        }
+    }
+
+    public Object clone() throws CloneNotSupportedException {
+        throw new CloneNotSupportedException();
     }
 
     public Shader createFragmentShader(String source) {
@@ -47,19 +58,15 @@ public class ShaderManager {
         return new Program(vertexShader, fragmentShader);
     }
 
+    public Shader createVertexShader(String source) {
+        return new Shader(GLES20.GL_VERTEX_SHADER, source);
+    }
+
     public void registerShader(Shader shader) {
         synchronized (shaders) {
             WeakReference<Shader> weakReference = new WeakReference<Shader>(shader, shaderReferenceQueue);
             shaders.add(weakReference);
             processShaderReferenceQueueImpl();
-        }
-    }
-
-    public void registerShaderProgram(Program shaderProgram) {
-        synchronized (shaderPrograms) {
-            WeakReference<Program> weakReference = new WeakReference<Program>(shaderProgram, shaderProgramReferenceQueue);
-            shaderPrograms.add(weakReference);
-            processShaderProgramReferenceQueueImpl();
         }
     }
 
@@ -71,9 +78,11 @@ public class ShaderManager {
         }
     }
 
-    private void processShaderReferenceQueue() {
+    public void registerShaderProgram(Program shaderProgram) {
         synchronized (shaderPrograms) {
-            processShaderReferenceQueueImpl();
+            WeakReference<Program> weakReference = new WeakReference<Program>(shaderProgram, shaderProgramReferenceQueue);
+            shaderPrograms.add(weakReference);
+            processShaderProgramReferenceQueueImpl();
         }
     }
 
@@ -85,26 +94,9 @@ public class ShaderManager {
         }
     }
 
-    private void processShaderProgramReferenceQueue() {
-        synchronized (shaderPrograms) {
-            processShaderProgramReferenceQueueImpl();
-        }
-    }
-
-    public void cleanUp() {
-        processShaderReferenceQueue();
-        processShaderProgramReferenceQueue();
-    }
-
-    public void unloadAllShaders() {
-        synchronized (shaders) {
-            for (WeakReference<Shader> shaderWeak : shaders) {
-                Shader shader = shaderWeak.get();
-                if (shader != null) {
-                    shader.unload();
-                }
-            }
-        }
+    public void unloadAll() {
+        unloadAllShaders();
+        unloadAllShaderPrograms();
     }
 
     public void unloadAllShaderPrograms() {
@@ -118,8 +110,14 @@ public class ShaderManager {
         }
     }
 
-    public void unloadAll() {
-        unloadAllShaders();
-        unloadAllShaderPrograms();
+    public void unloadAllShaders() {
+        synchronized (shaders) {
+            for (WeakReference<Shader> shaderWeak : shaders) {
+                Shader shader = shaderWeak.get();
+                if (shader != null) {
+                    shader.unload();
+                }
+            }
+        }
     }
 }

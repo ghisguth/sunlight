@@ -23,6 +23,8 @@ import javax.microedition.khronos.egl.EGLDisplay;
 // Original code provided by Robert Green
 // http://www.rbgrn.net/content/354-glsurfaceview-adapted-3d-live-wallpapers
 abstract class BaseConfigChooser implements EGLConfigChooser {
+    protected int[] mConfigSpec;
+
     public BaseConfigChooser(int[] configSpec) {
         mConfigSpec = configSpec;
     }
@@ -48,9 +50,10 @@ abstract class BaseConfigChooser implements EGLConfigChooser {
 
     abstract EGLConfig chooseConfig(EGL10 egl, EGLDisplay display, EGLConfig[] configs);
 
-    protected int[] mConfigSpec;
-
     public static class ComponentSizeChooser extends BaseConfigChooser {
+        // Subclasses can adjust these values:
+        protected int mRedSize;
+
         public ComponentSizeChooser(int redSize, int greenSize, int blueSize, int alphaSize, int depthSize,
                                     int stencilSize) {
             super(new int[]{EGL10.EGL_RED_SIZE, redSize, EGL10.EGL_GREEN_SIZE, greenSize, EGL10.EGL_BLUE_SIZE,
@@ -64,6 +67,13 @@ abstract class BaseConfigChooser implements EGLConfigChooser {
             mDepthSize = depthSize;
             mStencilSize = stencilSize;
         }
+
+        protected int mGreenSize;
+        protected int mBlueSize;
+        protected int mAlphaSize;
+        protected int mDepthSize;
+        protected int mStencilSize;
+        private int[] mValue;
 
         @Override
         public EGLConfig chooseConfig(EGL10 egl, EGLDisplay display, EGLConfig[] configs) {
@@ -96,14 +106,6 @@ abstract class BaseConfigChooser implements EGLConfigChooser {
             return defaultValue;
         }
 
-        private int[] mValue;
-        // Subclasses can adjust these values:
-        protected int mRedSize;
-        protected int mGreenSize;
-        protected int mBlueSize;
-        protected int mAlphaSize;
-        protected int mDepthSize;
-        protected int mStencilSize;
     }
 
     /**
@@ -119,4 +121,6 @@ abstract class BaseConfigChooser implements EGLConfigChooser {
             mBlueSize = 5;
         }
     }
+
+
 }

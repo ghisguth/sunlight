@@ -23,15 +23,15 @@ public class WallpaperSettings extends PreferenceActivity implements
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
     protected void onDestroy() {
         getPreferenceManager().getSharedPreferences()
                 .unregisterOnSharedPreferenceChangeListener(this);
         super.onDestroy();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,

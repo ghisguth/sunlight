@@ -13,12 +13,9 @@ import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
 
 public class VertexBuffer {
-    private static String TAG = "Sunlight";
-
     public static final int FLOAT_SIZE_BYTES = 4;
-
     public static final int SHORT_SIZE_BYTES = 2;
-
+    private static String TAG = "Sunlight";
     private FloatBuffer vertices;
     private ShortBuffer indices;
     private int verticesCount;
@@ -74,16 +71,6 @@ public class VertexBuffer {
         }
     }
 
-    public void unbind(Program program, String position, String uv) {
-        GLES20.glDisableVertexAttribArray(program.getAttributeLocation(position));
-        ErrorHelper.checkGlError(TAG, "glDisableVertexAttribArray " + position);
-
-        if (hasUv) {
-            GLES20.glDisableVertexAttribArray(program.getAttributeLocation(uv));
-            ErrorHelper.checkGlError(TAG, "glDisableVertexAttribArray " + uv);
-        }
-    }
-
     public void draw(int primitiveType) {
         if (indicesCount == 0) {
             GLES20.glDrawArrays(primitiveType, 0, verticesCount);
@@ -91,6 +78,16 @@ public class VertexBuffer {
         } else {
             GLES20.glDrawElements(primitiveType, indicesCount, GLES20.GL_UNSIGNED_SHORT, indices);
             ErrorHelper.checkGlError(TAG, "glDrawElements");
+        }
+    }
+
+    public void unbind(Program program, String position, String uv) {
+        GLES20.glDisableVertexAttribArray(program.getAttributeLocation(position));
+        ErrorHelper.checkGlError(TAG, "glDisableVertexAttribArray " + position);
+
+        if (hasUv) {
+            GLES20.glDisableVertexAttribArray(program.getAttributeLocation(uv));
+            ErrorHelper.checkGlError(TAG, "glDisableVertexAttribArray " + uv);
         }
     }
 

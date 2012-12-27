@@ -12,15 +12,19 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class FrameBuffer {
     private static String TAG = "Sunlight";
-
     private int frameBuffer;
-
     private RenderTexture renderTexture;
-
 
     public FrameBuffer(RenderTexture renderTexture) {
         this.renderTexture = renderTexture;
         TextureManager.getSingletonObject().registerFrameBuffer(this);
+    }
+
+    public void bind() {
+        if (frameBuffer == 0) {
+            throw new RuntimeException("Cannot bind frameBuffer because it is not loaded");
+        }
+        GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, frameBuffer);
     }
 
     protected void finalize() throws Throwable {
@@ -28,13 +32,34 @@ public class FrameBuffer {
         super.finalize();
     }
 
+    public void unload() {
+        if (frameBuffer != 0) {
+            if (GLES20.glIsFramebuffer(frameBuffer)) {
+                int[] frameBuffers = new int[1];
+                frameBuffers[0] = frameBuffer;
+                GLES20.glDeleteFramebuffers(1, frameBuffers, 0);
+                ErrorHelper.checkGlError(TAG, "glDeleteFramebuffers");
+            } else {
+                Log.w(TAG, "unable to delete frameBuffer " + frameBuffer + " because it is not valid");
+            }
+            frameBuffer = 0;
+        }
+
+        if (renderTexture != null) {
+            renderTexture.unload();
+        }
+    }
+
+    public int getFrameBuffer() {
+        return frameBuffer;
+    }
+
     public boolean load() {
         if (frameBuffer != 0) {
             return true;
         }
 
-        if(renderTexture == null || !renderTexture.load())
-        {
+        if (renderTexture == null || !renderTexture.load()) {
             return false;
         }
 
@@ -62,39 +87,8 @@ public class FrameBuffer {
         return true;
     }
 
-    public void unload() {
-        if (frameBuffer != 0) {
-            if (GLES20.glIsFramebuffer(frameBuffer)) {
-                int[] frameBuffers = new int[1];
-                frameBuffers[0] = frameBuffer;
-                GLES20.glDeleteFramebuffers(1, frameBuffers, 0);
-                ErrorHelper.checkGlError(TAG, "glDeleteFramebuffers");
-            } else {
-                Log.w(TAG, "unable to delete frameBuffer " + frameBuffer + " because it is not valid");
-            }
-            frameBuffer = 0;
-        }
-
-        if(renderTexture != null)
-        {
-            renderTexture.unload();
-        }
-    }
-
-    public void bind() {
-        if(frameBuffer == 0)
-        {
-            throw new RuntimeException("Cannot bind frameBuffer because it is not loaded");
-        }
-        GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, frameBuffer);
-    }
-
     public void unbind() {
         GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, 0);
-    }
-
-    public int getFrameBuffer() {
-        return frameBuffer;
     }
 
 }

@@ -58,14 +58,6 @@ public class SunActivity extends Activity {
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        if (glSurfaceView != null) {
-            glSurfaceView.onPause();
-        }
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
         if (glSurfaceView != null) {
@@ -73,9 +65,12 @@ public class SunActivity extends Activity {
         }
     }
 
-    public void setSurfaceView(GLSurfaceView glSurfaceView) {
-        this.glSurfaceView = glSurfaceView;
-        setContentView(glSurfaceView);
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (glSurfaceView != null) {
+            glSurfaceView.onPause();
+        }
     }
 
     private class TabHandler implements ActionBar.TabListener {
@@ -86,7 +81,9 @@ public class SunActivity extends Activity {
         }
 
         @Override
-        public void onTabReselected(Tab tab, FragmentTransaction ft) {
+        public void onTabSelected(Tab tab, FragmentTransaction fragmentTransaction) {
+            GLSurfaceView glSurfaceView = (GLSurfaceView) tab.getTag();
+            activity.setSurfaceView(glSurfaceView);
         }
 
         @Override
@@ -94,10 +91,13 @@ public class SunActivity extends Activity {
         }
 
         @Override
-        public void onTabSelected(Tab tab, FragmentTransaction fragmentTransaction) {
-            GLSurfaceView glSurfaceView = (GLSurfaceView) tab.getTag();
-            activity.setSurfaceView(glSurfaceView);
+        public void onTabReselected(Tab tab, FragmentTransaction ft) {
         }
+    }
+
+    public void setSurfaceView(GLSurfaceView glSurfaceView) {
+        this.glSurfaceView = glSurfaceView;
+        setContentView(glSurfaceView);
     }
 
 

@@ -11,8 +11,8 @@ import javax.microedition.khronos.egl.EGLContext;
 import javax.microedition.khronos.egl.EGLDisplay;
 
 public class GLES20WallpaperService extends GLWallpaperService {
-    private static String TAG = "Sunlight";
     private static final boolean DEBUG = false;
+    private static String TAG = "Sunlight";
 
     public static class ContextFactory implements EGLContextFactory {
         private static int EGL_CONTEXT_CLIENT_VERSION = 0x3098;
@@ -34,23 +34,7 @@ public class GLES20WallpaperService extends GLWallpaperService {
         }
     }
 
-    private static void checkEglError(String prompt, EGL10 egl) {
-        int error;
-        while ((error = egl.eglGetError()) != EGL10.EGL_SUCCESS) {
-            Log.e(TAG, String.format("%s: EGL error: 0x%x", prompt, error));
-        }
-    }
-
     protected static class ConfigChooser implements EGLConfigChooser {
-
-        public ConfigChooser(int r, int g, int b, int a, int depth, int stencil) {
-            mRedSize = r;
-            mGreenSize = g;
-            mBlueSize = b;
-            mAlphaSize = a;
-            mDepthSize = depth;
-            mStencilSize = stencil;
-        }
 
         /*
            * This EGL config specification is used to specify 2.0 rendering. We
@@ -61,6 +45,23 @@ public class GLES20WallpaperService extends GLWallpaperService {
         private static int[] s_configAttribs2 = {EGL10.EGL_RED_SIZE, 4,
                 EGL10.EGL_GREEN_SIZE, 4, EGL10.EGL_BLUE_SIZE, 4,
                 EGL10.EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT, EGL10.EGL_NONE};
+        // Subclasses can adjust these values:
+        protected int mRedSize;
+        protected int mGreenSize;
+        protected int mBlueSize;
+        protected int mAlphaSize;
+        protected int mDepthSize;
+        protected int mStencilSize;
+        private int[] mValue = new int[1];
+
+        public ConfigChooser(int r, int g, int b, int a, int depth, int stencil) {
+            mRedSize = r;
+            mGreenSize = g;
+            mBlueSize = b;
+            mAlphaSize = a;
+            mDepthSize = depth;
+            mStencilSize = stencil;
+        }
 
         public EGLConfig chooseConfig(EGL10 egl, EGLDisplay display) {
 
@@ -91,44 +92,6 @@ public class GLES20WallpaperService extends GLWallpaperService {
                 * Now return the "best" one
                 */
             return chooseConfig(egl, display, configs);
-        }
-
-        public EGLConfig chooseConfig(EGL10 egl, EGLDisplay display,
-                                      EGLConfig[] configs) {
-            for (EGLConfig config : configs) {
-                int d = findConfigAttrib(egl, display, config,
-                        EGL10.EGL_DEPTH_SIZE, 0);
-                int s = findConfigAttrib(egl, display, config,
-                        EGL10.EGL_STENCIL_SIZE, 0);
-
-                // We need at least mDepthSize and mStencilSize bits
-                if (d < mDepthSize || s < mStencilSize)
-                    continue;
-
-                // We want an *exact* match for red/green/blue/alpha
-                int r = findConfigAttrib(egl, display, config,
-                        EGL10.EGL_RED_SIZE, 0);
-                int g = findConfigAttrib(egl, display, config,
-                        EGL10.EGL_GREEN_SIZE, 0);
-                int b = findConfigAttrib(egl, display, config,
-                        EGL10.EGL_BLUE_SIZE, 0);
-                int a = findConfigAttrib(egl, display, config,
-                        EGL10.EGL_ALPHA_SIZE, 0);
-
-                if (r == mRedSize && g == mGreenSize && b == mBlueSize
-                        && a == mAlphaSize)
-                    return config;
-            }
-            return null;
-        }
-
-        private int findConfigAttrib(EGL10 egl, EGLDisplay display,
-                                     EGLConfig config, int attribute, int defaultValue) {
-
-            if (egl.eglGetConfigAttrib(display, config, attribute, mValue)) {
-                return mValue[0];
-            }
-            return defaultValue;
         }
 
         private void printConfigs(EGL10 egl, EGLDisplay display,
@@ -202,13 +165,51 @@ public class GLES20WallpaperService extends GLWallpaperService {
             }
         }
 
-        // Subclasses can adjust these values:
-        protected int mRedSize;
-        protected int mGreenSize;
-        protected int mBlueSize;
-        protected int mAlphaSize;
-        protected int mDepthSize;
-        protected int mStencilSize;
-        private int[] mValue = new int[1];
+        public EGLConfig chooseConfig(EGL10 egl, EGLDisplay display,
+                                      EGLConfig[] configs) {
+            for (EGLConfig config : configs) {
+                int d = findConfigAttrib(egl, display, config,
+                        EGL10.EGL_DEPTH_SIZE, 0);
+                int s = findConfigAttrib(egl, display, config,
+                        EGL10.EGL_STENCIL_SIZE, 0);
+
+                // We need at least mDepthSize and mStencilSize bits
+                if (d < mDepthSize || s < mStencilSize)
+                    continue;
+
+                // We want an *exact* match for red/green/blue/alpha
+                int r = findConfigAttrib(egl, display, config,
+                        EGL10.EGL_RED_SIZE, 0);
+                int g = findConfigAttrib(egl, display, config,
+                        EGL10.EGL_GREEN_SIZE, 0);
+                int b = findConfigAttrib(egl, display, config,
+                        EGL10.EGL_BLUE_SIZE, 0);
+                int a = findConfigAttrib(egl, display, config,
+                        EGL10.EGL_ALPHA_SIZE, 0);
+
+                if (r == mRedSize && g == mGreenSize && b == mBlueSize
+                        && a == mAlphaSize)
+                    return config;
+            }
+            return null;
+        }
+
+        private int findConfigAttrib(EGL10 egl, EGLDisplay display,
+                                     EGLConfig config, int attribute, int defaultValue) {
+
+            if (egl.eglGetConfigAttrib(display, config, attribute, mValue)) {
+                return mValue[0];
+            }
+            return defaultValue;
+        }
     }
+
+    private static void checkEglError(String prompt, EGL10 egl) {
+        int error;
+        while ((error = egl.eglGetError()) != EGL10.EGL_SUCCESS) {
+            Log.e(TAG, String.format("%s: EGL error: 0x%x", prompt, error));
+        }
+    }
+
+
 }

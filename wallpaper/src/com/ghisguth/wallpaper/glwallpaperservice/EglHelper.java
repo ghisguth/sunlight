@@ -25,12 +25,11 @@ import javax.microedition.khronos.opengles.GL;
 // http://www.rbgrn.net/content/354-glsurfaceview-adapted-3d-live-wallpapers
 class EglHelper {
 
+    EGLConfig mEglConfig;
     private EGL10 mEgl;
     private EGLDisplay mEglDisplay;
     private EGLSurface mEglSurface;
     private EGLContext mEglContext;
-    EGLConfig mEglConfig;
-
     private EGLConfigChooser mEGLConfigChooser;
     private EGLContextFactory mEGLContextFactory;
     private EGLWindowSurfaceFactory mEGLWindowSurfaceFactory;
@@ -42,6 +41,72 @@ class EglHelper {
         this.mEGLContextFactory = contextFactory;
         this.mEGLWindowSurfaceFactory = surfaceFactory;
         this.mGLWrapper = wrapper;
+    }
+
+    /*
+      * React to the creation of a new surface by creating and returning an OpenGL interface that renders to that
+      * surface.
+      */
+    public GL createSurface(SurfaceHolder holder) {
+        /*
+           * The window size has changed, so we need to create a new surface.
+           */
+        if (mEglSurface != null && mEglSurface != EGL10.EGL_NO_SURFACE) {
+
+            /*
+                * Unbind and destroy the old EGL surface, if there is one.
+                */
+            mEgl.eglMakeCurrent(mEglDisplay, EGL10.EGL_NO_SURFACE, EGL10.EGL_NO_SURFACE, EGL10.EGL_NO_CONTEXT);
+            mEGLWindowSurfaceFactory.destroySurface(mEgl, mEglDisplay, mEglSurface);
+        }
+
+        /*
+           * Create an EGL surface we can render into.
+           */
+        mEglSurface = mEGLWindowSurfaceFactory.createWindowSurface(mEgl, mEglDisplay, mEglConfig, holder);
+
+        if (mEglSurface == null || mEglSurface == EGL10.EGL_NO_SURFACE) {
+            throw new RuntimeException("createWindowSurface failed");
+        }
+
+        /*
+           * Before we can issue GL commands, we need to make sure the context is current and bound to a surface.
+           */
+        if (!mEgl.eglMakeCurrent(mEglDisplay, mEglSurface, mEglSurface, mEglContext)) {
+            throw new RuntimeException("eglMakeCurrent failed.");
+        }
+
+        GL gl = mEglContext.getGL();
+        if (mGLWrapper != null) {
+            gl = mGLWrapper.wrap(gl);
+        }
+
+        /*
+           * if ((mDebugFlags & (DEBUG_CHECK_GL_ERROR | DEBUG_LOG_GL_CALLS))!= 0) { int configFlags = 0; Writer log =
+           * null; if ((mDebugFlags & DEBUG_CHECK_GL_ERROR) != 0) { configFlags |= GLDebugHelper.CONFIG_CHECK_GL_ERROR; }
+           * if ((mDebugFlags & DEBUG_LOG_GL_CALLS) != 0) { log = new LogWriter(); } gl = GLDebugHelper.wrap(gl,
+           * configFlags, log); }
+           */
+        return gl;
+    }
+
+    public void destroySurface() {
+        if (mEglSurface != null && mEglSurface != EGL10.EGL_NO_SURFACE) {
+            mEgl.eglMakeCurrent(mEglDisplay, EGL10.EGL_NO_SURFACE, EGL10.EGL_NO_SURFACE, EGL10.EGL_NO_CONTEXT);
+            mEGLWindowSurfaceFactory.destroySurface(mEgl, mEglDisplay, mEglSurface);
+            mEglSurface = null;
+        }
+    }
+
+    public void finish() {
+        if (mEglContext != null) {
+            mEGLContextFactory.destroyContext(mEgl, mEglDisplay, mEglContext);
+            mEglContext = null;
+        }
+        if (mEglDisplay != null) {
+            mEgl.eglTerminate(mEglDisplay);
+            mEglDisplay = null;
+        }
     }
 
     /**
@@ -99,53 +164,6 @@ class EglHelper {
         mEglSurface = null;
     }
 
-    /*
-      * React to the creation of a new surface by creating and returning an OpenGL interface that renders to that
-      * surface.
-      */
-    public GL createSurface(SurfaceHolder holder) {
-        /*
-           * The window size has changed, so we need to create a new surface.
-           */
-        if (mEglSurface != null && mEglSurface != EGL10.EGL_NO_SURFACE) {
-
-            /*
-                * Unbind and destroy the old EGL surface, if there is one.
-                */
-            mEgl.eglMakeCurrent(mEglDisplay, EGL10.EGL_NO_SURFACE, EGL10.EGL_NO_SURFACE, EGL10.EGL_NO_CONTEXT);
-            mEGLWindowSurfaceFactory.destroySurface(mEgl, mEglDisplay, mEglSurface);
-        }
-
-        /*
-           * Create an EGL surface we can render into.
-           */
-        mEglSurface = mEGLWindowSurfaceFactory.createWindowSurface(mEgl, mEglDisplay, mEglConfig, holder);
-
-        if (mEglSurface == null || mEglSurface == EGL10.EGL_NO_SURFACE) {
-            throw new RuntimeException("createWindowSurface failed");
-        }
-
-        /*
-           * Before we can issue GL commands, we need to make sure the context is current and bound to a surface.
-           */
-        if (!mEgl.eglMakeCurrent(mEglDisplay, mEglSurface, mEglSurface, mEglContext)) {
-            throw new RuntimeException("eglMakeCurrent failed.");
-        }
-
-        GL gl = mEglContext.getGL();
-        if (mGLWrapper != null) {
-            gl = mGLWrapper.wrap(gl);
-        }
-
-        /*
-           * if ((mDebugFlags & (DEBUG_CHECK_GL_ERROR | DEBUG_LOG_GL_CALLS))!= 0) { int configFlags = 0; Writer log =
-           * null; if ((mDebugFlags & DEBUG_CHECK_GL_ERROR) != 0) { configFlags |= GLDebugHelper.CONFIG_CHECK_GL_ERROR; }
-           * if ((mDebugFlags & DEBUG_LOG_GL_CALLS) != 0) { log = new LogWriter(); } gl = GLDebugHelper.wrap(gl,
-           * configFlags, log); }
-           */
-        return gl;
-    }
-
     /**
      * Display the current render surface.
      *
@@ -159,24 +177,5 @@ class EglHelper {
            * because the device went to sleep). We need to sleep until we get a new surface.
            */
         return mEgl.eglGetError() != EGL11.EGL_CONTEXT_LOST;
-    }
-
-    public void destroySurface() {
-        if (mEglSurface != null && mEglSurface != EGL10.EGL_NO_SURFACE) {
-            mEgl.eglMakeCurrent(mEglDisplay, EGL10.EGL_NO_SURFACE, EGL10.EGL_NO_SURFACE, EGL10.EGL_NO_CONTEXT);
-            mEGLWindowSurfaceFactory.destroySurface(mEgl, mEglDisplay, mEglSurface);
-            mEglSurface = null;
-        }
-    }
-
-    public void finish() {
-        if (mEglContext != null) {
-            mEGLContextFactory.destroyContext(mEgl, mEglDisplay, mEglContext);
-            mEglContext = null;
-        }
-        if (mEglDisplay != null) {
-            mEgl.eglTerminate(mEglDisplay);
-            mEglDisplay = null;
-        }
     }
 }

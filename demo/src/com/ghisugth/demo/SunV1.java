@@ -18,15 +18,6 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class SunV1 extends RendererBase {
     private static String TAG = "Sunlight";
-
-    private Program program;
-
-    private Program coronaProgram;
-
-    private Texture baseTexture;
-
-    private Texture noiseTexture;
-
     private final float[] triangle_vertices_data = {
             // X, Y, Z, U, V
             1.0f, 0.0f, -1.0f, 1.0f, 0.0f,
@@ -34,14 +25,15 @@ public class SunV1 extends RendererBase {
             1.0f, 1.0f, -1.0f, 1.0f, 1.0f,
             0.0f, 1.0f, -1.0f, 0.0f, 1.0f
     };
-
     private final int horizontalResolution = 64;
     private final int verticalResolution = 32;
     private final int verticesCount = horizontalResolution * verticalResolution;
     private final int indicesCount = horizontalResolution * 2 * (verticalResolution - 1);
-
+    private Program program;
+    private Program coronaProgram;
+    private Texture baseTexture;
+    private Texture noiseTexture;
     private VertexBuffer sphereVertices;
-
     private float[] MVP_matrix = new float[16];
     private float[] P_matrix = new float[16];
     private float[] M_matrix = new float[16];
@@ -103,6 +95,31 @@ public class SunV1 extends RendererBase {
         sphereVertices = new VertexBuffer(vertices, indices, true);
     }
 
+    @Override
+    public void onSurfaceCreated(GL10 unused, EGLConfig config) {
+        Log.e(TAG, "onSurfaceCreated");
+        ShaderManager.getSingletonObject().unloadAll();
+        ShaderManager.getSingletonObject().cleanUp();
+
+        TextureManager.getSingletonObject().unloadAll();
+        TextureManager.getSingletonObject().cleanUp();
+
+        loadResources();
+
+        if (program != null) {
+            program.load();
+        }
+
+        ShaderManager.getSingletonObject().unloadAllShaders();
+
+        Matrix.setLookAtM(V_matrix, 0, 0, 0, 2.0f, 0f, 0f, 0f, 0f, -1.0f, 0.0f);
+    }
+
+    private void loadResources() {
+        loadShaders();
+        loadTextures();
+    }
+
     private void loadShaders() {
         if (program != null && coronaProgram != null) {
             return;
@@ -136,10 +153,16 @@ public class SunV1 extends RendererBase {
         }
     }
 
+    @Override
+    public void onSurfaceChanged(GL10 unused, int width, int height) {
+        Log.e(TAG, "onSurfaceChanged");
+        ShaderManager.getSingletonObject().cleanUp();
 
-    private void loadResources() {
-        loadShaders();
-        loadTextures();
+        GLES20.glViewport(0, 0, width, height);
+        float scale = 0.1f;
+        float ratio = scale * width / height;
+        Matrix.frustumM(P_matrix, 0, -ratio, ratio, -scale, scale, 0.1f,
+                100.0f);
     }
 
     @Override
@@ -219,38 +242,6 @@ public class SunV1 extends RendererBase {
 
             GLES20.glDisable(GLES20.GL_CULL_FACE);
         }
-    }
-
-    @Override
-    public void onSurfaceChanged(GL10 unused, int width, int height) {
-        Log.e(TAG, "onSurfaceChanged");
-        ShaderManager.getSingletonObject().cleanUp();
-
-        GLES20.glViewport(0, 0, width, height);
-        float scale = 0.1f;
-        float ratio = scale * width / height;
-        Matrix.frustumM(P_matrix, 0, -ratio, ratio, -scale, scale, 0.1f,
-                100.0f);
-    }
-
-    @Override
-    public void onSurfaceCreated(GL10 unused, EGLConfig config) {
-        Log.e(TAG, "onSurfaceCreated");
-        ShaderManager.getSingletonObject().unloadAll();
-        ShaderManager.getSingletonObject().cleanUp();
-
-        TextureManager.getSingletonObject().unloadAll();
-        TextureManager.getSingletonObject().cleanUp();
-
-        loadResources();
-
-        if (program != null) {
-            program.load();
-        }
-
-        ShaderManager.getSingletonObject().unloadAllShaders();
-
-        Matrix.setLookAtM(V_matrix, 0, 0, 0, 2.0f, 0f, 0f, 0f, 0f, -1.0f, 0.0f);
     }
 
     private float getTimeDeltaByScale(long scale) {

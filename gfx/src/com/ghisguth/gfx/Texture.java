@@ -18,9 +18,7 @@ import java.io.InputStream;
 
 public class Texture {
     private static String TAG = "Sunlight";
-
     protected int texture;
-
     private Resources resources;
     private int resource;
     private boolean compressed;
@@ -40,32 +38,41 @@ public class Texture {
         TextureManager.getSingletonObject().registerTexture(this);
     }
 
+    public void bind(int activeTexture, Program program, String name) {
+        bind(activeTexture);
+        GLES20.glUniform1i(program.getUniformLocation(name), activeTexture - GLES20.GL_TEXTURE0);
+        ErrorHelper.checkGlError(TAG, "glUniform1i");
+    }
+
+    public void bind(int activeTexture) {
+        GLES20.glActiveTexture(activeTexture);
+        ErrorHelper.checkGlError(TAG, "glActiveTexture");
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texture);
+        ErrorHelper.checkGlError(TAG, "glBindTexture texture");
+    }
+
     protected void finalize() throws Throwable {
         unload();
         super.finalize();
     }
 
-    protected void setUpTextureParameters() {
-        GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, minFilter);
-        GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, maxFilter);
-
-        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_S, wrapS);
-        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T, wrapT);
-
-        ErrorHelper.checkGlError(TAG, "glTexParameteri");
+    public void unload() {
+        if (texture != 0) {
+            if (GLES20.glIsTexture(texture)) {
+                int[] textures = new int[1];
+                textures[0] = texture;
+                GLES20.glDeleteTextures(1, textures, 0);
+                ErrorHelper.checkGlError(TAG, "glDeleteTextures");
+            } else {
+                Log.w(TAG, "unable to delete texture " + texture + " because it is not valid");
+            }
+            texture = 0;
+        }
     }
 
-    protected void bindTexture() {
-        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texture);
-        ErrorHelper.checkGlError(TAG, "glBindTexture texture");
+    public int getTexture() {
+        return texture;
     }
-
-    protected int createTexture() {
-        int[] textures = new int[1];
-        GLES20.glGenTextures(1, textures, 0);
-        return textures[0];
-    }
-
 
     public boolean load() {
         if (texture != 0) {
@@ -110,34 +117,24 @@ public class Texture {
         return true;
     }
 
-    public void unload() {
-        if (texture != 0) {
-            if (GLES20.glIsTexture(texture)) {
-                int[] textures = new int[1];
-                textures[0] = texture;
-                GLES20.glDeleteTextures(1, textures, 0);
-                ErrorHelper.checkGlError(TAG, "glDeleteTextures");
-            } else {
-                Log.w(TAG, "unable to delete texture " + texture + " because it is not valid");
-            }
-            texture = 0;
-        }
+    protected int createTexture() {
+        int[] textures = new int[1];
+        GLES20.glGenTextures(1, textures, 0);
+        return textures[0];
     }
 
-    public void bind(int activeTexture) {
-        GLES20.glActiveTexture(activeTexture);
-        ErrorHelper.checkGlError(TAG, "glActiveTexture");
+    protected void bindTexture() {
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texture);
         ErrorHelper.checkGlError(TAG, "glBindTexture texture");
     }
 
-    public void bind(int activeTexture, Program program, String name) {
-        bind(activeTexture);
-        GLES20.glUniform1i(program.getUniformLocation(name), activeTexture - GLES20.GL_TEXTURE0);
-        ErrorHelper.checkGlError(TAG, "glUniform1i");
-    }
+    protected void setUpTextureParameters() {
+        GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, minFilter);
+        GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, maxFilter);
 
-    public int getTexture() {
-        return texture;
+        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_S, wrapS);
+        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T, wrapT);
+
+        ErrorHelper.checkGlError(TAG, "glTexParameteri");
     }
 }

@@ -11,7 +11,6 @@ import android.util.Log;
 public class RenderTexture extends Texture {
 
     private static String TAG = "Sunlight";
-
     private int width;
     private int height;
 
@@ -19,6 +18,22 @@ public class RenderTexture extends Texture {
         super(null, 0, false, GLES20.GL_LINEAR, GLES20.GL_LINEAR, GLES20.GL_CLAMP_TO_EDGE, GLES20.GL_CLAMP_TO_EDGE);
         this.width = width;
         this.height = height;
+    }
+
+    public boolean load() {
+        if (texture != 0) {
+            return true;
+        }
+
+        texture = createTexture();
+        if (texture == 0) {
+            Log.e(TAG, "Unable to create render texture");
+            return false;
+        }
+
+        setUpRenderTexture();
+
+        return true;
     }
 
     public void update(int width, int height) {
@@ -39,21 +54,5 @@ public class RenderTexture extends Texture {
         ErrorHelper.checkGlError(TAG, "glTexImage2D texture");
 
         setUpTextureParameters();
-    }
-
-    public boolean load() {
-        if (texture != 0) {
-            return true;
-        }
-
-        texture = createTexture();
-        if (texture == 0) {
-            Log.e(TAG, "Unable to create render texture");
-            return false;
-        }
-
-        setUpRenderTexture();
-
-        return true;
     }
 }

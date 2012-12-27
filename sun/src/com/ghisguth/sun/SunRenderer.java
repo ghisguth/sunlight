@@ -17,38 +17,30 @@ import java.io.InputStream;
 public class SunRenderer implements GLWallpaperService.Renderer {
 
     private static String TAG = "Sunlight";
-
     private final int sunHorizontalResolution = 64;
     private final int sunVerticalResolution = 32;
-
     private int frameBufferWidth = 256;
     private int frameBufferHeight = 256;
     private int surfaceWidth = 256;
     private int surfaceHeight = 256;
-
     private Context context;
-
     private Program sunProgram;
     private Program coronaProgram;
     private Program postRayProgram;
-
     private Texture baseTexture;
     private Texture noiseTexture;
     private Texture colorTexture;
-
     private VertexBuffer sphereVertices;
     private VertexBuffer quadVertices;
     private RenderTexture[] renderTextures;
     private FrameBuffer[] frameBuffers;
     private int targetTextureIndex = 0;
     private boolean resetFrameBuffers = false;
-
     private boolean useSmallerTextures_ = false;
     private boolean useNonPowerOfTwoTextures_ = false;
     private boolean useNonSquareTextures_ = false;
     private boolean useOneFrameBuffer = false;
     private boolean postEffectsEnabled = true;
-
     private float[] MVP_matrix = new float[16];
     private float[] P_matrix = new float[16];
     private float[] M_matrix = new float[16];
@@ -62,44 +54,134 @@ public class SunRenderer implements GLWallpaperService.Renderer {
     }
 
     @Override
-    public void onDrawFrame(GL10 unused) {
-        GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
+    public void onSurfaceCreated(GL10 unused, EGLConfig config) {
+        ShaderManager.getSingletonObject().unloadAll();
+        ShaderManager.getSingletonObject().cleanUp();
 
-        if (postEffectsEnabled) {
-            if (resetFrameBuffers) {
-                resetFrameBuffers = false;
+        TextureManager.getSingletonObject().unloadAll();
+        TextureManager.getSingletonObject().cleanUp();
 
-                if (!useOneFrameBuffer) {
-                    frameBuffers[1 - targetTextureIndex].bind();
-                    GLES20.glViewport(0, 0, frameBufferWidth, frameBufferHeight);
-                    GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
-                }
-            }
+        loadResources();
 
-            frameBuffers[targetTextureIndex].bind();
-            GLES20.glViewport(0, 0, frameBufferWidth, frameBufferHeight);
-            GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
-
-            /*if (!useOneFrameBuffer) {
-                renderPostEffect(1 - targetTextureIndex);
-            } else {
-                renderPostEffect(targetTextureIndex);
-            } */
-            renderSun();
-
-            GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, 0);
-            GLES20.glViewport(0, 0, surfaceWidth, surfaceHeight);
-
-            GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
-            renderPostEffect(targetTextureIndex);
-
-            if (!useOneFrameBuffer) {
-                targetTextureIndex = 1 - targetTextureIndex;
-            }
-        } else {
-            renderSun();
+        if (sunProgram != null) {
+            sunProgram.load();
         }
+
+        if (coronaProgram != null) {
+            coronaProgram.load();
+        }
+
+        if (postRayProgram != null) {
+            postRayProgram.load();
+        }
+
+        if (baseTexture != null) {
+            baseTexture.load();
+        }
+
+        if (colorTexture != null) {
+            colorTexture.load();
+        }
+
+        if (noiseTexture != null) {
+            noiseTexture.load();
+        }
+
+        ShaderManager.getSingletonObject().unloadAllShaders();
+
+        setupFrameBuffer(unused);
+
+        Matrix.setLookAtM(V_matrix, 0, 0, 0, 2.0f, 0f, 0f, 0f, 0f, -1.0f, 0.0f);
+        Matrix.orthoM(Q_matrix, 0, 0, 1, 0, 1, -1, 1);
+    }
+
+    private void setupFrameBuffer(GL10 unused) {
+        TextureManager textureManager = TextureManager.getSingletonObject();
+
+        renderTextures = new RenderTexture[2];
+
+        renderTextures[0] = textureManager.createRenderTexture(frameBufferWidth, frameBufferHeight);
+        renderTextures[1] = textureManager.createRenderTexture(frameBufferWidth, frameBufferHeight);
+
+        if (!renderTextures[0].load()) {
+            Log.e(TAG, "Could not create render texture");
+            throw new RuntimeException("Could not create render texture");
+        }
+
+        if (!useOneFrameBuffer) {
+            if (!renderTextures[1].load()) {
+                Log.e(TAG, "Could not create second render texture");
+                throw new RuntimeException("Could not create second render texture");
+            }
+        }
+
+        frameBuffers = new FrameBuffer[2];
+
+        frameBuffers[0] = textureManager.createFrameBuffer(renderTextures[0]);
+
+        if (!frameBuffers[0].load()) {
+            Log.e(TAG, "Could not create frame buffer");
+            throw new RuntimeException("Could not create frame buffer");
+        }
+
+        if (!useOneFrameBuffer) {
+            frameBuffers[1] = textureManager.createFrameBuffer(renderTextures[1]);
+
+            if (!frameBuffers[1].load()) {
+                Log.e(TAG, "Could not create second frame buffer");
+                throw new RuntimeException(
+                        "Could not create second frame buffer");
+            }
+        }
+    }
+
+    private void loadResources() {
+        loadShaders();
+        loadTextures();
+    }
+
+    private void loadTextures() {
+        try {
+            TextureManager textureManager = TextureManager.getSingletonObject();
+            if (baseTexture == null) {
+                baseTexture = textureManager.createTexture(context.getResources(), R.raw.sun_surface_etc1, true, GLES20.GL_NEAREST, GLES20.GL_LINEAR, GLES20.GL_REPEAT, GLES20.GL_REPEAT);
+            }
+            if (noiseTexture == null) {
+                noiseTexture = textureManager.createTexture(context.getResources(), R.raw.noise_etc1, true, GLES20.GL_NEAREST, GLES20.GL_LINEAR, GLES20.GL_REPEAT, GLES20.GL_REPEAT);
+            }
+            if (colorTexture == null) {
+                colorTexture = textureManager.createTexture(context.getResources(), R.raw.star_color_etc1, true, GLES20.GL_NEAREST, GLES20.GL_LINEAR, GLES20.GL_CLAMP_TO_EDGE, GLES20.GL_CLAMP_TO_EDGE);
+            }
+        } catch (Exception ex) {
+            Log.e(TAG, "Unable to load textures from resources " + ex.toString());
+        }
+    }
+
+    private void loadShaders() {
+        if (sunProgram != null && coronaProgram != null && postRayProgram != null) {
+            return;
+        }
+
+        try {
+            ShaderManager shaderManager = ShaderManager.getSingletonObject();
+            Shader vertex = shaderManager.createVertexShader(ResourceHelper.loadRawString(openResource(R.raw.sun_vertex)));
+            Shader fragment = shaderManager.createFragmentShader(ResourceHelper.loadRawString(openResource(R.raw.sun_lookup_fragment)));
+            sunProgram = shaderManager.createShaderProgram(vertex, fragment);
+
+            vertex = shaderManager.createVertexShader(ResourceHelper.loadRawString(openResource(R.raw.sun_corona_vertex)));
+            fragment = shaderManager.createFragmentShader(ResourceHelper.loadRawString(openResource(R.raw.sun_corona_lookup_fragment)));
+            coronaProgram = shaderManager.createShaderProgram(vertex, fragment);
+
+            vertex = shaderManager.createVertexShader(ResourceHelper.loadRawString(openResource(R.raw.sun_ray_vertex)));
+            fragment = shaderManager.createFragmentShader(ResourceHelper.loadRawString(openResource(R.raw.sun_ray_fragment)));
+            postRayProgram = shaderManager.createShaderProgram(vertex, fragment);
+        } catch (Exception ex) {
+            Log.e(TAG, "Unable to load shaders from resources " + ex.toString());
+        }
+    }
+
+    protected InputStream openResource(int id) {
+        return context.getResources().openRawResource(id);
     }
 
     @Override
@@ -111,8 +193,7 @@ public class SunRenderer implements GLWallpaperService.Renderer {
         float vertical = scale;
         float horizontal = vertical * width / height;
 
-        if(width < height)
-        {
+        if (width < height) {
             horizontal = scale;
             vertical = horizontal * height / width;
         }
@@ -162,94 +243,57 @@ public class SunRenderer implements GLWallpaperService.Renderer {
     }
 
     @Override
-    public void onSurfaceCreated(GL10 unused, EGLConfig config) {
-        ShaderManager.getSingletonObject().unloadAll();
-        ShaderManager.getSingletonObject().cleanUp();
+    public void onDrawFrame(GL10 unused) {
+        GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 
-        TextureManager.getSingletonObject().unloadAll();
-        TextureManager.getSingletonObject().cleanUp();
+        if (postEffectsEnabled) {
+            if (resetFrameBuffers) {
+                resetFrameBuffers = false;
 
-        loadResources();
-
-        if (sunProgram != null) {
-            sunProgram.load();
-        }
-
-        if (coronaProgram != null) {
-            coronaProgram.load();
-        }
-
-        if (postRayProgram != null) {
-            postRayProgram.load();
-        }
-
-        if (baseTexture != null) {
-            baseTexture.load();
-        }
-
-        if (colorTexture != null) {
-            colorTexture.load();
-        }
-
-        if (noiseTexture != null) {
-            noiseTexture.load();
-        }
-
-        ShaderManager.getSingletonObject().unloadAllShaders();
-
-        setupFrameBuffer(unused);
-
-        Matrix.setLookAtM(V_matrix, 0, 0, 0, 2.0f, 0f, 0f, 0f, 0f, -1.0f, 0.0f);
-        Matrix.orthoM(Q_matrix, 0, 0, 1, 0, 1, -1, 1);
-    }
-
-    protected InputStream openResource(int id) {
-        return context.getResources().openRawResource(id);
-    }
-
-    private void loadShaders() {
-        if (sunProgram != null && coronaProgram != null && postRayProgram != null) {
-            return;
-        }
-
-        try {
-            ShaderManager shaderManager = ShaderManager.getSingletonObject();
-            Shader vertex = shaderManager.createVertexShader(ResourceHelper.loadRawString(openResource(R.raw.sun_vertex)));
-            Shader fragment = shaderManager.createFragmentShader(ResourceHelper.loadRawString(openResource(R.raw.sun_lookup_fragment)));
-            sunProgram = shaderManager.createShaderProgram(vertex, fragment);
-
-            vertex = shaderManager.createVertexShader(ResourceHelper.loadRawString(openResource(R.raw.sun_corona_vertex)));
-            fragment = shaderManager.createFragmentShader(ResourceHelper.loadRawString(openResource(R.raw.sun_corona_lookup_fragment)));
-            coronaProgram = shaderManager.createShaderProgram(vertex, fragment);
-
-            vertex = shaderManager.createVertexShader(ResourceHelper.loadRawString(openResource(R.raw.sun_ray_vertex)));
-            fragment = shaderManager.createFragmentShader(ResourceHelper.loadRawString(openResource(R.raw.sun_ray_fragment)));
-            postRayProgram = shaderManager.createShaderProgram(vertex, fragment);
-        } catch (Exception ex) {
-            Log.e(TAG, "Unable to load shaders from resources " + ex.toString());
-        }
-    }
-
-    private void loadTextures() {
-        try {
-            TextureManager textureManager = TextureManager.getSingletonObject();
-            if (baseTexture == null) {
-                baseTexture = textureManager.createTexture(context.getResources(), R.raw.sun_surface_etc1, true, GLES20.GL_NEAREST, GLES20.GL_LINEAR, GLES20.GL_REPEAT, GLES20.GL_REPEAT);
+                if (!useOneFrameBuffer) {
+                    frameBuffers[1 - targetTextureIndex].bind();
+                    GLES20.glViewport(0, 0, frameBufferWidth, frameBufferHeight);
+                    GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
+                }
             }
-            if (noiseTexture == null) {
-                noiseTexture = textureManager.createTexture(context.getResources(), R.raw.noise_etc1, true, GLES20.GL_NEAREST, GLES20.GL_LINEAR, GLES20.GL_REPEAT, GLES20.GL_REPEAT);
+
+            frameBuffers[targetTextureIndex].bind();
+            GLES20.glViewport(0, 0, frameBufferWidth, frameBufferHeight);
+            GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
+
+            /*if (!useOneFrameBuffer) {
+                renderPostEffect(1 - targetTextureIndex);
+            } else {
+                renderPostEffect(targetTextureIndex);
+            } */
+            renderSun();
+
+            GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, 0);
+            GLES20.glViewport(0, 0, surfaceWidth, surfaceHeight);
+
+            GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
+            renderPostEffect(targetTextureIndex);
+
+            if (!useOneFrameBuffer) {
+                targetTextureIndex = 1 - targetTextureIndex;
             }
-            if (colorTexture == null) {
-                colorTexture = textureManager.createTexture(context.getResources(), R.raw.star_color_etc1, true, GLES20.GL_NEAREST, GLES20.GL_LINEAR, GLES20.GL_CLAMP_TO_EDGE, GLES20.GL_CLAMP_TO_EDGE);
-            }
-        } catch (Exception ex) {
-            Log.e(TAG, "Unable to load textures from resources " + ex.toString());
+        } else {
+            renderSun();
         }
     }
 
-    private void loadResources() {
-        loadShaders();
-        loadTextures();
+    private void renderPostEffect(int textureIndex) {
+        if (postRayProgram != null && postRayProgram.use()) {
+            renderTextures[textureIndex].bind(GLES20.GL_TEXTURE0, postRayProgram, "sTexture");
+            quadVertices.bind(postRayProgram, "aPosition", "aTextureCoord");
+
+            GLES20.glUniform1f(postRayProgram.getUniformLocation("blur"), 0.6f);
+
+            GLES20.glUniformMatrix4fv(postRayProgram.getUniformLocation("uMVPMatrix"), 1, false, Q_matrix, 0);
+
+            quadVertices.draw(GLES20.GL_TRIANGLE_STRIP);
+        }
     }
 
     private void renderSun() {
@@ -295,7 +339,7 @@ public class SunRenderer implements GLWallpaperService.Renderer {
 
             //surfaceColorOffset = getTimeDeltaByScale(19000L);
 
-            surfaceColorOffset = (float)(Math.cos(getTimeDeltaByScale(190000L) * Math.PI * 2.0) * 0.5 + 0.5);
+            surfaceColorOffset = (float) (Math.cos(getTimeDeltaByScale(190000L) * Math.PI * 2.0) * 0.5 + 0.5);
 
             GLES20.glUniform1f(sunProgram.getUniformLocation("uColorOffset"), surfaceColorOffset);
             GLES20.glUniform1f(sunProgram.getUniformLocation("uColorAdd"), surfaceColorAdd);
@@ -352,58 +396,5 @@ public class SunRenderer implements GLWallpaperService.Renderer {
             return 0.0f;
         long time = SystemClock.uptimeMillis() % scale;
         return (float) ((int) time) / (float) scale;
-    }
-
-    private void setupFrameBuffer(GL10 unused) {
-        TextureManager textureManager = TextureManager.getSingletonObject();
-
-        renderTextures = new RenderTexture[2];
-
-        renderTextures[0] = textureManager.createRenderTexture(frameBufferWidth, frameBufferHeight);
-        renderTextures[1] = textureManager.createRenderTexture(frameBufferWidth, frameBufferHeight);
-
-        if (!renderTextures[0].load()) {
-            Log.e(TAG, "Could not create render texture");
-            throw new RuntimeException("Could not create render texture");
-        }
-
-        if (!useOneFrameBuffer) {
-            if (!renderTextures[1].load()) {
-                Log.e(TAG, "Could not create second render texture");
-                throw new RuntimeException("Could not create second render texture");
-            }
-        }
-
-        frameBuffers = new FrameBuffer[2];
-
-        frameBuffers[0] = textureManager.createFrameBuffer(renderTextures[0]);
-
-        if (!frameBuffers[0].load()) {
-            Log.e(TAG, "Could not create frame buffer");
-            throw new RuntimeException("Could not create frame buffer");
-        }
-
-        if (!useOneFrameBuffer) {
-            frameBuffers[1] = textureManager.createFrameBuffer(renderTextures[1]);
-
-            if (!frameBuffers[1].load()) {
-                Log.e(TAG, "Could not create second frame buffer");
-                throw new RuntimeException(
-                        "Could not create second frame buffer");
-            }
-        }
-    }
-
-    private void renderPostEffect(int textureIndex) {
-        if (postRayProgram != null && postRayProgram.use()) {
-            renderTextures[textureIndex].bind(GLES20.GL_TEXTURE0, postRayProgram, "sTexture");
-            quadVertices.bind(postRayProgram, "aPosition", "aTextureCoord");
-
-            GLES20.glUniform1f(postRayProgram.getUniformLocation("blur"), 0.6f);
-
-            GLES20.glUniformMatrix4fv(postRayProgram.getUniformLocation("uMVPMatrix"), 1, false, Q_matrix, 0);
-
-            quadVertices.draw(GLES20.GL_TRIANGLE_STRIP);
-        }
     }
 }

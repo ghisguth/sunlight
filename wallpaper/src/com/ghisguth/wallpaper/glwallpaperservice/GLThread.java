@@ -25,24 +25,20 @@ import java.util.ArrayList;
 // Original code provided by Robert Green
 // http://www.rbgrn.net/content/354-glsurfaceview-adapted-3d-live-wallpapers
 class GLThread extends Thread {
-    private final static boolean LOG_THREADS = false;
     public final static int DEBUG_CHECK_GL_ERROR = 1;
     public final static int DEBUG_LOG_GL_CALLS = 2;
-
+    private final static boolean LOG_THREADS = false;
     private final GLThreadManager sGLThreadManager = new GLThreadManager();
+    public SurfaceHolder mHolder;
+    // Once the thread is started, all accesses to the following member
+    // variables are protected by the sGLThreadManager monitor
+    public boolean mDone;
     private GLThread mEglOwner;
-
     private EGLConfigChooser mEGLConfigChooser;
     private EGLContextFactory mEGLContextFactory;
     private EGLWindowSurfaceFactory mEGLWindowSurfaceFactory;
     private GLWrapper mGLWrapper;
-
-    public SurfaceHolder mHolder;
     private boolean mSizeChanged = true;
-
-    // Once the thread is started, all accesses to the following member
-    // variables are protected by the sGLThreadManager monitor
-    public boolean mDone;
     private boolean mPaused;
     private boolean mHasSurface;
     private boolean mWaitingForSurface;
@@ -53,7 +49,6 @@ class GLThread extends Thread {
     private boolean mRequestRender;
     private boolean mEventsWaiting;
     // End of member variables protected by the sGLThreadManager monitor.
-
     private GLWallpaperService.Renderer mRenderer;
     private ArrayList<Runnable> mEventQueue = new ArrayList<Runnable>();
     private EglHelper mEglHelper;
@@ -73,6 +68,84 @@ class GLThread extends Thread {
         this.mGLWrapper = wrapper;
     }
 
+    public int getRenderMode() {
+        synchronized (sGLThreadManager) {
+            return mRenderMode;
+        }
+    }
+
+    public void setRenderMode(int renderMode) {
+        if (!((GLWallpaperService.GLEngine.RENDERMODE_WHEN_DIRTY <= renderMode) && (renderMode <= GLWallpaperService.GLEngine.RENDERMODE_CONTINUOUSLY))) {
+            throw new IllegalArgumentException("renderMode");
+        }
+        synchronized (sGLThreadManager) {
+            mRenderMode = renderMode;
+            if (renderMode == GLWallpaperService.GLEngine.RENDERMODE_CONTINUOUSLY) {
+                sGLThreadManager.notifyAll();
+            }
+        }
+    }
+
+    public void onPause() {
+        synchronized (sGLThreadManager) {
+            mPaused = true;
+            sGLThreadManager.notifyAll();
+        }
+    }
+
+    public void onResume() {
+        synchronized (sGLThreadManager) {
+            mPaused = false;
+            mRequestRender = true;
+            sGLThreadManager.notifyAll();
+        }
+    }
+
+    public void onWindowResize(int w, int h) {
+        synchronized (sGLThreadManager) {
+            mWidth = w;
+            mHeight = h;
+            mSizeChanged = true;
+            sGLThreadManager.notifyAll();
+        }
+    }
+
+    /**
+     * Queue an "event" to be run on the GL rendering thread.
+     *
+     * @param r the runnable to be run on the GL rendering thread.
+     */
+    public void queueEvent(Runnable r) {
+        synchronized (this) {
+            mEventQueue.add(r);
+            synchronized (sGLThreadManager) {
+                mEventsWaiting = true;
+                sGLThreadManager.notifyAll();
+            }
+        }
+    }
+
+    public void requestExitAndWait() {
+        // don't call this from GLThread thread or it is a guaranteed
+        // deadlock!
+        synchronized (sGLThreadManager) {
+            mDone = true;
+            sGLThreadManager.notifyAll();
+        }
+        try {
+            join();
+        } catch (InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        }
+    }
+
+    public void requestRender() {
+        synchronized (sGLThreadManager) {
+            mRequestRender = true;
+            sGLThreadManager.notifyAll();
+        }
+    }
+
     @Override
     public void run() {
         setName("GLThread " + getId());
@@ -86,17 +159,6 @@ class GLThread extends Thread {
             // fall thru and exit normally
         } finally {
             sGLThreadManager.threadExiting(this);
-        }
-    }
-
-    /*
-      * This private method should only be called inside a synchronized(sGLThreadManager) block.
-      */
-    private void stopEglLocked() {
-        if (mHaveEgl) {
-            mHaveEgl = false;
-            mEglHelper.destroySurface();
-            sGLThreadManager.releaseEglSurface(this);
         }
     }
 
@@ -237,34 +299,30 @@ class GLThread extends Thread {
         }
     }
 
+    private Runnable getEvent() {
+        synchronized (this) {
+            if (mEventQueue.size() > 0) {
+                return mEventQueue.remove(0);
+            }
+
+        }
+        return null;
+    }
+
     private boolean isDone() {
         synchronized (sGLThreadManager) {
             return mDone;
         }
     }
 
-    public void setRenderMode(int renderMode) {
-        if (!((GLWallpaperService.GLEngine.RENDERMODE_WHEN_DIRTY <= renderMode) && (renderMode <= GLWallpaperService.GLEngine.RENDERMODE_CONTINUOUSLY))) {
-            throw new IllegalArgumentException("renderMode");
-        }
-        synchronized (sGLThreadManager) {
-            mRenderMode = renderMode;
-            if (renderMode == GLWallpaperService.GLEngine.RENDERMODE_CONTINUOUSLY) {
-                sGLThreadManager.notifyAll();
-            }
-        }
-    }
-
-    public int getRenderMode() {
-        synchronized (sGLThreadManager) {
-            return mRenderMode;
-        }
-    }
-
-    public void requestRender() {
-        synchronized (sGLThreadManager) {
-            mRequestRender = true;
-            sGLThreadManager.notifyAll();
+    /*
+      * This private method should only be called inside a synchronized(sGLThreadManager) block.
+      */
+    private void stopEglLocked() {
+        if (mHaveEgl) {
+            mHaveEgl = false;
+            mEglHelper.destroySurface();
+            sGLThreadManager.releaseEglSurface(this);
         }
     }
 
@@ -294,69 +352,6 @@ class GLThread extends Thread {
                 }
             }
         }
-    }
-
-    public void onPause() {
-        synchronized (sGLThreadManager) {
-            mPaused = true;
-            sGLThreadManager.notifyAll();
-        }
-    }
-
-    public void onResume() {
-        synchronized (sGLThreadManager) {
-            mPaused = false;
-            mRequestRender = true;
-            sGLThreadManager.notifyAll();
-        }
-    }
-
-    public void onWindowResize(int w, int h) {
-        synchronized (sGLThreadManager) {
-            mWidth = w;
-            mHeight = h;
-            mSizeChanged = true;
-            sGLThreadManager.notifyAll();
-        }
-    }
-
-    public void requestExitAndWait() {
-        // don't call this from GLThread thread or it is a guaranteed
-        // deadlock!
-        synchronized (sGLThreadManager) {
-            mDone = true;
-            sGLThreadManager.notifyAll();
-        }
-        try {
-            join();
-        } catch (InterruptedException ex) {
-            Thread.currentThread().interrupt();
-        }
-    }
-
-    /**
-     * Queue an "event" to be run on the GL rendering thread.
-     *
-     * @param r the runnable to be run on the GL rendering thread.
-     */
-    public void queueEvent(Runnable r) {
-        synchronized (this) {
-            mEventQueue.add(r);
-            synchronized (sGLThreadManager) {
-                mEventsWaiting = true;
-                sGLThreadManager.notifyAll();
-            }
-        }
-    }
-
-    private Runnable getEvent() {
-        synchronized (this) {
-            if (mEventQueue.size() > 0) {
-                return mEventQueue.remove(0);
-            }
-
-        }
-        return null;
     }
 
     private class GLThreadManager {

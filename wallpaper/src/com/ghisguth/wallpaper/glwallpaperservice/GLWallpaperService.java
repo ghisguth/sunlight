@@ -33,10 +33,18 @@ public class GLWallpaperService extends WallpaperService {
         return new GLEngine();
     }
 
+    public interface Renderer {
+
+        public void onDrawFrame(GL10 gl);
+
+        public void onSurfaceChanged(GL10 gl, int width, int height);
+
+        public void onSurfaceCreated(GL10 gl, EGLConfig config);
+    }
+
     public class GLEngine extends Engine {
         public final static int RENDERMODE_WHEN_DIRTY = 0;
         public final static int RENDERMODE_CONTINUOUSLY = 1;
-
         private GLThread mGLThread;
         private EGLConfigChooser mEGLConfigChooser;
         private EGLContextFactory mEGLContextFactory;
@@ -48,14 +56,20 @@ public class GLWallpaperService extends WallpaperService {
             super();
         }
 
-        @Override
-        public void onVisibilityChanged(boolean visible) {
-            if (visible) {
-                onResume();
-            } else {
-                onPause();
-            }
-            super.onVisibilityChanged(visible);
+        public int getDebugFlags() {
+            return mDebugFlags;
+        }
+
+        public void setDebugFlags(int debugFlags) {
+            mDebugFlags = debugFlags;
+        }
+
+        public int getRenderMode() {
+            return mGLThread.getRenderMode();
+        }
+
+        public void setRenderMode(int renderMode) {
+            mGLThread.setRenderMode(renderMode);
         }
 
         @Override
@@ -69,6 +83,24 @@ public class GLWallpaperService extends WallpaperService {
             super.onDestroy();
             // Log.d(TAG, "GLEngine.onDestroy()");
             mGLThread.requestExitAndWait();
+        }
+
+        @Override
+        public void onVisibilityChanged(boolean visible) {
+            if (visible) {
+                onResume();
+            } else {
+                onPause();
+            }
+            super.onVisibilityChanged(visible);
+        }
+
+        public void onResume() {
+            mGLThread.onResume();
+        }
+
+        public void onPause() {
+            mGLThread.onPause();
         }
 
         @Override
@@ -92,19 +124,44 @@ public class GLWallpaperService extends WallpaperService {
             super.onSurfaceDestroyed(holder);
         }
 
+        public void queueEvent(Runnable r) {
+            mGLThread.queueEvent(r);
+        }
+
+        public void requestRender() {
+            mGLThread.requestRender();
+        }
+
+        public void setEGLConfigChooser(boolean needDepth) {
+            setEGLConfigChooser(new BaseConfigChooser.SimpleEGLConfigChooser(needDepth));
+        }
+
+        public void setEGLConfigChooser(EGLConfigChooser configChooser) {
+            checkRenderThreadState();
+            mEGLConfigChooser = configChooser;
+        }
+
+        public void setEGLConfigChooser(int redSize, int greenSize, int blueSize, int alphaSize, int depthSize,
+                                        int stencilSize) {
+            setEGLConfigChooser(new BaseConfigChooser.ComponentSizeChooser(redSize, greenSize, blueSize, alphaSize, depthSize,
+                    stencilSize));
+        }
+
+        public void setEGLContextFactory(EGLContextFactory factory) {
+            checkRenderThreadState();
+            mEGLContextFactory = factory;
+        }
+
+        public void setEGLWindowSurfaceFactory(EGLWindowSurfaceFactory factory) {
+            checkRenderThreadState();
+            mEGLWindowSurfaceFactory = factory;
+        }
+
         /**
          * An EGL helper class.
          */
         public void setGLWrapper(GLWrapper glWrapper) {
             mGLWrapper = glWrapper;
-        }
-
-        public void setDebugFlags(int debugFlags) {
-            mDebugFlags = debugFlags;
-        }
-
-        public int getDebugFlags() {
-            return mDebugFlags;
         }
 
         public void setRenderer(Renderer renderer) {
@@ -122,68 +179,10 @@ public class GLWallpaperService extends WallpaperService {
             mGLThread.start();
         }
 
-        public void setEGLContextFactory(EGLContextFactory factory) {
-            checkRenderThreadState();
-            mEGLContextFactory = factory;
-        }
-
-        public void setEGLWindowSurfaceFactory(EGLWindowSurfaceFactory factory) {
-            checkRenderThreadState();
-            mEGLWindowSurfaceFactory = factory;
-        }
-
-        public void setEGLConfigChooser(EGLConfigChooser configChooser) {
-            checkRenderThreadState();
-            mEGLConfigChooser = configChooser;
-        }
-
-        public void setEGLConfigChooser(boolean needDepth) {
-            setEGLConfigChooser(new BaseConfigChooser.SimpleEGLConfigChooser(needDepth));
-        }
-
-        public void setEGLConfigChooser(int redSize, int greenSize, int blueSize, int alphaSize, int depthSize,
-                                        int stencilSize) {
-            setEGLConfigChooser(new BaseConfigChooser.ComponentSizeChooser(redSize, greenSize, blueSize, alphaSize, depthSize,
-                    stencilSize));
-        }
-
-        public void setRenderMode(int renderMode) {
-            mGLThread.setRenderMode(renderMode);
-        }
-
-        public int getRenderMode() {
-            return mGLThread.getRenderMode();
-        }
-
-        public void requestRender() {
-            mGLThread.requestRender();
-        }
-
-        public void onPause() {
-            mGLThread.onPause();
-        }
-
-        public void onResume() {
-            mGLThread.onResume();
-        }
-
-        public void queueEvent(Runnable r) {
-            mGLThread.queueEvent(r);
-        }
-
         private void checkRenderThreadState() {
             if (mGLThread != null) {
                 throw new IllegalStateException("setRenderer has already been called for this instance.");
             }
         }
-    }
-
-    public interface Renderer {
-
-        public void onSurfaceCreated(GL10 gl, EGLConfig config);
-
-        public void onSurfaceChanged(GL10 gl, int width, int height);
-
-        public void onDrawFrame(GL10 gl);
     }
 }

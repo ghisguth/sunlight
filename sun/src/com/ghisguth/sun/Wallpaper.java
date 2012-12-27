@@ -6,9 +6,15 @@ import com.ghisguth.wallpaper.GLES20WallpaperService;
 import com.ghisguth.wallpaper.glwallpaperservice.GLWallpaperService;
 
 public class Wallpaper extends GLES20WallpaperService {
-    private static String TAG = "Sunlight";
-    private static final boolean DEBUG = false;
     public static final String SHARED_PREF_NAME = "SunSettings";
+    private static final boolean DEBUG = false;
+    private static String TAG = "Sunlight";
+
+    @Override
+    public Engine onCreateEngine() {
+        return new WallpaperEngine(this, this.getSharedPreferences(SHARED_PREF_NAME,
+                Context.MODE_PRIVATE));
+    }
 
     class WallpaperEngine extends GLWallpaperService.GLEngine {
         public WallpaperEngine(Context context, SharedPreferences preferences) {
@@ -21,11 +27,5 @@ public class Wallpaper extends GLES20WallpaperService {
             setRenderer(renderer);
             setRenderMode(RENDERMODE_CONTINUOUSLY);
         }
-    }
-
-    @Override
-    public Engine onCreateEngine() {
-        return new WallpaperEngine(this, this.getSharedPreferences(SHARED_PREF_NAME,
-                Context.MODE_PRIVATE));
     }
 }
