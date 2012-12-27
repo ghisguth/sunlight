@@ -39,9 +39,8 @@ public class Test extends RendererBase {
     private float[] V_matrix = new float[16];
     private float[] Q_matrix = new float[16];
 
-    private RenderTexture[] renderTextures;
-    private FrameBuffer[] frameBuffers;
-    private int targetTextureIndex = 0;
+    private RenderTexture renderTexture;
+    private FrameBuffer frameBuffer;
 
     private int frameBufferWidth = 256;
     private int frameBufferHeight = 256;
@@ -51,9 +50,6 @@ public class Test extends RendererBase {
     private boolean useSmallerTextures_ = false;
     private boolean useNonPowerOfTwoTextures_ = false;
     private boolean useNonSquareTextures_ = false;
-    private boolean useOneFrameBuffer = false;
-
-    private boolean resetFrameBuffers = false;
 
     private boolean postEffectsEnabled = true;
 
@@ -216,36 +212,17 @@ public class Test extends RendererBase {
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 
         if(postEffectsEnabled) {
-            if (resetFrameBuffers) {
-                resetFrameBuffers = false;
-
-                if (!useOneFrameBuffer) {
-                    frameBuffers[1 - targetTextureIndex].bind();
-                    GLES20.glViewport(0, 0, frameBufferWidth, frameBufferHeight);
-                    GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
-                }
-            }
-
-            frameBuffers[targetTextureIndex].bind();
+            frameBuffer.bind();
             GLES20.glViewport(0, 0, frameBufferWidth, frameBufferHeight);
             GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 
-            /*if (!useOneFrameBuffer) {
-                renderPostEffect(1 - targetTextureIndex);
-            } else {
-                renderPostEffect(targetTextureIndex);
-            } */
             renderSun();
 
-            GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, 0);
+            frameBuffer.unbind();
             GLES20.glViewport(0, 0, surfaceWidth, surfaceHeight);
 
             GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
-            renderPostEffect(targetTextureIndex);
-
-            if (!useOneFrameBuffer) {
-                targetTextureIndex = 1 - targetTextureIndex;
-            }
+            renderPostEffect();
         }
         else
         {
@@ -297,14 +274,7 @@ public class Test extends RendererBase {
         Log.i("BL***", "frameBufferWidth=" + frameBufferWidth
                 + " frameBufferHeight=" + frameBufferHeight);
 
-        renderTextures[0].update(frameBufferWidth, frameBufferHeight);
-
-        if (!useOneFrameBuffer) {
-            renderTextures[1].update(frameBufferWidth, frameBufferHeight);
-        }
-
-        targetTextureIndex = 0;
-        resetFrameBuffers = true;
+        renderTexture.update(frameBufferWidth, frameBufferHeight);
     }
 
     @Override
@@ -330,9 +300,9 @@ public class Test extends RendererBase {
         Matrix.setLookAtM(V_matrix, 0, 0, 0, 2.0f, 0f, 0f, 0f, 0f, -1.0f, 0.0f);
     }
 
-    private void renderPostEffect(int textureIndex) {
+    private void renderPostEffect() {
         if (postRayProgram.use()) {
-            renderTextures[textureIndex].bind(GLES20.GL_TEXTURE0, postRayProgram, "sTexture");
+            renderTexture.bind(GLES20.GL_TEXTURE0, postRayProgram, "sTexture");
             quadVertices.bind(postRayProgram, "aPosition", "aTextureCoord");
 
             GLES20.glUniform1f(postRayProgram.getUniformLocation("blur"), 0.6f);
@@ -346,42 +316,19 @@ public class Test extends RendererBase {
     private void setupFrameBuffer(GL10 unused) {
         TextureManager textureManager = TextureManager.getSingletonObject();
 
-        renderTextures = new RenderTexture[2];
+        renderTexture = textureManager.createRenderTexture(frameBufferWidth, frameBufferHeight);
 
-        renderTextures[0] = textureManager.createRenderTexture(frameBufferWidth, frameBufferHeight);
-        renderTextures[1] = textureManager.createRenderTexture(frameBufferWidth, frameBufferHeight);
-
-        if(!renderTextures[0].load())
+        if(!renderTexture.load())
         {
             Log.e(TAG, "Could not create render texture");
             throw new RuntimeException("Could not create render texture");
         }
 
-        if (!useOneFrameBuffer) {
-            if(!renderTextures[1].load())
-            {
-                Log.e(TAG, "Could not create second render texture");
-                throw new RuntimeException("Could not create second render texture");
-            }
-        }
+        frameBuffer = textureManager.createFrameBuffer(renderTexture);
 
-        frameBuffers = new FrameBuffer[2];
-
-        frameBuffers[0] = textureManager.createFrameBuffer(renderTextures[0]);
-
-        if (!frameBuffers[0].load()) {
+        if (!frameBuffer.load()) {
             Log.e(TAG, "Could not create frame buffer");
             throw new RuntimeException("Could not create frame buffer");
-        }
-
-        if (!useOneFrameBuffer) {
-            frameBuffers[1] = textureManager.createFrameBuffer(renderTextures[1]);
-
-            if (!frameBuffers[1].load()) {
-                Log.e(TAG, "Could not create second frame buffer");
-                throw new RuntimeException(
-                        "Could not create second frame buffer");
-            }
         }
     }
 
