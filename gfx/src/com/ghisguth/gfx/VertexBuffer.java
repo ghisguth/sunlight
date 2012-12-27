@@ -25,8 +25,7 @@ public class VertexBuffer {
     private int indicesCount;
     private boolean hasUv;
 
-    public VertexBuffer(float[] vertexArray, short[] indexArray, boolean hasUv)
-    {
+    public VertexBuffer(float[] vertexArray, short[] indexArray, boolean hasUv) {
         this.hasUv = hasUv;
         vertices = ByteBuffer
                 .allocateDirect(
@@ -47,15 +46,14 @@ public class VertexBuffer {
     private int getStride() {
         int stride = 3;
 
-        if(hasUv) {
+        if (hasUv) {
             stride += 2;
         }
 
         return stride;
     }
 
-    public void bind(Program program, String position, String uv)
-    {
+    public void bind(Program program, String position, String uv) {
         int offset = 0;
         int stride = getStride() * FLOAT_SIZE_BYTES;
 
@@ -67,7 +65,7 @@ public class VertexBuffer {
 
         offset += 3;
 
-        if(hasUv) {
+        if (hasUv) {
             vertices.position(offset);
             GLES20.glVertexAttribPointer(program.getAttributeLocation(uv), 2, GLES20.GL_FLOAT, false, stride, vertices);
             ErrorHelper.checkGlError(TAG, "glVertexAttribPointer " + uv);
@@ -76,26 +74,21 @@ public class VertexBuffer {
         }
     }
 
-    public void unbind(Program program, String position, String uv)
-    {
+    public void unbind(Program program, String position, String uv) {
         GLES20.glDisableVertexAttribArray(program.getAttributeLocation(position));
         ErrorHelper.checkGlError(TAG, "glDisableVertexAttribArray " + position);
 
-        if(hasUv) {
+        if (hasUv) {
             GLES20.glDisableVertexAttribArray(program.getAttributeLocation(uv));
             ErrorHelper.checkGlError(TAG, "glDisableVertexAttribArray " + uv);
         }
     }
 
-    public void draw(int primitiveType)
-    {
-        if(indicesCount == 0)
-        {
+    public void draw(int primitiveType) {
+        if (indicesCount == 0) {
             GLES20.glDrawArrays(primitiveType, 0, verticesCount);
             ErrorHelper.checkGlError(TAG, "glDrawArrays");
-        }
-        else
-        {
+        } else {
             GLES20.glDrawElements(primitiveType, indicesCount, GLES20.GL_UNSIGNED_SHORT, indices);
             ErrorHelper.checkGlError(TAG, "glDrawElements");
         }

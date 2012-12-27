@@ -19,7 +19,7 @@ import java.io.InputStream;
 public class Texture {
     private static String TAG = "Sunlight";
 
-    private int texture;
+    protected int texture;
 
     private Resources resources;
     private int resource;
@@ -28,8 +28,6 @@ public class Texture {
     private int maxFilter;
     private int wrapS;
     private int wrapT;
-
-    private int activeTexture;
 
     public Texture(Resources resources, int resource, boolean compressed, int minFilter, int maxFilter, int wrapS, int wrapT) {
         this.resources = resources;
@@ -47,25 +45,41 @@ public class Texture {
         super.finalize();
     }
 
-    public boolean load() {
-        if (texture != 0) {
-            return true;
-        }
-
-        int[] textures = new int[1];
-        GLES20.glGenTextures(1, textures, 0);
-        texture = textures[0];
-        if (texture == 0) {
-            return false;
-        }
-
-        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texture);
-
+    protected void setUpTextureParameters() {
         GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, minFilter);
         GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, maxFilter);
 
         GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_S, wrapS);
         GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T, wrapT);
+
+        ErrorHelper.checkGlError(TAG, "glTexParameteri");
+    }
+
+    protected void bindTexture() {
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texture);
+        ErrorHelper.checkGlError(TAG, "glBindTexture texture");
+    }
+
+    protected int createTexture() {
+        int[] textures = new int[1];
+        GLES20.glGenTextures(1, textures, 0);
+        return textures[0];
+    }
+
+
+    public boolean load() {
+        if (texture != 0) {
+            return true;
+        }
+
+        texture = createTexture();
+
+        if (texture == 0) {
+            return false;
+        }
+
+        bindTexture();
+        setUpTextureParameters();
 
         InputStream is = resources.openRawResource(resource);
 
@@ -110,17 +124,14 @@ public class Texture {
         }
     }
 
-    public void bind(int activeTexture)
-    {
-        this.activeTexture = 0;
+    public void bind(int activeTexture) {
         GLES20.glActiveTexture(activeTexture);
         ErrorHelper.checkGlError(TAG, "glActiveTexture");
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texture);
         ErrorHelper.checkGlError(TAG, "glBindTexture texture");
     }
 
-    public void bind(int activeTexture, Program program, String name)
-    {
+    public void bind(int activeTexture, Program program, String name) {
         bind(activeTexture);
         GLES20.glUniform1i(program.getUniformLocation(name), activeTexture - GLES20.GL_TEXTURE0);
         ErrorHelper.checkGlError(TAG, "glUniform1i");

@@ -7,6 +7,7 @@ package com.ghisguth.gfx;
 
 import android.content.res.Resources;
 
+import java.io.FileReader;
 import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.WeakReference;
@@ -15,6 +16,9 @@ import java.util.HashSet;
 public class TextureManager {
     private HashSet<WeakReference<Texture>> textures = new HashSet<WeakReference<Texture>>();
     private ReferenceQueue<Texture> textureReferenceQueue = new ReferenceQueue<Texture>();
+
+    private HashSet<WeakReference<FrameBuffer>> frameBuffers = new HashSet<WeakReference<FrameBuffer>>();
+    private ReferenceQueue<FrameBuffer> frameBufferReferenceQueue = new ReferenceQueue<FrameBuffer>();
 
     private static TextureManager singletonObject;
 
@@ -34,6 +38,10 @@ public class TextureManager {
 
     public Texture createTexture(Resources resources, int resource, boolean compressed, int minFilter, int maxFilter, int wrapS, int wrapT) {
         return new Texture(resources, resource, compressed, minFilter, maxFilter, wrapS, wrapT);
+    }
+
+    public FrameBuffer createFrameBuffer(RenderTexture renderTexture) {
+        return new FrameBuffer(renderTexture);
     }
 
     public void registerTexture(Texture texture) {
@@ -58,8 +66,36 @@ public class TextureManager {
         }
     }
 
+    public void registerFrameBuffer(FrameBuffer frameBuffer) {
+        synchronized (frameBuffers) {
+            WeakReference<FrameBuffer> weakReference = new WeakReference<FrameBuffer>(frameBuffer, frameBufferReferenceQueue);
+            frameBuffers.add(weakReference);
+            processFrameBufferReferenceQueueImpl();
+        }
+    }
+
+    private void processFrameBufferReferenceQueueImpl() {
+        Reference<?> reference = textureReferenceQueue.poll();
+        while (reference != null) {
+            frameBuffers.remove(reference);
+            reference = textureReferenceQueue.poll();
+        }
+    }
+
+    private void processFrameBufferReferenceQueue() {
+        synchronized (frameBuffers) {
+            processFrameBufferReferenceQueueImpl();
+        }
+    }
+
     public void cleanUp() {
         processTextureReferenceQueue();
+        processFrameBufferReferenceQueue();
+    }
+
+    public RenderTexture createRenderTexture(int width, int height)
+    {
+        return new RenderTexture(width, height);
     }
 
     public void unloadAllTextures() {
@@ -73,8 +109,20 @@ public class TextureManager {
         }
     }
 
+    public void unloadAllFrameBuffers() {
+        synchronized (frameBuffers) {
+            for (WeakReference<FrameBuffer> frameBufferWeak : frameBuffers) {
+                FrameBuffer frameBuffer = frameBufferWeak.get();
+                if (frameBuffer != null) {
+                    frameBuffer.unload();
+                }
+            }
+        }
+    }
+
     public void unloadAll() {
         unloadAllTextures();
+        unloadAllFrameBuffers();
     }
 
 }

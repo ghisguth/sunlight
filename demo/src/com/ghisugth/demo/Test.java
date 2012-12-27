@@ -52,23 +52,23 @@ public class Test extends RendererBase {
     private float[] M_matrix = new float[16];
     private float[] V_matrix = new float[16];
 
-    private float[] quad_matrix_ = new float[16];
+    private float[] quadMatrix = new float[16];
 
-    private int target_texture_index_ = 0;
-    private int[] target_texture_;
-    private int[] framebuffer_;
+    private RenderTexture[] renderTextures;
+    private FrameBuffer[] frameBuffers;
+    private int targetTextureIndex = 0;
 
-    private int framebuffer_width_ = 256;
-    private int framebuffer_height_ = 256;
-    private int surface_width_ = 256;
-    private int surface_height_ = 256;
+    private int frameBufferWidth = 256;
+    private int frameBufferHeight = 256;
+    private int surfaceWidth = 256;
+    private int surfaceHeight = 256;
 
     private boolean useSmallerTextures_ = false;
     private boolean useNonPowerOfTwoTextures_ = false;
     private boolean useNonSquareTextures_ = false;
-    private boolean useOneFramebuffer_ = false;
+    private boolean useOneFrameBuffer = false;
 
-    private boolean resetFramebuffers_ = false;
+    private boolean resetFrameBuffers = false;
 
     private boolean postEffectsEnabled = true;
 
@@ -278,37 +278,35 @@ public class Test extends RendererBase {
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 
         if(postEffectsEnabled) {
-            if (resetFramebuffers_) {
-                resetFramebuffers_ = false;
+            if (resetFrameBuffers) {
+                resetFrameBuffers = false;
 
-                if (!useOneFramebuffer_) {
-                    GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER,
-                            framebuffer_[1 - target_texture_index_]);
-                    GLES20.glViewport(0, 0, framebuffer_width_, framebuffer_height_);
+                if (!useOneFrameBuffer) {
+                    frameBuffers[1 - targetTextureIndex].bind();
+                    GLES20.glViewport(0, 0, frameBufferWidth, frameBufferHeight);
                     GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
                 }
             }
 
-            GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER,
-                    framebuffer_[target_texture_index_]);
-            GLES20.glViewport(0, 0, framebuffer_width_, framebuffer_height_);
+            frameBuffers[targetTextureIndex].bind();
+            GLES20.glViewport(0, 0, frameBufferWidth, frameBufferHeight);
             GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 
-            /*if (!useOneFramebuffer_) {
-                renderPostEffect(1 - target_texture_index_);
+            /*if (!useOneFrameBuffer) {
+                renderPostEffect(1 - targetTextureIndex);
             } else {
-                renderPostEffect(target_texture_index_);
+                renderPostEffect(targetTextureIndex);
             } */
             renderSun();
 
             GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, 0);
-            GLES20.glViewport(0, 0, surface_width_, surface_height_);
+            GLES20.glViewport(0, 0, surfaceWidth, surfaceHeight);
 
             GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
-            renderPostEffect(target_texture_index_);
+            renderPostEffect(targetTextureIndex);
 
-            if (!useOneFramebuffer_) {
-                target_texture_index_ = 1 - target_texture_index_;
+            if (!useOneFrameBuffer) {
+                targetTextureIndex = 1 - targetTextureIndex;
             }
         }
         else
@@ -327,53 +325,51 @@ public class Test extends RendererBase {
         float scale = 0.1f;
         float ratio = scale * width / height;
         Matrix.frustumM(P_matrix, 0, -ratio, ratio, -scale, scale, 0.1f, 100.0f);
-        Matrix.orthoM(quad_matrix_, 0, 0, 1, 0, 1, -1, 1);
+        Matrix.orthoM(quadMatrix, 0, 0, 1, 0, 1, -1, 1);
 
-        surface_width_ = width;
-        surface_height_ = height;
+        surfaceWidth = width;
+        surfaceHeight = height;
 
         if (!useNonPowerOfTwoTextures_) {
             // lets make framebuffer have power of 2 dimension
             // and it should be less then display size
-            framebuffer_width_ = 1 << (int) (Math.log(width) / Math.log(2));
-            if (framebuffer_width_ == surface_width_)
-                framebuffer_width_ >>= 1;
-            framebuffer_height_ = 1 << (int) (Math.log(height) / Math.log(2));
-            if (framebuffer_height_ == surface_height_)
-                framebuffer_height_ >>= 1;
+            frameBufferWidth = 1 << (int) (Math.log(width) / Math.log(2));
+            if (frameBufferWidth == surfaceWidth)
+                frameBufferWidth >>= 1;
+            frameBufferHeight = 1 << (int) (Math.log(height) / Math.log(2));
+            if (frameBufferHeight == surfaceHeight)
+                frameBufferHeight >>= 1;
         } else {
-            framebuffer_width_ = surface_width_;
-            framebuffer_height_ = surface_height_;
+            frameBufferWidth = surfaceWidth;
+            frameBufferHeight = surfaceHeight;
         }
 
         if (!useNonSquareTextures_) {
             // http://code.google.com/p/android/issues/detail?id=14835
             // The size of the FBO should have square size.
-            if (framebuffer_height_ > framebuffer_width_) {
-                framebuffer_width_ = framebuffer_height_;
-            } else if (framebuffer_width_ > framebuffer_height_) {
-                framebuffer_height_ = framebuffer_width_;
+            if (frameBufferHeight > frameBufferWidth) {
+                frameBufferWidth = frameBufferHeight;
+            } else if (frameBufferWidth > frameBufferHeight) {
+                frameBufferHeight = frameBufferWidth;
             }
         }
 
         if (useSmallerTextures_) {
-            framebuffer_width_ >>= 1;
-            framebuffer_height_ >>= 1;
+            frameBufferWidth >>= 1;
+            frameBufferHeight >>= 1;
         }
 
-        Log.i("BL***", "framebuffer_width_=" + framebuffer_width_
-                + " framebuffer_height_=" + framebuffer_height_);
+        Log.i("BL***", "frameBufferWidth=" + frameBufferWidth
+                + " frameBufferHeight=" + frameBufferHeight);
 
-        updateTargetTexture(unused, target_texture_[0], framebuffer_width_,
-                framebuffer_height_);
+        renderTextures[0].update(frameBufferWidth, frameBufferHeight);
 
-        if (!useOneFramebuffer_) {
-            updateTargetTexture(unused, target_texture_[1], framebuffer_width_,
-                    framebuffer_height_);
+        if (!useOneFrameBuffer) {
+            renderTextures[1].update(frameBufferWidth, frameBufferHeight);
         }
 
-        target_texture_index_ = 0;
-        resetFramebuffers_ = true;
+        targetTextureIndex = 0;
+        resetFrameBuffers = true;
     }
 
     @Override
@@ -400,117 +396,57 @@ public class Test extends RendererBase {
 
     private void renderPostEffect(int textureIndex) {
         if (postRayProgram.use()) {
-            GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
-            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D,
-                    target_texture_[textureIndex]);
-
-            GLES20.glUniform1i(postRayProgram.getUniformLocation("sTexture"), 0);
-            GLES20.glUniform1f(postRayProgram.getUniformLocation("blur"), 0.6f);
-
+            renderTextures[textureIndex].bind(GLES20.GL_TEXTURE0, postRayProgram, "sTexture");
             quadVertices.bind(postRayProgram, "aPosition", "aTextureCoord");
 
-            GLES20.glUniformMatrix4fv(postRayProgram.getUniformLocation("uMVPMatrix"), 1, false, quad_matrix_, 0);
+            GLES20.glUniform1f(postRayProgram.getUniformLocation("blur"), 0.6f);
+
+            GLES20.glUniformMatrix4fv(postRayProgram.getUniformLocation("uMVPMatrix"), 1, false, quadMatrix, 0);
 
             quadVertices.draw(GLES20.GL_TRIANGLE_STRIP);
         }
     }
 
-    private void updateTargetTexture(GL10 gl, int texture, int width, int height) {
-        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texture);
-        GLES20.glTexImage2D(GLES20.GL_TEXTURE_2D, 0, GLES20.GL_RGBA, width,
-                height, 0, GLES20.GL_RGBA, GLES20.GL_UNSIGNED_BYTE, null);
-        GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D,
-                GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_LINEAR);
-        GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D,
-                GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
-    }
-
     private void setupFramebuffer(GL10 gl) {
-        if (target_texture_ != null) {
-            if (target_texture_[0] != 0) {
-                GLES20.glDeleteTextures(1, target_texture_, 0);
-                ErrorHelper.checkGlError(TAG, "glDeleteTextures target_texture_ 0");
-            }
-            if (target_texture_[1] != 0) {
-                GLES20.glDeleteTextures(1, target_texture_, 1);
-                ErrorHelper.checkGlError(TAG, "glDeleteTextures target_texture_ 1");
-            }
-        }
+        TextureManager textureManager = TextureManager.getSingletonObject();
 
-        if (framebuffer_ != null) {
-            if (framebuffer_[0] != 0) {
-                GLES20.glDeleteFramebuffers(1, framebuffer_, 0);
-                ErrorHelper.checkGlError(TAG, "glDeleteFramebuffers framebuffer_ 0");
-            }
-            if (framebuffer_[1] != 0) {
-                GLES20.glDeleteFramebuffers(1, framebuffer_, 1);
-                ErrorHelper.checkGlError(TAG, "glDeleteFramebuffers framebuffer_ 1");
-            }
-        }
+        renderTextures = new RenderTexture[2];
 
-        target_texture_ = new int[2];
-        target_texture_[0] = createTargetTexture(gl, framebuffer_width_,
-                framebuffer_height_);
-        if (target_texture_[0] == 0) {
+        renderTextures[0] = textureManager.createRenderTexture(frameBufferWidth, frameBufferHeight);
+        renderTextures[1] = textureManager.createRenderTexture(frameBufferWidth, frameBufferHeight);
+
+        if(!renderTextures[0].load())
+        {
             Log.e(TAG, "Could not create render texture");
             throw new RuntimeException("Could not create render texture");
         }
-        if (!useOneFramebuffer_) {
-            target_texture_[1] = createTargetTexture(gl, framebuffer_width_,
-                    framebuffer_height_);
-            if (target_texture_[1] == 0) {
+
+        if (!useOneFrameBuffer) {
+            if(!renderTextures[1].load())
+            {
                 Log.e(TAG, "Could not create second render texture");
-                throw new RuntimeException(
-                        "Could not create second render texture");
+                throw new RuntimeException("Could not create second render texture");
             }
         }
 
-        framebuffer_ = new int[2];
-        framebuffer_[0] = createFrameBuffer(gl, framebuffer_width_,
-                framebuffer_height_, target_texture_[0]);
-        if (framebuffer_[0] == 0) {
+        frameBuffers = new FrameBuffer[2];
+
+        frameBuffers[0] = textureManager.createFrameBuffer(renderTextures[0]);
+
+        if (!frameBuffers[0].load()) {
             Log.e(TAG, "Could not create frame buffer");
             throw new RuntimeException("Could not create frame buffer");
         }
 
-        if (!useOneFramebuffer_) {
-            framebuffer_[1] = createFrameBuffer(gl, framebuffer_width_,
-                    framebuffer_height_, target_texture_[1]);
-            if (framebuffer_[0] == 0) {
+        if (!useOneFrameBuffer) {
+            frameBuffers[1] = textureManager.createFrameBuffer(renderTextures[1]);
+
+            if (!frameBuffers[1].load()) {
                 Log.e(TAG, "Could not create second frame buffer");
                 throw new RuntimeException(
                         "Could not create second frame buffer");
             }
         }
-    }
-
-    private int createTargetTexture(GL10 gl, int width, int height) {
-        int texture;
-        int[] textures = new int[1];
-        GLES20.glGenTextures(1, textures, 0);
-        texture = textures[0];
-        updateTargetTexture(gl, texture, width, height);
-        return texture;
-    }
-
-    private int createFrameBuffer(GL10 gl, int width, int height,
-                                  int targetTextureId) {
-        int framebuffer;
-        int[] framebuffers = new int[1];
-        GLES20.glGenFramebuffers(1, framebuffers, 0);
-        framebuffer = framebuffers[0];
-        GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, framebuffer);
-
-        GLES20.glFramebufferTexture2D(GLES20.GL_FRAMEBUFFER,
-                GLES20.GL_COLOR_ATTACHMENT0, GL10.GL_TEXTURE_2D,
-                targetTextureId, 0);
-        int status = GLES20.glCheckFramebufferStatus(GLES20.GL_FRAMEBUFFER);
-        if (status != GLES20.GL_FRAMEBUFFER_COMPLETE) {
-            throw new RuntimeException("Framebuffer is not complete: "
-                    + Integer.toHexString(status));
-        }
-        GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, 0);
-        return framebuffer;
     }
 
     private float getTimeDeltaByScale(long scale) {
