@@ -19,16 +19,12 @@ import javax.microedition.khronos.opengles.GL10;
 public class Test extends RendererBase {
     private static String TAG = "Sunlight";
 
-    private Program program;
-
+    private Program sunProgram;
     private Program coronaProgram;
-
     private Program postRayProgram;
 
     private Texture baseTexture;
-
     private Texture noiseTexture;
-
     private Texture colorTexture;
 
     private final int horizontalResolution = 64;
@@ -41,8 +37,7 @@ public class Test extends RendererBase {
     private float[] P_matrix = new float[16];
     private float[] M_matrix = new float[16];
     private float[] V_matrix = new float[16];
-
-    private float[] quadMatrix = new float[16];
+    private float[] Q_matrix = new float[16];
 
     private RenderTexture[] renderTextures;
     private FrameBuffer[] frameBuffers;
@@ -70,12 +65,11 @@ public class Test extends RendererBase {
         setRenderMode(RENDERMODE_CONTINUOUSLY);
 
         sphereVertices = GeometryHelper.createSphere(horizontalResolution, verticalResolution);
-
         quadVertices = GeometryHelper.createScreenQuad();
     }
 
     private void loadShaders() {
-        if (program != null && coronaProgram != null && postRayProgram != null) {
+        if (sunProgram != null && coronaProgram != null && postRayProgram != null) {
             return;
         }
 
@@ -83,7 +77,7 @@ public class Test extends RendererBase {
             ShaderManager shaderManager = ShaderManager.getSingletonObject();
             Shader vertex = shaderManager.createVertexShader(ResourceHelper.loadRawString(openResource(R.raw.sun_vertex)));
             Shader fragment = shaderManager.createFragmentShader(ResourceHelper.loadRawString(openResource(R.raw.sun_lookup_fragment)));
-            program = shaderManager.createShaderProgram(vertex, fragment);
+            sunProgram = shaderManager.createShaderProgram(vertex, fragment);
 
             vertex = shaderManager.createVertexShader(ResourceHelper.loadRawString(openResource(R.raw.sun_corona_vertex)));
             fragment = shaderManager.createFragmentShader(ResourceHelper.loadRawString(openResource(R.raw.sun_corona_lookup_fragment)));
@@ -121,8 +115,8 @@ public class Test extends RendererBase {
     }
 
     private void renderSun() {
-        if (program != null && baseTexture != null) {
-            if (!program.use() || !baseTexture.load() || !noiseTexture.load() || !colorTexture.load()) {
+        if (sunProgram != null && baseTexture != null) {
+            if (!sunProgram.use() || !baseTexture.load() || !noiseTexture.load() || !colorTexture.load()) {
                 return;
             }
 
@@ -138,23 +132,23 @@ public class Test extends RendererBase {
             Matrix.multiplyMM(MVP_matrix, 0, P_matrix, 0, MVP_matrix, 0);
 
 
-            baseTexture.bind(GLES20.GL_TEXTURE0, program, "sBaseTexture");
-            noiseTexture.bind(GLES20.GL_TEXTURE1, program, "sNoiseTexture");
-            colorTexture.bind(GLES20.GL_TEXTURE2, program, "sColorTexture");
+            baseTexture.bind(GLES20.GL_TEXTURE0, sunProgram, "sBaseTexture");
+            noiseTexture.bind(GLES20.GL_TEXTURE1, sunProgram, "sNoiseTexture");
+            colorTexture.bind(GLES20.GL_TEXTURE2, sunProgram, "sColorTexture");
 
-            sphereVertices.bind(program, "aPosition", "aTextureCoord");
+            sphereVertices.bind(sunProgram, "aPosition", "aTextureCoord");
 
-            GLES20.glUniformMatrix4fv(program.getUniformLocation("uMVPMatrix"), 1, false, MVP_matrix, 0);
+            GLES20.glUniformMatrix4fv(sunProgram.getUniformLocation("uMVPMatrix"), 1, false, MVP_matrix, 0);
 
 
             float animationTime = getTimeDeltaByScale(790000L);
-            GLES20.glUniform1f(program.getUniformLocation("uTime"), animationTime);
+            GLES20.glUniform1f(sunProgram.getUniformLocation("uTime"), animationTime);
 
             float animationTime2 = getTimeDeltaByScale(669000L);
-            GLES20.glUniform1f(program.getUniformLocation("uTime2"), animationTime2);
+            GLES20.glUniform1f(sunProgram.getUniformLocation("uTime2"), animationTime2);
 
             float animationTime3 = getTimeDeltaByScale(637000L);
-            GLES20.glUniform1f(program.getUniformLocation("uTime3"), animationTime3);
+            GLES20.glUniform1f(sunProgram.getUniformLocation("uTime3"), animationTime3);
 
             //float surfaceColorOffset = 0.02734375f;
             //float surfaceColorAdd = 0.3f;
@@ -166,16 +160,16 @@ public class Test extends RendererBase {
 
             surfaceColorOffset = getTimeDeltaByScale(19000L);
 
-            GLES20.glUniform1f(program.getUniformLocation("uColorOffset"), surfaceColorOffset);
-            GLES20.glUniform1f(program.getUniformLocation("uColorAdd"), surfaceColorAdd);
-            GLES20.glUniform1f(program.getUniformLocation("uColorMul"), surfaceColorMul);
+            GLES20.glUniform1f(sunProgram.getUniformLocation("uColorOffset"), surfaceColorOffset);
+            GLES20.glUniform1f(sunProgram.getUniformLocation("uColorAdd"), surfaceColorAdd);
+            GLES20.glUniform1f(sunProgram.getUniformLocation("uColorMul"), surfaceColorMul);
 
             GLES20.glEnable(GLES20.GL_CULL_FACE);
             GLES20.glCullFace(GLES20.GL_BACK);
 
             sphereVertices.draw(GLES20.GL_TRIANGLE_STRIP);
 
-            sphereVertices.unbind(program, "aPosition", "aTextureCoord");
+            sphereVertices.unbind(sunProgram, "aPosition", "aTextureCoord");
 
             if (coronaProgram != null && coronaProgram.use()) {
 
@@ -207,7 +201,7 @@ public class Test extends RendererBase {
 
                 sphereVertices.draw(GLES20.GL_TRIANGLE_STRIP);
 
-                sphereVertices.unbind(program, "aPosition", "aTextureCoord");
+                sphereVertices.unbind(sunProgram, "aPosition", "aTextureCoord");
 
                 GLES20.glDisable(GLES20.GL_BLEND);
             }
@@ -257,19 +251,16 @@ public class Test extends RendererBase {
         {
             renderSun();
         }
-
     }
 
     @Override
     public void onSurfaceChanged(GL10 unused, int width, int height) {
-        Log.e(TAG, "onSurfaceChanged");
         ShaderManager.getSingletonObject().cleanUp();
 
         GLES20.glViewport(0, 0, width, height);
         float scale = 0.1f;
         float ratio = scale * width / height;
         Matrix.frustumM(P_matrix, 0, -ratio, ratio, -scale, scale, 0.1f, 100.0f);
-        Matrix.orthoM(quadMatrix, 0, 0, 1, 0, 1, -1, 1);
 
         surfaceWidth = width;
         surfaceHeight = height;
@@ -318,7 +309,8 @@ public class Test extends RendererBase {
 
     @Override
     public void onSurfaceCreated(GL10 unused, EGLConfig config) {
-        Log.e(TAG, "onSurfaceCreated");
+        Matrix.orthoM(Q_matrix, 0, 0, 1, 0, 1, -1, 1);
+
         ShaderManager.getSingletonObject().unloadAll();
         ShaderManager.getSingletonObject().cleanUp();
 
@@ -327,13 +319,13 @@ public class Test extends RendererBase {
 
         loadResources();
 
-        if (program != null) {
-            program.load();
+        if (sunProgram != null) {
+            sunProgram.load();
         }
 
         ShaderManager.getSingletonObject().unloadAllShaders();
 
-        setupFramebuffer(unused);
+        setupFrameBuffer(unused);
 
         Matrix.setLookAtM(V_matrix, 0, 0, 0, 2.0f, 0f, 0f, 0f, 0f, -1.0f, 0.0f);
     }
@@ -345,13 +337,13 @@ public class Test extends RendererBase {
 
             GLES20.glUniform1f(postRayProgram.getUniformLocation("blur"), 0.6f);
 
-            GLES20.glUniformMatrix4fv(postRayProgram.getUniformLocation("uMVPMatrix"), 1, false, quadMatrix, 0);
+            GLES20.glUniformMatrix4fv(postRayProgram.getUniformLocation("uMVPMatrix"), 1, false, Q_matrix, 0);
 
             quadVertices.draw(GLES20.GL_TRIANGLE_STRIP);
         }
     }
 
-    private void setupFramebuffer(GL10 gl) {
+    private void setupFrameBuffer(GL10 unused) {
         TextureManager textureManager = TextureManager.getSingletonObject();
 
         renderTextures = new RenderTexture[2];
