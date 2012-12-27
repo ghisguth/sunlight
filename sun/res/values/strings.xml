@@ -2,4 +2,5 @@
 <resources>
     <string name="app_name">Your very own Sun!</string>
     <string name="description">If only I could be so grossly incandescent!</string>
+    <string name="wallpaper_settings">Magnificent settings</string>
 </resources>
