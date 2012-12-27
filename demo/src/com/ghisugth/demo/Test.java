@@ -31,18 +31,8 @@ public class Test extends RendererBase {
 
     private Texture colorTexture;
 
-    private final float[] quadVericesArray = {
-            // X, Y, Z, U, V
-            1.0f, 0.0f, -1.0f, 1.0f, 0.0f,
-            0.0f, 0.0f, -0.5f, 0.0f, 0.0f,
-            1.0f, 1.0f, -1.0f, 1.0f, 1.0f,
-            0.0f, 1.0f, -1.0f, 0.0f, 1.0f
-    };
-
     private final int horizontalResolution = 64;
     private final int verticalResolution = 32;
-    private final int verticesCount = horizontalResolution * verticalResolution;
-    private final int indicesCount = horizontalResolution * 2 * (verticalResolution - 1);
 
     private VertexBuffer sphereVertices;
     private VertexBuffer quadVertices;
@@ -79,55 +69,9 @@ public class Test extends RendererBase {
         setRenderer(this);
         setRenderMode(RENDERMODE_CONTINUOUSLY);
 
-        float[] vertices = new float[verticesCount * 5];
-        short[] indices = new short[indicesCount];
-        int index = 0;
-        float radius = 1.0f;
+        sphereVertices = GeometryHelper.createSphere(horizontalResolution, verticalResolution);
 
-        for (int j = 0; j < verticalResolution; ++j) {
-            double v = (double) j / (verticalResolution - 1);
-            double theta = v * Math.PI;
-            double sinTheta = Math.sin(theta);
-            double cosTheta = Math.cos(theta);
-
-            for (int i = 0; i < horizontalResolution; ++i) {
-                double u = (double) i / (horizontalResolution - 1);
-
-                double phi = 2.0f * u * Math.PI;
-                double sinPhi = Math.sin(phi);
-                double cosPhi = Math.cos(phi);
-
-                vertices[index + 0] = (float) (radius * sinTheta * cosPhi);
-                vertices[index + 1] = (float) (radius * sinTheta * sinPhi);
-                vertices[index + 2] = (float) (radius * cosTheta);
-                vertices[index + 3] = (float) (u);
-                vertices[index + 4] = (float) (v);
-                index += 5;
-            }
-        }
-
-        index = 0;
-
-        for (int j = 0; j < verticalResolution - 1; ++j) {
-            boolean dir = (j & 1) != 0;
-            if (dir || true) {
-                for (int i = 0; i < horizontalResolution; ++i) {
-                    indices[index + 0] = (short) (j * horizontalResolution + i);
-                    indices[index + 1] = (short) ((j + 1) * horizontalResolution + i);
-                    index += 2;
-                }
-            } else {
-                for (int i = horizontalResolution - 1; i >= 0; --i) {
-                    indices[index + 0] = (short) (j * horizontalResolution + i);
-                    indices[index + 1] = (short) ((j + 1) * horizontalResolution + i);
-                    index += 2;
-                }
-            }
-        }
-
-        sphereVertices = new VertexBuffer(vertices, indices, true);
-
-        quadVertices = new VertexBuffer(quadVericesArray, new short[0], true);
+        quadVertices = GeometryHelper.createScreenQuad();
     }
 
     private void loadShaders() {
