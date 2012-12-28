@@ -39,9 +39,9 @@
     <string name="settings_sun_corona_speed">Activity</string>
     <string name="settings_sun_corona_speed_summary">Animation speed</string>
     <string name="settings_post_effects">Post effects</string>
-    <string name="settings_post_disabled">Disabled</string>
-    <string name="settings_post_disabled_summary_on">Post effects are disabled. Will consume less resources.</string>
-    <string name="settings_post_disabled_summary_off">Render star glowing. Consumes more resources.</string>
+    <string name="settings_post_enabled">Enabled</string>
+    <string name="settings_post_enabled_summary_on">Post effects are disabled. Consumes more resources.</string>
+    <string name="settings_post_enabled_summary_off">Post effects are disabled. Will consume less resources.</string>
     <string name="settings_post_ray_exposure">Exposure</string>
     <string name="settings_post_ray_exposure_summary">Ray exposure</string>
     <string name="settings_post_ray_density">Density</string>

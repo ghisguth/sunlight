@@ -84,10 +84,11 @@
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/settings_post_effects" >
         <CheckBoxPreference
-                android:key="postDisabled"
-                android:title="@string/settings_post_disabled"
-                android:summaryOn="@string/settings_post_disabled_summary_on"
-                android:summaryOff="@string/settings_post_disabled_summary_off" />
+                android:key="postEnabled"
+                android:defaultValue="true"
+                android:title="@string/settings_post_enabled"
+                android:summaryOn="@string/settings_post_enabled_summary_on"
+                android:summaryOff="@string/settings_post_enabled_summary_off" />
         <ListPreference
                 android:key="rayQuality"
                 android:title="@string/settings_post_ray_quality"
