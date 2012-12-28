@@ -50,7 +50,7 @@
     <string name="settings_post_ray_decay_summary">Star light decay</string>
     <string name="settings_post_ray_weight">Weight</string>
     <string name="settings_post_ray_weight_summary">Sample weight</string>
-    <string name="settings_post_ray_quality">Effects quality</string>
+    <string name="settings_post_ray_quality">Quality</string>
     <string name="settings_post_ray_quality_summary">Better quality will consume more resources and may reduce framerate.</string>
     <string name="settings_post_ray_quality_dialog">Select effect quality</string>
 </resources>

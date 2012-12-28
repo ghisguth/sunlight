@@ -61,8 +61,8 @@ public class SunRenderer implements GLWallpaperService.Renderer {
     private float preferenceCoronaSpeed = 1.0f;
     private float colorAdd = 0.0f;
     private float preferenceColorAdd = 0.0f;
-    private float colorMul = 1.0f;
-    private float preferenceColorMul = 0.0f;
+    private float colorMul = 2.0f;
+    private float preferenceColorMul = 1.0f;
     private float rotationSpeed = 0.5f;
     private float preferenceRotationSpeed = 1.0f;
     private float animationSpeed = 0.8f;
@@ -333,7 +333,6 @@ public class SunRenderer implements GLWallpaperService.Renderer {
 
             GLES20.glUniformMatrix4fv(sunProgram.getUniformLocation("uMVPMatrix"), 1, false, MVP_matrix, 0);
 
-
             float animationTime = getTimeDeltaByScale((long) (790000.0 / finalAnimationSpeed));
             float animationTime2 = getTimeDeltaByScale((long) (669000.0 / finalAnimationSpeed));
             float animationTime3 = getTimeDeltaByScale((long) (637000.0 / finalAnimationSpeed));
@@ -459,7 +458,7 @@ public class SunRenderer implements GLWallpaperService.Renderer {
                 renderer.setRotationSpeed(sharedPreferences.getInt("rotationSpeed", 127));
                 renderer.setAnimationSpeed(sharedPreferences.getInt("animationSpeed", 127));
 
-                renderer.setPostEffectsEnabled(!sharedPreferences.getBoolean("postDisabled", false));
+                renderer.setPostEffectsEnabled(sharedPreferences.getBoolean("postEnabled", true));
                 renderer.setRayDensity(sharedPreferences.getInt("rayDensity", 127));
                 renderer.setRayDecay(sharedPreferences.getInt("rayDecay", 127));
                 renderer.setRayWeight(sharedPreferences.getInt("rayWeight", 127));
