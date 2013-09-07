@@ -170,7 +170,10 @@ public class Test extends RendererBase {
             renderTexture.bind(GLES20.GL_TEXTURE0, postRayProgram, "sTexture");
             quadVertices.bind(postRayProgram, "aPosition", "aTextureCoord");
 
-            GLES20.glUniform1f(postRayProgram.getUniformLocation("blur"), 0.6f);
+            GLES20.glUniform1f(postRayProgram.getUniformLocation("uDecay"), 0.95f);
+            GLES20.glUniform1f(postRayProgram.getUniformLocation("uWeight"), 0.11f);
+            GLES20.glUniform1f(postRayProgram.getUniformLocation("uDensity"), 0.1f);
+            GLES20.glUniform1f(postRayProgram.getUniformLocation("uExposure"), 0.58f);
 
             GLES20.glUniformMatrix4fv(postRayProgram.getUniformLocation("uMVPMatrix"), 1, false, Q_matrix, 0);
 

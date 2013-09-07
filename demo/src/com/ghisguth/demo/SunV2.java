@@ -337,7 +337,10 @@ public class SunV2 extends RendererBase {
                     target_texture_[textureIndex]);
 
             GLES20.glUniform1i(postRayProgram.getUniformLocation("sTexture"), 0);
-            GLES20.glUniform1f(postRayProgram.getUniformLocation("blur"), 0.6f);
+            GLES20.glUniform1f(postRayProgram.getUniformLocation("uDecay"), 0.95f);
+            GLES20.glUniform1f(postRayProgram.getUniformLocation("uWeight"), 0.11f);
+            GLES20.glUniform1f(postRayProgram.getUniformLocation("uDensity"), 0.1f);
+            GLES20.glUniform1f(postRayProgram.getUniformLocation("uExposure"), 0.58f);
 
             quadVertices.bind(postRayProgram, "aPosition", "aTextureCoord");
 
