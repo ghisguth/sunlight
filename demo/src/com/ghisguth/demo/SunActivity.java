@@ -3,7 +3,7 @@
  * Copyright (c) $today.year sunlight authors (see file `COPYRIGHT` for the license)
  */
 
-package com.ghisugth.demo;
+package com.ghisguth.demo;
 
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
