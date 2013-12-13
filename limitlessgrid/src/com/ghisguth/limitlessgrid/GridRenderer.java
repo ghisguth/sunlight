@@ -404,7 +404,7 @@ public class GridRenderer implements GLWallpaperService.Renderer {
 
     public void setColors(int backgroundInt, int linesInt) {
         float scale = 1.0f / 255.0f;
-        float scaleBackground = scale * 0.05f;
+        float scaleBackground = scale * 0.03f;
         backgroundColorRed = scaleBackground * Color.red(backgroundInt);
         backgroundColorGreen = scaleBackground * Color.green(backgroundInt);
         backgroundColorBlue = scaleBackground * Color.blue(backgroundInt);
@@ -442,7 +442,7 @@ public class GridRenderer implements GLWallpaperService.Renderer {
             value = 0;
         }
 
-        int newGridSize = 7 + value * 2;
+        int newGridSize = 5 + value * 2;
 
         if(this.gridSize != newGridSize) {
             this.lineVertices = CreateLineVertices(newGridSize);
