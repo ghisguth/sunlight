@@ -94,6 +94,7 @@ public class BlurredLinesRenderer implements GLWallpaperService.Renderer {
 
         if (resetFramebuffers) {
             resetFramebuffers = false;
+
             if (!useOneFramebuffer) {
                 frameBuffers[1 - activeTargettexture].bind();
                 GLES20.glViewport(0, 0, frameBufferWidth, frameBufferHeight);
@@ -174,6 +175,7 @@ public class BlurredLinesRenderer implements GLWallpaperService.Renderer {
         }
 
         resetFramebuffers = true;
+        activeTargettexture = 0;
     }
 
     @Override
@@ -290,8 +292,10 @@ public class BlurredLinesRenderer implements GLWallpaperService.Renderer {
 
             GLES20.glUniformMatrix4fv(phenixLineProgram.getUniformLocation("uMVPMatrix"), 1, false, MVP_matrix, 0);
 
+            float finalBrightness = brightness * brightnessFactor;
+
             GLES20.glUniform1f(phenixLineProgram.getUniformLocation("uDelta"), delta);
-            GLES20.glUniform1f(phenixLineProgram.getUniformLocation("uBrightness"), brightness * brightnessFactor);
+            GLES20.glUniform1f(phenixLineProgram.getUniformLocation("uBrightness"), finalBrightness);
             GLES20.glUniform3f(phenixLineProgram.getUniformLocation("uColor"), linesColorRed, linesColorGreen, linesColorBlue);
 
             GLES20.glEnable(GLES20.GL_BLEND);
