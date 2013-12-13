@@ -71,6 +71,11 @@ public class BlurredLinesRenderer implements GLWallpaperService.Renderer {
     public BlurredLinesRenderer(Context context) {
         this.context = context;
 
+        quadVertices = GeometryHelper.createScreenQuad();
+        lineVertices = CreateLineVertices();
+    }
+
+    private VertexBuffer CreateLineVertices() {
         // Create lines
         Random rnd = new Random();
         float[] lineVerticesArray = new float[lineCount * 3];
@@ -80,7 +85,7 @@ public class BlurredLinesRenderer implements GLWallpaperService.Renderer {
             lineVerticesArray[i * 3 + 2] = rnd.nextFloat();
         }
 
-        lineVertices = new VertexBuffer(lineVerticesArray, new short[0], false);
+        return new VertexBuffer(lineVerticesArray, new short[0], false);
     }
 
     @Override
