@@ -35,6 +35,12 @@ public class SunActivity extends Activity {
 
             tab = actionBar.newTab();
             tab.setTabListener(tabHandler);
+            tab.setText(R.string.tab_lines);
+            tab.setTag(new Lines(this));
+            actionBar.addTab(tab);
+
+            tab = actionBar.newTab();
+            tab.setTabListener(tabHandler);
             tab.setText(R.string.tab_test);
             tab.setTag(new Test(this));
             actionBar.addTab(tab);
@@ -56,6 +62,7 @@ public class SunActivity extends Activity {
             tab.setText(R.string.tab_sunv3);
             tab.setTag(new SunV3(this));
             actionBar.addTab(tab);
+
         } else {
             glSurfaceView = new Test(this);
             setContentView(glSurfaceView);
