@@ -9,9 +9,9 @@ import com.ghisguth.wallpaper.GLES20WallpaperService;
 import com.ghisguth.wallpaper.glwallpaperservice.GLWallpaperService;
 
 public class Wallpaper extends GLES20WallpaperService {
-    public static final String SHARED_PREF_NAME = "SunSettings";
+    public static final String SHARED_PREF_NAME = "GridSettings";
     private static final boolean DEBUG = false;
-    private static String TAG = "Sunlight";
+    private static String TAG = "Sunlight.Grid";
     private long lastTap = 0;
 
     @Override
