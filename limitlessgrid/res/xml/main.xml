@@ -22,5 +22,5 @@
 <wallpaper xmlns:android="http://schemas.android.com/apk/res/android"
            android:thumbnail="@drawable/thumbnail"
            android:description="@string/description"
-           android:settingsActivity="com.ghisguth.blurredlines.WallpaperSettings"
+           android:settingsActivity="com.ghisguth.limitlessgrid.WallpaperSettings"
         />
