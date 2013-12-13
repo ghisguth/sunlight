@@ -32,8 +32,8 @@ public class Lines extends RendererBase {
     private float[] M_matrix = new float[16];
     private float[] V_matrix = new float[16];
     private float[] Q_matrix = new float[16];
-    private RenderTexture renderTexture;
-    private FrameBuffer frameBuffer;
+    private RenderTexture[] renderTextures = new RenderTexture[2];
+    private FrameBuffer[] frameBuffers = new FrameBuffer[2];
     private int frameBufferWidth = 256;
     private int frameBufferHeight = 256;
     private int surfaceWidth = 256;
@@ -41,7 +41,12 @@ public class Lines extends RendererBase {
     private boolean useSmallerTextures_ = false;
     private boolean useNonPowerOfTwoTextures_ = false;
     private boolean useNonSquareTextures_ = false;
-    private boolean postEffectsEnabled = true;
+
+    private boolean useOneFramebuffer = false;
+
+    private boolean resetFramebuffers = false;
+
+    private int activeTargettexture = 0;
 
     private float backgroundColorRed = 0.0f;
     private float backgroundColorGreen = 0.0f;
@@ -52,7 +57,7 @@ public class Lines extends RendererBase {
 
     private float blur = 0.86f;
     private float blurFactor = 1.0f;
-    private float brightness = 0.15f + 0.5f;
+    private float brightness = 0.15f;
     private float brightnessFactor = 1.0f;
 
 
@@ -101,6 +106,9 @@ public class Lines extends RendererBase {
 
         ShaderManager.getSingletonObject().unloadAllShaders();
 
+        renderTextures = new RenderTexture[2];
+        frameBuffers = new FrameBuffer[2];
+
         setupFrameBuffer(unused);
 
         Matrix.setLookAtM(V_matrix, 0, 0, 0, 1.0f, 0f, 0f, 0f, 0f, -1.0f, 0.0f);
@@ -109,18 +117,22 @@ public class Lines extends RendererBase {
     private void setupFrameBuffer(GL10 unused) {
         TextureManager textureManager = TextureManager.getSingletonObject();
 
-        renderTexture = textureManager.createRenderTexture(frameBufferWidth, frameBufferHeight);
+        int numberOfRequiredTextures = useOneFramebuffer ? 1 : 2;
 
-        if (!renderTexture.load()) {
-            Log.e(TAG, "Could not create render texture");
-            throw new RuntimeException("Could not create render texture");
-        }
+        for(int i = 0; i < numberOfRequiredTextures; ++i) {
+            renderTextures[i] = textureManager.createRenderTexture(frameBufferWidth, frameBufferHeight);
 
-        frameBuffer = textureManager.createFrameBuffer(renderTexture);
+            if (!renderTextures[i].load()) {
+                Log.e(TAG, "Could not create render texture");
+                throw new RuntimeException("Could not create render texture");
+            }
 
-        if (!frameBuffer.load()) {
-            Log.e(TAG, "Could not create frame buffer");
-            throw new RuntimeException("Could not create frame buffer");
+            frameBuffers[i] = textureManager.createFrameBuffer(renderTextures[i]);
+
+            if (!frameBuffers[i].load()) {
+                Log.e(TAG, "Could not create frame buffer");
+                throw new RuntimeException("Could not create frame buffer");
+            }
         }
     }
 
@@ -168,35 +180,49 @@ public class Lines extends RendererBase {
         Log.i("BL***", "frameBufferWidth=" + frameBufferWidth
                 + " frameBufferHeight=" + frameBufferHeight);
 
-        renderTexture.update(frameBufferWidth, frameBufferHeight);
+        for(int i = 0; i < renderTextures.length; ++i) {
+            if(renderTextures[i] != null) {
+                renderTextures[i].update(frameBufferWidth, frameBufferHeight);
+            }
+        }
+
+        resetFramebuffers = true;
     }
 
     @Override
     public void onDrawFrame(GL10 unused) {
         GLES20.glClearColor(backgroundColorRed, backgroundColorGreen, backgroundColorBlue, 1.0f);
 
-        if (postEffectsEnabled) {
-            frameBuffer.bind();
-            GLES20.glViewport(0, 0, frameBufferWidth, frameBufferHeight);
-            GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
+        if (resetFramebuffers) {
+            resetFramebuffers = false;
+            if (!useOneFramebuffer) {
+                frameBuffers[1 - activeTargettexture].bind();
+                GLES20.glViewport(0, 0, frameBufferWidth, frameBufferHeight);
+                GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
+            }
+        }
 
-            renderPostEffect();
-            renderLines();
+        frameBuffers[activeTargettexture].bind();
+        GLES20.glViewport(0, 0, frameBufferWidth, frameBufferHeight);
+        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 
-            frameBuffer.unbind();
+        renderBlurTexture(useOneFramebuffer ? (activeTargettexture) : (1 - activeTargettexture));
+        renderLines();
 
-            GLES20.glViewport(0, 0, surfaceWidth, surfaceHeight);
-            GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
-            renderPostEffect();
-        } else { 
-            GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
-            renderLines();
+        frameBuffers[activeTargettexture].unbind();
+
+        GLES20.glViewport(0, 0, surfaceWidth, surfaceHeight);
+        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
+        renderBlurTexture(activeTargettexture);
+
+        if(!useOneFramebuffer) {
+            activeTargettexture = 1 - activeTargettexture;
         }
     }
 
-    private void renderPostEffect() {
+    private void renderBlurTexture(int textureIndex) {
         if (postProgram.use()) {
-            renderTexture.bind(GLES20.GL_TEXTURE0, postProgram, "sTexture");
+            renderTextures[textureIndex].bind(GLES20.GL_TEXTURE0, postProgram, "sTexture");
             quadVertices.bind(postProgram, "aPosition", "aTextureCoord");
 
             GLES20.glUniform1f(postProgram.getUniformLocation("uBlur"), blur * blurFactor);
@@ -212,7 +238,7 @@ public class Lines extends RendererBase {
 
             quadVertices.unbind(postProgram, "aPosition", "aTextureCoord");
 
-            renderTexture.unbind(GLES20.GL_TEXTURE0);
+            renderTextures[textureIndex].unbind(GLES20.GL_TEXTURE0);
         }
     }
 
