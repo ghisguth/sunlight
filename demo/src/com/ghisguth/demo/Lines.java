@@ -22,9 +22,6 @@ public class Lines extends RendererBase {
     private final int lineCount = 1500;
     private Program phenixLineProgram;
     private Program postProgram;
-    private Texture baseTexture;
-    private Texture noiseTexture;
-    private Texture colorTexture;
     private VertexBuffer quadVertices;
     private VertexBuffer lineVertices;
     private float[] MVP_matrix = new float[16];
@@ -90,8 +87,6 @@ public class Lines extends RendererBase {
 
     @Override
     public void onSurfaceCreated(GL10 unused, EGLConfig config) {
-        Matrix.orthoM(Q_matrix, 0, 0, 1, 0, 1, -1, 1);
-
         ShaderManager.getSingletonObject().unloadAll();
         ShaderManager.getSingletonObject().cleanUp();
 
@@ -112,6 +107,7 @@ public class Lines extends RendererBase {
         setupFrameBuffer(unused);
 
         Matrix.setLookAtM(V_matrix, 0, 0, 0, 1.0f, 0f, 0f, 0f, 0f, -1.0f, 0.0f);
+        Matrix.orthoM(Q_matrix, 0, 0, 1, 0, 1, -1, 1);
     }
 
     private void setupFrameBuffer(GL10 unused) {
@@ -285,24 +281,6 @@ public class Lines extends RendererBase {
 
     private void loadResources() {
         loadShaders();
-        loadTextures();
-    }
-
-    private void loadTextures() {
-        try {
-            TextureManager textureManager = TextureManager.getSingletonObject();
-            if (baseTexture == null) {
-                baseTexture = textureManager.createTexture(getResources(), R.raw.sun_surface_etc1, true, GLES20.GL_NEAREST, GLES20.GL_LINEAR, GLES20.GL_REPEAT, GLES20.GL_REPEAT);
-            }
-            if (noiseTexture == null) {
-                noiseTexture = textureManager.createTexture(getResources(), R.raw.noise_etc1, true, GLES20.GL_NEAREST, GLES20.GL_LINEAR, GLES20.GL_REPEAT, GLES20.GL_REPEAT);
-            }
-            if (colorTexture == null) {
-                colorTexture = textureManager.createTexture(getResources(), R.raw.star_color_etc1, true, GLES20.GL_NEAREST, GLES20.GL_LINEAR, GLES20.GL_CLAMP_TO_EDGE, GLES20.GL_CLAMP_TO_EDGE);
-            }
-        } catch (Exception ex) {
-            Log.e(TAG, "Unable to load textures from resources " + ex.toString());
-        }
     }
 
     private void loadShaders() {

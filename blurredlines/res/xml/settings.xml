@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2009 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+  
+          http://www.apache.org/licenses/LICENSE-2.0
+  
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:key="wallpaper_settings"
+    android:title="@string/wallpaper_settings" >
+
+    <PreferenceCategory android:title="@string/settings_general_preferences" >
+        <com.jakewharton.utilities.ColorPreference
+            android:defaultValue="@integer/color_background_default"
+            android:key="backgroundColor"
+            android:summary="@string/settings_background_summary"
+            android:title="@string/settings_background_title" />
+        <com.jakewharton.utilities.ColorPreference
+            android:defaultValue="@integer/color_lines_default"
+            android:key="linesColor"
+            android:summary="@string/settings_lines_summary"
+            android:title="@string/settings_lines_title" />
+
+        <cxa.lineswallpaper.SliderPreference
+            android:defaultValue="@integer/factor_default"
+            android:key="brightness"
+            android:summary="@string/settings_brightness_summary"
+            android:title="@string/settings_brightness_title" />
+        <cxa.lineswallpaper.SliderPreference
+            android:defaultValue="@integer/factor_default"
+            android:key="blur"
+            android:summary="@string/settings_blur_summary"
+            android:title="@string/settings_blur_title" />
+        <cxa.lineswallpaper.SliderPreference
+            android:defaultValue="@integer/factor_default"
+            android:key="linewidth"
+            android:summary="@string/settings_linewidth_summary"
+            android:title="@string/settings_linewidth_title" />
+        <cxa.lineswallpaper.SliderPreference
+            android:defaultValue="@integer/factor_default"
+            android:key="speed"
+            android:summary="@string/settings_speed_summary"
+            android:title="@string/settings_speed_title" />
+        <cxa.lineswallpaper.SliderPreference
+            android:defaultValue="@integer/factor_default"
+            android:key="rotationspeed"
+            android:summary="@string/settings_rotationspeed_summary"
+            android:title="@string/settings_rotationspeed_title" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/settings_general_compatibility" >
+        <CheckBoxPreference
+            android:key="use_one_framebuffer"
+            android:title="@string/settings_use_one_framebuffer_title"
+            android:summaryOn="@string/settings_use_one_framebuffer_summary_on"
+            android:summaryOff="@string/settings_use_one_framebuffer_summary_off" />
+        
+        <CheckBoxPreference
+            android:key="use_non_square_textures"
+            android:title="@string/settings_use_non_square_textures_title"
+            android:summaryOn="@string/settings_use_non_square_textures_summary_on"
+            android:summaryOff="@string/settings_use_non_square_textures_summary_off" />
+        
+        <!--CheckBoxPreference
+            android:key="use_non_power_of_two_textures"
+            android:title="@string/settings_use_non_power_of_two_textures_title"
+            android:summaryOn="@string/settings_use_non_power_of_two_textures_summary_on"
+            android:summaryOff="@string/settings_use_non_power_of_two_textures_summary_off" /-->
+        
+        <CheckBoxPreference
+            android:key="use_smaller_textures"
+            android:title="@string/settings_use_smaller_textures_title"
+            android:summaryOn="@string/settings_use_smaller_textures_summary_on"
+            android:summaryOff="@string/settings_use_smaller_textures_summary_off" />
+        
+    </PreferenceCategory>
+
+</PreferenceScreen>
