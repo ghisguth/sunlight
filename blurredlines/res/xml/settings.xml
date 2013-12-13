@@ -64,6 +64,15 @@
                 android:summaryOn="@string/settings_use_one_framebuffer_summary_on"
                 android:summaryOff="@string/settings_use_one_framebuffer_summary_off"/>
 
+        <ListPreference
+                android:key="lineCount"
+                android:title="@string/settings_lines_count_title"
+                android:summary="@string/settings_lines_count_summary"
+                android:entries="@array/lines_count_names"
+                android:entryValues="@array/lines_count_values"
+                android:dialogTitle="@string/settings_lines_count_dialog"
+                android:defaultValue="3"/>
+
         <CheckBoxPreference
                 android:key="use_non_square_textures"
                 android:title="@string/settings_use_non_square_textures_title"

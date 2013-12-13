@@ -25,7 +25,6 @@ public class BlurredLinesRenderer implements GLWallpaperService.Renderer {
     private int surfaceWidth = 256;
     private int surfaceHeight = 256;
     private Context context;
-    private final int lineCount = 1500;
     private Program phenixLineProgram;
     private Program postProgram;
     private VertexBuffer quadVertices;
@@ -50,6 +49,8 @@ public class BlurredLinesRenderer implements GLWallpaperService.Renderer {
 
     private int activeTargettexture = 0;
 
+    private int lineCount = 1500;
+
     private float backgroundColorRed = 0.0f;
     private float backgroundColorGreen = 0.0f;
     private float backgroundColorBlue = 0.0f;
@@ -72,14 +73,14 @@ public class BlurredLinesRenderer implements GLWallpaperService.Renderer {
         this.context = context;
 
         quadVertices = GeometryHelper.createScreenQuad();
-        lineVertices = CreateLineVertices();
+        lineVertices = CreateLineVertices(lineCount);
     }
 
-    private VertexBuffer CreateLineVertices() {
+    private VertexBuffer CreateLineVertices(int count) {
         // Create lines
         Random rnd = new Random();
-        float[] lineVerticesArray = new float[lineCount * 3];
-        for (int i = 0; i < lineCount; ++i) {
+        float[] lineVerticesArray = new float[count * 3];
+        for (int i = 0; i < count; ++i) {
             lineVerticesArray[i * 3 + 0] = rnd.nextFloat() * 2 - 1;
             lineVerticesArray[i * 3 + 1] = rnd.nextFloat() * 2 - 1;
             lineVerticesArray[i * 3 + 2] = rnd.nextFloat();
@@ -349,6 +350,7 @@ public class BlurredLinesRenderer implements GLWallpaperService.Renderer {
                 renderer.setLineWidth(sharedPreferences.getInt("linewidth", 127));
                 renderer.setRotationSpeed(sharedPreferences.getInt("rotationspeed", 127));
                 renderer.setSpeed(sharedPreferences.getInt("speed", 127));
+                renderer.setLinesCount(Integer.parseInt(sharedPreferences.getString("lineCount", "3")));
 
             } catch (final Exception e) {
                 Log.e(TAG, "PREF init error: " + e);
@@ -390,6 +392,21 @@ public class BlurredLinesRenderer implements GLWallpaperService.Renderer {
     public void setSpeed(int value) {
         speedFactor = getScaledFactor(value, 1.0f);
     }
+
+    public void setLinesCount(int value) {
+        if(value < 0) {
+            value = 0;
+        }
+
+        int newLinesCount = 750 + value * 250;
+
+        if(this.lineCount != newLinesCount) {
+            this.lineCount = newLinesCount;
+
+            this.lineVertices = CreateLineVertices(lineCount);
+        }
+    }
+
 
     public void setCompatibilitySettings(boolean useSmallerTextures,
                                          boolean useNonPowerOfTwoTextures,
