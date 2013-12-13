@@ -15,8 +15,20 @@ public class GeometryHelper {
             0.0f, 1.0f, -1.0f, 0.0f, 1.0f
     };
 
+    private static final float[] spriteVerticesArray = {
+            // X, Y, Z, U, V
+            1.0f, 0.0f, -1.0f, 1.0f, 1.0f,
+            0.0f, 0.0f, -0.5f, 0.0f, 1.0f,
+            1.0f, 1.0f, -1.0f, 1.0f, 0.0f,
+            0.0f, 1.0f, -1.0f, 0.0f, 0.0f
+    };
+
     public static VertexBuffer createScreenQuad() {
         return new VertexBuffer(quadVerticesArray, new short[0], true);
+    }
+
+    public static VertexBuffer createSprite() {
+        return new VertexBuffer(spriteVerticesArray, new short[0], true);
     }
 
     public static VertexBuffer createSphere(int horizontalResolution, int verticalResolution) {
