@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string-array name="lines_count_names">
+    <item>"Крайне мало"</item>
+    <item>"Очень мало"</item>
+    <item>"Мало"</item>
+    <item>"Средне"</item>
+    <item>"Много"</item>
+    <item>"Очень много"</item>
+    <item>"Крайне много"</item>
+</string-array>
+
+</resources>
