@@ -1,6 +1,11 @@
 sunlight
 =======================
 
+Project includes 3D live wallpaper for OpenGL ES 2.0 capable androind devices.
+
+Your very own sun
+=======================
+
 This application is a 3D live wallpaper. It renders sun as well as other star types using OpenGL ES 2.0.
 
 Live animated Sun can be configured. You can change size, color, animation speed, corona size, turbulence and many more options.
@@ -33,3 +38,23 @@ Build instructions
 ----------------------
 
 The project created in Intellij IDEA 12 Community Edition. Ant build should work too.
+
+blurred-lines-live
+=======================
+
+This is small live wallpaper inspired by 1K demo "In the mist of web"
+(www.tylerdurden.net.ru).
+
+Usage: Home->Menu->Wallpapers->Live Wallpapers
+
+Wallpaper should work properly on HTC Desire device.
+If you have problems on your device please email me.
+
+Speed improvements may be introduced in further version.
+
+Live Wallpaper Open GL support used from andenginelivewallpaperextensio project
+(http://code.google.com/p/andenginelivewallpaperextension).
+Detailed information on GLSurfaceView adaption for 3D Live Wallpapers:
+http://www.rbgrn.net/content/354-glsurfaceview-adapted-3d-live-wallpapers
+GLWallpaperService imported from https://github.com/markfguerra/GLWallpaperService
+Settings code based on https://github.com/JakeWharton/SnakeWallpaper project.
