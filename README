@@ -58,3 +58,23 @@ Detailed information on GLSurfaceView adaption for 3D Live Wallpapers:
 http://www.rbgrn.net/content/354-glsurfaceview-adapted-3d-live-wallpapers
 GLWallpaperService imported from https://github.com/markfguerra/GLWallpaperService
 Settings code based on https://github.com/JakeWharton/SnakeWallpaper project.
+
+
+the-grid-live
+=======================
+
+This is small live wallpaper based on blurred-lines-live project.
+
+Usage: Home->Menu->Wallpapers->Live Wallpapers
+
+Wallpaper should work properly on HTC Desire and Nexus 7 devices
+If you have problems on your device please email me.
+
+
+Code forked from blurred-lines-live project (https://github.com/ghisguth/blurred-lines-live);
+Live Wallpaper Open GL support used from andenginelivewallpaperextensio project
+(http://code.google.com/p/andenginelivewallpaperextension).
+Detailed information on GLSurfaceView adaption for 3D Live Wallpapers:
+http://www.rbgrn.net/content/354-glsurfaceview-adapted-3d-live-wallpapers
+GLWallpaperService imported from https://github.com/markfguerra/GLWallpaperService
+Settings code based on https://github.com/JakeWharton/SnakeWallpaper project.
