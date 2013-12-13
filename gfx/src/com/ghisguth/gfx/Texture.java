@@ -51,6 +51,13 @@ public class Texture {
         ErrorHelper.checkGlError(TAG, "glBindTexture texture");
     }
 
+    public void unbind(int activeTexture) {
+        GLES20.glActiveTexture(activeTexture);
+        ErrorHelper.checkGlError(TAG, "glActiveTexture");
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, 0);
+        ErrorHelper.checkGlError(TAG, "glBindTexture texture");
+    }
+
     protected void finalize() throws Throwable {
         unload();
         super.finalize();
