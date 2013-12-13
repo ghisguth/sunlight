@@ -8,7 +8,7 @@
     <uses-feature android:name="android.software.live_wallpaper"/>
     <application android:icon="@drawable/thumbnail" android:label="@string/app_name">
         <service
-                android:label="@string/app_name"
+                android:label="@string/wallpaper_lines"
                 android:name="com.ghisguth.blurredlines.Wallpaper"
                 android:permission="android.permission.BIND_WALLPAPER">
             <intent-filter>

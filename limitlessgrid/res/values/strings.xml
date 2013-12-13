@@ -1,4 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">limitlessgrid</string>
+    <string name="wallpaper_grid">Limitless Grid</string>
+    <string name="app_name">Limitless Grid Live Wallpaper</string>
+    <string name="description">Gray line grid drawn on black background</string>
+    <string name="wallpaper_settings">Settings</string>
+    <string name="wallpaper_settings_title">Select colors</string>
+    <string name="wallpaper_settings_summary">Choose background and foreground color</string>
+    <string name="settings_background_title">Background</string>
+    <string name="settings_background_summary">Color of the background</string>
+    <string name="settings_lines_title">Line color</string>
+    <string name="settings_lines_summary">Color of the lines</string>
+    <string name="settings_blur_title">Blur</string>
+    <string name="settings_blur_summary">Line blurriness</string>
+    <string name="settings_brightness_title">Brightness</string>
+    <string name="settings_brightness_summary">Line brightness</string>
+    <string name="settings_linewidth_title">Size</string>
+    <string name="settings_linewidth_summary">Line size</string>
+    <string name="settings_rotationspeed_title">Rotation</string>
+    <string name="settings_rotationspeed_summary">Rotation speed</string>
+    <string name="settings_speed_title">Animation</string>
+    <string name="settings_speed_summary">Animation speed</string>
+    <string name="settings_value">Value:</string>
+    <string name="settings_general_preferences">General</string>
+    <string name="settings_general_compatibility">Compatibility and performance</string>
+    <string name="settings_use_one_framebuffer_title">Use single framebuffer</string>
+    <string name="settings_use_one_framebuffer_summary_on">Use one render texture and framebuffer. Uses less resources,
+        but may not work on some devices like Nexus 7.
+    </string>
+    <string name="settings_use_one_framebuffer_summary_off">Use two render texture and framebuffer. Uses more resources,
+        but will work on all devices.
+    </string>
+    <string name="settings_use_non_square_textures_title">Use non square textures</string>
+    <string name="settings_use_non_square_textures_summary_on">Will use rectangular textures. Better performance, but
+        may not work on some old devices.
+    </string>
+    <string name="settings_use_non_square_textures_summary_off">Use square textures only. Uses more resources, but will
+        work on all devices.
+    </string>
+    <string name="settings_use_non_power_of_two_textures_title">Use non power of two textures</string>
+    <string name="settings_use_non_power_of_two_textures_summary_on">Use non power of two textures. Better
+        performance/visual, but may not work on some devices.
+    </string>
+    <string name="settings_use_non_power_of_two_textures_summary_off">Use non power of two textures only. Uses more
+        resources, but will work on all devices.
+    </string>
+    <string name="settings_use_smaller_textures_title">Reduce internal framebuffer size</string>
+    <string name="settings_use_smaller_textures_summary_on">Will use smaller render textures. Better performance, but
+        may look not as good as on full resoulution.
+    </string>
+    <string name="settings_use_smaller_textures_summary_off">Use full texture resolution.</string>
+    <string name="settings_grid_density_title">Grid density</string>
+    <string name="settings_grid_density_summary">Higher density will look better, but it may affect performance.</string>
+    <string name="settings_grid_density_dialog">Select grid density</string>
 </resources>

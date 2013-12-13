@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="wallpaper_grid">Безграничная Сеть</string>
+    <string name="app_name">Безграничная Сеть живые обои</string>
+    <string name="description">Анимированая сеть без граници</string>
+    <string name="wallpaper_settings">Настройки</string>
+    <string name="wallpaper_settings_title">Выберите цвет</string>
+    <string name="wallpaper_settings_summary">Выберите основной и фоновый цвет</string>
+    <string name="settings_background_title">Фон</string>
+    <string name="settings_background_summary">Цвет фона</string>
+    <string name="settings_lines_title">Линии</string>
+    <string name="settings_lines_summary">Цвет линий</string>
+    <string name="settings_blur_title">Размытие</string>
+    <string name="settings_blur_summary">Уровень размытия линий</string>
+    <string name="settings_brightness_title">Яркость</string>
+    <string name="settings_brightness_summary">Яркость линий</string>
+    <string name="settings_linewidth_title">Размер</string>
+    <string name="settings_linewidth_summary">Размер линий</string>
+    <string name="settings_rotationspeed_title">Вращение</string>
+    <string name="settings_rotationspeed_summary">Скорость вращения</string>
+    <string name="settings_speed_title">Анимация</string>
+    <string name="settings_speed_summary">Скорость анимации</string>
+    <string name="settings_value">Значение:</string>
+    <string name="settings_general_preferences">Общие</string>
+    <string name="settings_general_compatibility">Совместимость и производительность</string>
+    <string name="settings_use_one_framebuffer_title">Использовать один фреймбуфер</string>
+    <string name="settings_use_one_framebuffer_summary_on">Использует одну текстуру и один фреймбуфер. Потребляет меньше ресурсов, но может некоректно работать на некоторых устройствах. Например Nexus 7.
+    </string>
+    <string name="settings_use_one_framebuffer_summary_off">Использовать две текстуры и фреймбуфера. Потребляет больше ресурсов, но работает на всех устройствах.</string>
+    <string name="settings_use_non_square_textures_title">Использовать неквадратные текстуры</string>
+    <string name="settings_use_non_square_textures_summary_on">Использует неквадратные текстуры. Лучшая производительность, но может не работать на некоторых устройствах.</string>
+    <string name="settings_use_non_square_textures_summary_off">Использует квадратные текстуры. Потребляет больше ресурсов, но работает на всех устройствах.
+    </string>
+    <string name="settings_use_non_power_of_two_textures_title">Использовать текстуры размера не степени двойки</string>
+    <string name="settings_use_non_power_of_two_textures_summary_on">Использовать текстуры размера не степени двойки. Лучшие производительность и качество. Но может не работать на некоторых устройствах.
+    </string>
+    <string name="settings_use_non_power_of_two_textures_summary_off">Использовать текстуры размера степени двойки. Потребляет больше ресурсов, но работает на всех устройствах.</string>
+    <string name="settings_use_smaller_textures_title">Ументьшить размер внутреннего буффера</string>
+    <string name="settings_use_smaller_textures_summary_on">Использует меньшие текстуры. Лучше производительность, но выглядит не так хорошо как при полном разрешении.
+    </string>
+    <string name="settings_use_smaller_textures_summary_off">Полное разрешение текстур. Лучшее качество.</string>
+    <string name="settings_grid_density_title">Плотность сетки</string>
+    <string name="settings_grid_density_summary">Большая плотность выглядит лучше, но может повлеять на производительность.</string>
+    <string name="settings_grid_density_dialog">Выберите плотность сетки</string>
+</resources>
