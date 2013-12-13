@@ -347,6 +347,8 @@ public class SunV2 extends RendererBase {
             GLES20.glUniformMatrix4fv(postRayProgram.getUniformLocation("uMVPMatrix"), 1, false, quad_matrix_, 0);
 
             quadVertices.draw(GLES20.GL_TRIANGLE_STRIP);
+
+            quadVertices.unbind(postRayProgram, "aPosition", "aTextureCoord");
         }
     }
 

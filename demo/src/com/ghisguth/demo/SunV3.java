@@ -178,6 +178,10 @@ public class SunV3 extends RendererBase {
             GLES20.glUniformMatrix4fv(postRayProgram.getUniformLocation("uMVPMatrix"), 1, false, Q_matrix, 0);
 
             quadVertices.draw(GLES20.GL_TRIANGLE_STRIP);
+
+            quadVertices.unbind(postRayProgram, "aPosition", "aTextureCoord");
+
+            renderTexture.unbind(GLES20.GL_TEXTURE0);
         }
     }
 
@@ -238,6 +242,10 @@ public class SunV3 extends RendererBase {
 
             sphereVertices.unbind(sunProgram, "aPosition", "aTextureCoord");
 
+            baseTexture.unbind(GLES20.GL_TEXTURE0);
+            noiseTexture.unbind(GLES20.GL_TEXTURE1);
+            colorTexture.unbind(GLES20.GL_TEXTURE2);
+
             if (coronaProgram != null && coronaProgram.use()) {
 
                 GLES20.glEnable(GLES20.GL_BLEND);
@@ -269,6 +277,10 @@ public class SunV3 extends RendererBase {
                 sphereVertices.draw(GLES20.GL_TRIANGLE_STRIP);
 
                 sphereVertices.unbind(sunProgram, "aPosition", "aTextureCoord");
+
+                baseTexture.unbind(GLES20.GL_TEXTURE0);
+                noiseTexture.unbind(GLES20.GL_TEXTURE1);
+                colorTexture.unbind(GLES20.GL_TEXTURE2);
 
                 GLES20.glDisable(GLES20.GL_BLEND);
             }
