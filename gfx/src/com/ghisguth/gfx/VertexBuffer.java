@@ -6,6 +6,7 @@
 package com.ghisguth.gfx;
 
 import android.opengl.GLES20;
+import android.util.Log;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -78,6 +79,22 @@ public class VertexBuffer {
         } else {
             GLES20.glDrawElements(primitiveType, indicesCount, GLES20.GL_UNSIGNED_SHORT, indices);
             ErrorHelper.checkGlError(TAG, "glDrawElements");
+        }
+    }
+
+    public void draw(int primitiveType, int start, int count) {
+        if (indicesCount == 0) {
+            if(start < 0 || (start + count) > verticesCount) {
+                String message = "VertexBuffer::draw called with invalid start/count: start=" + start + " count=" + count + " verticesCount=" + verticesCount;
+                Log.e(TAG, message);
+                throw new RuntimeException(message);
+            }
+
+            GLES20.glDrawArrays(primitiveType, start, count);
+            ErrorHelper.checkGlError(TAG, "glDrawArrays");
+        } else {
+            Log.e(TAG, "VertexBuffer::draw called with start/count for indexed buffer");
+            throw new RuntimeException("VertexBuffer::draw called with start/count for indexed buffer");
         }
     }
 
