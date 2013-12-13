@@ -9,10 +9,10 @@ public class GeometryHelper {
 
     private static final float[] quadVerticesArray = {
             // X, Y, Z, U, V
-            1.0f, 0.0f, -1.0f, 1.0f, 0.0f,
-            0.0f, 0.0f, -0.5f, 0.0f, 0.0f,
-            1.0f, 1.0f, -1.0f, 1.0f, 1.0f,
-            0.0f, 1.0f, -1.0f, 0.0f, 1.0f
+            1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
+            0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+            1.0f, 1.0f, 0.0f, 1.0f, 1.0f,
+            0.0f, 1.0f, 0.0f, 0.0f, 1.0f
     };
 
     private static final float[] spriteVerticesArray = {
