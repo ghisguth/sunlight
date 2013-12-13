@@ -35,6 +35,12 @@ public class SunActivity extends Activity {
 
             tab = actionBar.newTab();
             tab.setTabListener(tabHandler);
+            tab.setText(R.string.tab_grid);
+            tab.setTag(new Grid(this));
+            actionBar.addTab(tab);
+
+            tab = actionBar.newTab();
+            tab.setTabListener(tabHandler);
             tab.setText(R.string.tab_lines);
             tab.setTag(new Lines(this));
             actionBar.addTab(tab);
