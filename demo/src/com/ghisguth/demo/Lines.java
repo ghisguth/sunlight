@@ -115,7 +115,7 @@ public class Lines extends RendererBase {
 
         int numberOfRequiredTextures = useOneFramebuffer ? 1 : 2;
 
-        for(int i = 0; i < numberOfRequiredTextures; ++i) {
+        for (int i = 0; i < numberOfRequiredTextures; ++i) {
             renderTextures[i] = textureManager.createRenderTexture(frameBufferWidth, frameBufferHeight);
 
             if (!renderTextures[i].load()) {
@@ -176,8 +176,8 @@ public class Lines extends RendererBase {
         Log.i("BL***", "frameBufferWidth=" + frameBufferWidth
                 + " frameBufferHeight=" + frameBufferHeight);
 
-        for(int i = 0; i < renderTextures.length; ++i) {
-            if(renderTextures[i] != null) {
+        for (int i = 0; i < renderTextures.length; ++i) {
+            if (renderTextures[i] != null) {
                 renderTextures[i].update(frameBufferWidth, frameBufferHeight);
             }
         }
@@ -211,7 +211,7 @@ public class Lines extends RendererBase {
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
         renderBlurTexture(activeTargettexture);
 
-        if(!useOneFramebuffer) {
+        if (!useOneFramebuffer) {
             activeTargettexture = 1 - activeTargettexture;
         }
     }

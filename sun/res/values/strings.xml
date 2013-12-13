@@ -6,10 +6,16 @@
     <string name="settings_general_preferences">General</string>
     <string name="settings_general_compatibility">Compatibility and performance</string>
     <string name="settings_use_non_square_textures_title">Use non square textures</string>
-    <string name="settings_use_non_square_textures_summary_on">Will use rectangular textures. Better performance, but may not work on some old devices.</string>
-    <string name="settings_use_non_square_textures_summary_off">Use square textures only. Uses more resources, but will work on all devices.</string>
+    <string name="settings_use_non_square_textures_summary_on">Will use rectangular textures. Better performance, but
+        may not work on some old devices.
+    </string>
+    <string name="settings_use_non_square_textures_summary_off">Use square textures only. Uses more resources, but will
+        work on all devices.
+    </string>
     <string name="settings_use_smaller_textures_title">Reduce internal framebuffer size</string>
-    <string name="settings_use_smaller_textures_summary_on">Will use smaller render textures. Better performance, but may look not as good as on full resoulution.</string>
+    <string name="settings_use_smaller_textures_summary_on">Will use smaller render textures. Better performance, but
+        may look not as good as on full resoulution.
+    </string>
     <string name="settings_use_smaller_textures_summary_off">Use full texture resolution.</string>
     <string name="settings_sun">Sun</string>
     <string name="settings_sun_size">Sun size</string>
@@ -51,6 +57,8 @@
     <string name="settings_post_ray_weight">Weight</string>
     <string name="settings_post_ray_weight_summary">Sample weight</string>
     <string name="settings_post_ray_quality">Quality</string>
-    <string name="settings_post_ray_quality_summary">Better quality will consume more resources and may reduce framerate.</string>
+    <string name="settings_post_ray_quality_summary">Better quality will consume more resources and may reduce
+        framerate.
+    </string>
     <string name="settings_post_ray_quality_dialog">Select effect quality</string>
 </resources>

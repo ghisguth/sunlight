@@ -5,11 +5,9 @@
 
 package com.ghisguth.sun;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
-import android.preference.PreferenceManager;
 
 public class WallpaperSettings extends PreferenceActivity implements
         SharedPreferences.OnSharedPreferenceChangeListener {

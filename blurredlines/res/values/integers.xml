@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
-	<integer name="color_background_default">0x00000000</integer>
-	<integer name="color_lines_default">0xffffffff</integer>
-	<integer name="factor_default">0x0000007f</integer>
+    <integer name="color_background_default">0x00000000</integer>
+    <integer name="color_lines_default">0xffffffff</integer>
+    <integer name="factor_default">0x0000007f</integer>
 </resources>

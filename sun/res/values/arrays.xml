@@ -3,7 +3,7 @@
     <string-array name="post_effect_quality_names">
         <item>"Low"</item>
         <item>"Medium"</item>
-           <item>"High"</item>
+        <item>"High"</item>
     </string-array>
 
     <string-array name="post_effect_quality_values">

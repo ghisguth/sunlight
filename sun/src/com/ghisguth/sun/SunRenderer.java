@@ -349,7 +349,7 @@ public class SunRenderer implements GLWallpaperService.Renderer {
             float surfaceColorAdd = colorAdd + preferenceColorAdd;
             float surfaceColorMul = colorMul * preferenceColorMul;
 
-            if(preferenceAnimateTemperature) {
+            if (preferenceAnimateTemperature) {
                 surfaceColorOffset = (float) (Math.cos(getTimeDeltaByScale(190000L) * Math.PI * 2.0) * 0.5 + 0.5);
             }
 

@@ -109,7 +109,7 @@ public class BlurredLinesRenderer implements GLWallpaperService.Renderer {
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
         renderBlurTexture(activeTargettexture);
 
-        if(!useOneFramebuffer) {
+        if (!useOneFramebuffer) {
             activeTargettexture = 1 - activeTargettexture;
         }
     }
@@ -162,8 +162,8 @@ public class BlurredLinesRenderer implements GLWallpaperService.Renderer {
             frameBufferHeight >>= 1;
         }
 
-        for(int i = 0; i < renderTextures.length; ++i) {
-            if(renderTextures[i] != null) {
+        for (int i = 0; i < renderTextures.length; ++i) {
+            if (renderTextures[i] != null) {
                 renderTextures[i].update(frameBufferWidth, frameBufferHeight);
             }
         }
@@ -201,7 +201,7 @@ public class BlurredLinesRenderer implements GLWallpaperService.Renderer {
 
         int numberOfRequiredTextures = useOneFramebuffer ? 1 : 2;
 
-        for(int i = 0; i < numberOfRequiredTextures; ++i) {
+        for (int i = 0; i < numberOfRequiredTextures; ++i) {
             renderTextures[i] = textureManager.createRenderTexture(frameBufferWidth, frameBufferHeight);
 
             if (!renderTextures[i].load()) {
@@ -332,7 +332,7 @@ public class BlurredLinesRenderer implements GLWallpaperService.Renderer {
                 boolean useNonSquareTextures = sharedPreferences.getBoolean("use_non_square_textures", false);
                 boolean useOneFramebuffer = sharedPreferences.getBoolean("use_one_framebuffer", false);
 
-                renderer.setCompatibilitySettings(useSmallerTextures, useNonPowerOfTwoTextures, useNonSquareTextures,useOneFramebuffer);
+                renderer.setCompatibilitySettings(useSmallerTextures, useNonPowerOfTwoTextures, useNonSquareTextures, useOneFramebuffer);
 
                 renderer.setColors(sharedPreferences.getInt("backgroundColor", 0), sharedPreferences.getInt("linesColor", -1));
                 renderer.setBlur(sharedPreferences.getInt("blur", 127));
@@ -357,6 +357,7 @@ public class BlurredLinesRenderer implements GLWallpaperService.Renderer {
         linesColorGreen = scale * Color.green(linesInt);
         linesColorBlue = scale * Color.blue(linesInt);
     }
+
     public void setBlur(int value) {
         blurFactor = getScaledFactor(value, 0.125f);
     }

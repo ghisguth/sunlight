@@ -35,7 +35,7 @@ public class Wallpaper extends GLES20WallpaperService {
 
 
         public Bundle onCommand(java.lang.String action, int x, int y, int z,
-                                android.os.Bundle extras, boolean resultRequested){
+                                android.os.Bundle extras, boolean resultRequested) {
             Intent myIntent = new Intent();
 
             long currentTime = System.currentTimeMillis();
