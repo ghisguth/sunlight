@@ -37,6 +37,8 @@ public class Cubes extends RendererBase {
     private boolean useNonPowerOfTwoTextures_ = false;
     private boolean useNonSquareTextures_ = false;
 
+    private int tick = 0;
+
     public Cubes(Context context) {
         super(context);
 
@@ -45,7 +47,7 @@ public class Cubes extends RendererBase {
         setRenderMode(RENDERMODE_CONTINUOUSLY);
 
         quadVertices = GeometryHelper.createSprite();
-        cubeVertices = GeometryHelper.createSphere(15, 10);
+        cubeVertices = GeometryHelper.createCube(8);
     }
 
     @Override
@@ -138,27 +140,15 @@ public class Cubes extends RendererBase {
 
     @Override
     public void onDrawFrame(GL10 unused) {
-        GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        float red = getTimeDeltaByScale(20000L) * 0.55f;
+        float green = getTimeDeltaByScale(35000L) * 0.35f;
+        float blue = getTimeDeltaByScale(10000L) * 0.40f;
+        GLES20.glClearColor(red, green, blue, 1.0f);
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 
-        renderScene();
         renderCube();
     }
 
-    private void renderScene() {
-        if (spriteProgram != null && baseTexture != null) {
-            if (!spriteProgram.use() || !baseTexture.load()) {
-                return;
-            }
-
-            baseTexture.bind(GLES20.GL_TEXTURE0, spriteProgram, "sTexture");
-            quadVertices.bind(spriteProgram, "aPosition", "aTextureCoord");
-
-            GLES20.glUniformMatrix4fv(spriteProgram.getUniformLocation("uMVPMatrix"), 1, false, Q_matrix, 0);
-
-            quadVertices.draw(GLES20.GL_TRIANGLE_STRIP);
-        }
-    }
 
     private void renderCube() {
         if (spriteProgram != null && baseTexture != null) {
@@ -182,12 +172,17 @@ public class Cubes extends RendererBase {
 
             GLES20.glUniformMatrix4fv(spriteProgram.getUniformLocation("uMVPMatrix"), 1, false, MVP_matrix, 0);
 
-            GLES20.glEnable(GLES20.GL_CULL_FACE);
+            //GLES20.glEnable(GLES20.GL_CULL_FACE);
             GLES20.glCullFace(GLES20.GL_BACK);
 
-            cubeVertices.draw(GLES20.GL_TRIANGLE_STRIP);
+            GLES20.glEnable(GLES20.GL_POLYGON_OFFSET_FILL);
+            GLES20.glPolygonOffset(2.0f, 2.0f);
 
-            GLES20.glDisable(GLES20.GL_CULL_FACE);
+            cubeVertices.draw(GLES20.GL_POINTS, 0, ((tick++) / 10) % cubeVertices.getVertexCount());
+
+            GLES20.glDisable(GLES20.GL_POLYGON_OFFSET_FILL);
+
+            //GLES20.glDisable(GLES20.GL_CULL_FACE);
 
             cubeVertices.unbind(spriteProgram, "aPosition", "aTextureCoord");
 
@@ -218,8 +213,8 @@ public class Cubes extends RendererBase {
 
         try {
             ShaderManager shaderManager = ShaderManager.getSingletonObject();
-            Shader vertex = shaderManager.createVertexShader(ResourceHelper.loadRawString(openResource(R.raw.sprite_vertex)));
-            Shader fragment = shaderManager.createFragmentShader(ResourceHelper.loadRawString(openResource(R.raw.sprite_fragment)));
+            Shader vertex = shaderManager.createVertexShader(ResourceHelper.loadRawString(openResource(R.raw.deforming_cube_vertex)));
+            Shader fragment = shaderManager.createFragmentShader(ResourceHelper.loadRawString(openResource(R.raw.deforming_cube_fragment)));
             spriteProgram = shaderManager.createShaderProgram(vertex, fragment);
         } catch (Exception ex) {
             Log.e(TAG, "Unable to load shaders from resources " + ex.toString());
