@@ -108,4 +108,12 @@ public class VertexBuffer {
         }
     }
 
+    public int getVertexCount() {
+        return this.verticesCount;
+    }
+
+    public int getIndexCount() {
+        return this.indicesCount;
+    }
+
 }
