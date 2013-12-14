@@ -239,11 +239,15 @@ public class GridRenderer implements GLWallpaperService.Renderer {
 
         loadResources();
 
+        ShaderManager.getSingletonObject().unloadAllShaders();
+
         if (phenixLineProgram != null) {
             phenixLineProgram.load();
         }
 
-        ShaderManager.getSingletonObject().unloadAllShaders();
+        if(postProgram != null) {
+            postProgram.load();
+        }
 
         renderTextures = new RenderTexture[2];
         frameBuffers = new FrameBuffer[2];
