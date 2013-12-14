@@ -200,8 +200,6 @@ public class BlurredLinesRenderer implements GLWallpaperService.Renderer {
 
         loadResources();
 
-        ShaderManager.getSingletonObject().unloadAllShaders();
-
         if (phenixLineProgram != null) {
             phenixLineProgram.load();
         }
@@ -209,6 +207,8 @@ public class BlurredLinesRenderer implements GLWallpaperService.Renderer {
         if(postProgram != null) {
             postProgram.load();
         }
+
+        ShaderManager.getSingletonObject().unloadAllShaders();
 
         renderTextures = new RenderTexture[2];
         frameBuffers = new FrameBuffer[2];

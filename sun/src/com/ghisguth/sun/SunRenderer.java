@@ -190,6 +190,8 @@ public class SunRenderer implements GLWallpaperService.Renderer {
             postRayProgram.load();
         }
 
+        ShaderManager.getSingletonObject().unloadAllShaders();
+
         if (baseTexture != null) {
             baseTexture.load();
         }
@@ -201,8 +203,6 @@ public class SunRenderer implements GLWallpaperService.Renderer {
         if (noiseTexture != null) {
             noiseTexture.load();
         }
-
-        ShaderManager.getSingletonObject().unloadAllShaders();
 
         setupFrameBuffer(unused);
 
