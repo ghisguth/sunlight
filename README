@@ -38,7 +38,7 @@ Settings code based on https://github.com/JakeWharton/SnakeWallpaper project.
 Build instructions
 ----------------------
 
-The project created in Intellij IDEA 12 Community Edition. Ant build should work too.
+Import project into Adnroid Studio. Or use command line gradle tool.
 
 blurred-lines-live
 =======================
