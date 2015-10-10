@@ -10,7 +10,7 @@ import android.util.Log;
 import com.ghisguth.gfx.*;
 import com.ghisguth.shared.ResourceHelper;
 import com.ghisguth.wallpaper.glwallpaperservice.GLWallpaperService;
-
+import cxa.gridwallpaper.R;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 import java.io.InputStream;
