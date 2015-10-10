@@ -33,6 +33,7 @@ Settings code based on https://github.com/JakeWharton/SnakeWallpaper project.
 * Some ideas and few textures was borrowed from "100,000 stars" demo (http://workshop.chromeexperiments.com/stars/)
 * Volumetric Light Scattering as a Post-Process (http://http.developer.nvidia.com/GPUGems3/gpugems3_ch13.html)
 * Some code ideas was borrowed harism's android_effects demo (https://github.com/harism/android_effects)
+* Color picker powered by AmbilWarna library (https://github.com/yukuku/ambilwarna)
 
 Build instructions
 ----------------------
