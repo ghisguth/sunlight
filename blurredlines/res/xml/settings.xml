@@ -19,12 +19,12 @@
     android:title="@string/wallpaper_settings">
 
     <PreferenceCategory android:title="@string/settings_general_preferences">
-        <com.ghisguth.ux.ColorPickerPreference
+        <yuku.ambilwarna.widget.AmbilWarnaPreference
             android:defaultValue="@integer/color_background_default"
             android:key="backgroundColor"
             android:summary="@string/settings_background_summary"
             android:title="@string/settings_background_title" />
-        <com.ghisguth.ux.ColorPickerPreference
+        <yuku.ambilwarna.widget.AmbilWarnaPreference
             android:defaultValue="@integer/color_lines_default"
             android:key="linesColor"
             android:summary="@string/settings_lines_summary"
