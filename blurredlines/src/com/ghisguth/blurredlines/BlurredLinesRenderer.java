@@ -7,15 +7,25 @@ import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.os.SystemClock;
 import android.util.Log;
-import com.ghisguth.gfx.*;
+
+import com.ghisguth.gfx.FrameBuffer;
+import com.ghisguth.gfx.GeometryHelper;
+import com.ghisguth.gfx.Program;
+import com.ghisguth.gfx.RenderTexture;
+import com.ghisguth.gfx.Shader;
+import com.ghisguth.gfx.ShaderManager;
+import com.ghisguth.gfx.TextureManager;
+import com.ghisguth.gfx.VertexBuffer;
 import com.ghisguth.shared.ResourceHelper;
 import com.ghisguth.wallpaper.glwallpaperservice.GLWallpaperService;
-import cxa.lineswallpaper.R;
+
+import java.io.InputStream;
+import java.util.Random;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
-import java.io.InputStream;
-import java.util.Random;
+
+import cxa.lineswallpaper.R;
 
 
 public class BlurredLinesRenderer implements GLWallpaperService.Renderer {
@@ -326,39 +336,6 @@ public class BlurredLinesRenderer implements GLWallpaperService.Renderer {
         settingsUpdater.onSharedPreferenceChanged(this.preferences, null);
     }
 
-    private class SettingsUpdater implements
-            SharedPreferences.OnSharedPreferenceChangeListener {
-        private BlurredLinesRenderer renderer;
-
-        public SettingsUpdater(BlurredLinesRenderer renderer) {
-            this.renderer = renderer;
-        }
-
-        @Override
-        public void onSharedPreferenceChanged(
-                SharedPreferences sharedPreferences, String key) {
-            try {
-                boolean useSmallerTextures = sharedPreferences.getBoolean("use_smaller_textures", false);
-                boolean useNonPowerOfTwoTextures = sharedPreferences.getBoolean("use_non_power_of_two_textures", false);
-                boolean useNonSquareTextures = sharedPreferences.getBoolean("use_non_square_textures", false);
-                boolean useOneFramebuffer = sharedPreferences.getBoolean("use_one_framebuffer", false);
-
-                renderer.setCompatibilitySettings(useSmallerTextures, useNonPowerOfTwoTextures, useNonSquareTextures, useOneFramebuffer);
-
-                renderer.setColors(sharedPreferences.getInt("backgroundColor", 0), sharedPreferences.getInt("linesColor", -1));
-                renderer.setBlur(sharedPreferences.getInt("blur", 127));
-                renderer.setBrightness(sharedPreferences.getInt("brightness", 127));
-                renderer.setLineWidth(sharedPreferences.getInt("linewidth", 127));
-                renderer.setRotationSpeed(sharedPreferences.getInt("rotationspeed", 127));
-                renderer.setSpeed(sharedPreferences.getInt("speed", 127));
-                renderer.setLinesCount(Integer.parseInt(sharedPreferences.getString("lineCount", "3")));
-
-            } catch (final Exception e) {
-                Log.e(TAG, "PREF init error: " + e);
-            }
-        }
-    }
-
     public void setColors(int backgroundInt, int linesInt) {
         float scale = 1.0f / 255.0f;
         float scaleBackground = scale * 0.05f;
@@ -395,19 +372,18 @@ public class BlurredLinesRenderer implements GLWallpaperService.Renderer {
     }
 
     public void setLinesCount(int value) {
-        if(value < 0) {
+        if (value < 0) {
             value = 0;
         }
 
         int newLinesCount = 750 + value * 250;
 
-        if(this.lineCount != newLinesCount) {
+        if (this.lineCount != newLinesCount) {
             this.lineCount = newLinesCount;
 
             this.lineVertices = CreateLineVertices(lineCount);
         }
     }
-
 
     public void setCompatibilitySettings(boolean useSmallerTextures,
                                          boolean useNonPowerOfTwoTextures,
@@ -424,5 +400,38 @@ public class BlurredLinesRenderer implements GLWallpaperService.Renderer {
         float scaledValue = scale * (value - 127) * multiplier;
         float result = (float) Math.exp(scaledValue);
         return result;
+    }
+
+    private class SettingsUpdater implements
+            SharedPreferences.OnSharedPreferenceChangeListener {
+        private BlurredLinesRenderer renderer;
+
+        public SettingsUpdater(BlurredLinesRenderer renderer) {
+            this.renderer = renderer;
+        }
+
+        @Override
+        public void onSharedPreferenceChanged(
+                SharedPreferences sharedPreferences, String key) {
+            try {
+                boolean useSmallerTextures = sharedPreferences.getBoolean("use_smaller_textures", false);
+                boolean useNonPowerOfTwoTextures = sharedPreferences.getBoolean("use_non_power_of_two_textures", false);
+                boolean useNonSquareTextures = sharedPreferences.getBoolean("use_non_square_textures", false);
+                boolean useOneFramebuffer = sharedPreferences.getBoolean("use_one_framebuffer", false);
+
+                renderer.setCompatibilitySettings(useSmallerTextures, useNonPowerOfTwoTextures, useNonSquareTextures, useOneFramebuffer);
+
+                renderer.setColors(sharedPreferences.getInt("backgroundColor", 0), sharedPreferences.getInt("linesColor", -1));
+                renderer.setBlur(sharedPreferences.getInt("blur", 127));
+                renderer.setBrightness(sharedPreferences.getInt("brightness", 127));
+                renderer.setLineWidth(sharedPreferences.getInt("linewidth", 127));
+                renderer.setRotationSpeed(sharedPreferences.getInt("rotationspeed", 127));
+                renderer.setSpeed(sharedPreferences.getInt("speed", 127));
+                renderer.setLinesCount(Integer.parseInt(sharedPreferences.getString("lineCount", "3")));
+
+            } catch (final Exception e) {
+                Log.e(TAG, "PREF init error: " + e);
+            }
+        }
     }
 }

@@ -84,7 +84,7 @@ public class VertexBuffer {
 
     public void draw(int primitiveType, int start, int count) {
         if (indicesCount == 0) {
-            if(start < 0 || (start + count) > verticesCount) {
+            if (start < 0 || (start + count) > verticesCount) {
                 String message = "VertexBuffer::draw called with invalid start/count: start=" + start + " count=" + count + " verticesCount=" + verticesCount;
                 Log.e(TAG, message);
                 throw new RuntimeException(message);

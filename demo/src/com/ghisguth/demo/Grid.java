@@ -10,26 +10,28 @@ import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.os.SystemClock;
 import android.util.Log;
-import com.ghisguth.gfx.*;
+
+import com.ghisguth.gfx.FrameBuffer;
+import com.ghisguth.gfx.GeometryHelper;
+import com.ghisguth.gfx.Program;
+import com.ghisguth.gfx.RenderTexture;
+import com.ghisguth.gfx.Shader;
+import com.ghisguth.gfx.ShaderManager;
+import com.ghisguth.gfx.TextureManager;
+import com.ghisguth.gfx.VertexBuffer;
 import com.ghisguth.shared.ResourceHelper;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
-import java.util.Random;
 
 public class Grid extends RendererBase {
-    private static String TAG = "Lines";
-
     private static final int GRID_DIM = 13;
-
     private static final int MOVING_LINE_COUNT = (GRID_DIM + 1)
             * (GRID_DIM + 1) * 2 * 2;
-
     private static final int STALE_LINE_COUNT = (GRID_DIM + 1) * (GRID_DIM + 1)
             * 2;
-
     private static final int LINE_COUNT = MOVING_LINE_COUNT + STALE_LINE_COUNT;
-
+    private static String TAG = "Lines";
     private Program phenixLineProgram;
     private Program postProgram;
     private VertexBuffer quadVertices;

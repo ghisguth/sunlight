@@ -8,6 +8,7 @@ package com.ghisguth.blurredlines;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+
 import cxa.lineswallpaper.R;
 
 public class WallpaperSettings extends PreferenceActivity implements

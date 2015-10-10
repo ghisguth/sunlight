@@ -10,12 +10,21 @@ import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.os.SystemClock;
 import android.util.Log;
-import com.ghisguth.gfx.*;
+
+import com.ghisguth.gfx.FrameBuffer;
+import com.ghisguth.gfx.GeometryHelper;
+import com.ghisguth.gfx.Program;
+import com.ghisguth.gfx.RenderTexture;
+import com.ghisguth.gfx.Shader;
+import com.ghisguth.gfx.ShaderManager;
+import com.ghisguth.gfx.TextureManager;
+import com.ghisguth.gfx.VertexBuffer;
 import com.ghisguth.shared.ResourceHelper;
+
+import java.util.Random;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
-import java.util.Random;
 
 public class Lines extends RendererBase {
     private static String TAG = "Lines";

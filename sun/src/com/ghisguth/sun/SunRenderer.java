@@ -6,13 +6,23 @@ import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.os.SystemClock;
 import android.util.Log;
-import com.ghisguth.gfx.*;
+
+import com.ghisguth.gfx.FrameBuffer;
+import com.ghisguth.gfx.GeometryHelper;
+import com.ghisguth.gfx.Program;
+import com.ghisguth.gfx.RenderTexture;
+import com.ghisguth.gfx.Shader;
+import com.ghisguth.gfx.ShaderManager;
+import com.ghisguth.gfx.Texture;
+import com.ghisguth.gfx.TextureManager;
+import com.ghisguth.gfx.VertexBuffer;
 import com.ghisguth.shared.ResourceHelper;
 import com.ghisguth.wallpaper.glwallpaperservice.GLWallpaperService;
 
+import java.io.InputStream;
+
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
-import java.io.InputStream;
 
 
 public class SunRenderer implements GLWallpaperService.Renderer {
@@ -435,57 +445,6 @@ public class SunRenderer implements GLWallpaperService.Renderer {
         settingsUpdater.onSharedPreferenceChanged(this.preferences, null);
     }
 
-    private class SettingsUpdater implements
-            SharedPreferences.OnSharedPreferenceChangeListener {
-        private SunRenderer renderer;
-
-        public SettingsUpdater(SunRenderer renderer) {
-            this.renderer = renderer;
-        }
-
-        @Override
-        public void onSharedPreferenceChanged(
-                SharedPreferences sharedPreferences, String key) {
-            try {
-                boolean useSmallerTextures = sharedPreferences.getBoolean("use_smaller_textures", false);
-                boolean useNonPowerOfTwoTextures = sharedPreferences.getBoolean("use_non_power_of_two_textures", false);
-                boolean useNonSquareTextures = sharedPreferences.getBoolean("use_non_square_textures", false);
-
-                renderer.setCompatibilitySettings(useSmallerTextures,
-                        useNonPowerOfTwoTextures, useNonSquareTextures);
-
-                renderer.setSize(sharedPreferences.getInt("size", 200));
-
-                renderer.setCoronaSize(sharedPreferences.getInt("coronaSize", 127));
-
-                renderer.setCoronaOpacity(sharedPreferences.getInt("coronaOpacity", 127));
-
-                renderer.setCoronaTurbulence(sharedPreferences.getInt("coronaTurbulence", 127));
-                renderer.setCoronaHeight(sharedPreferences.getInt("coronaHeight", 127));
-                renderer.setCoronaSpeed(sharedPreferences.getInt("coronaSpeed", 127));
-
-                renderer.setColorAdd(sharedPreferences.getInt("baseBrightness", 16));
-                renderer.setColorMul(sharedPreferences.getInt("maxBrightness", 127));
-
-                renderer.setRotationSpeed(sharedPreferences.getInt("rotationSpeed", 127));
-                renderer.setAnimationSpeed(sharedPreferences.getInt("animationSpeed", 127));
-
-                renderer.setPostEffectsEnabled(sharedPreferences.getBoolean("postEnabled", true));
-                renderer.setRayDensity(sharedPreferences.getInt("rayDensity", 127));
-                renderer.setRayDecay(sharedPreferences.getInt("rayDecay", 127));
-                renderer.setRayWeight(sharedPreferences.getInt("rayWeight", 127));
-                renderer.setRayExposure(sharedPreferences.getInt("rayExposure", 127));
-                renderer.setRayQuality(Integer.parseInt(sharedPreferences.getString("rayQuality", "0")));
-
-                renderer.setTemperature(sharedPreferences.getInt("temperature", 7));
-                renderer.setTemperatureAnimation(sharedPreferences.getBoolean("animateTemperature", false));
-
-            } catch (final Exception e) {
-                Log.e(TAG, "PREF init error: " + e);
-            }
-        }
-    }
-
     private void setTemperatureAnimation(boolean animateTemperature) {
         preferenceAnimateTemperature = animateTemperature;
     }
@@ -537,7 +496,6 @@ public class SunRenderer implements GLWallpaperService.Renderer {
     private void setPostEffectsEnabled(boolean value) {
         postEffectsEnabled = value;
     }
-
 
     public void setCompatibilitySettings(boolean useSmallerTextures,
                                          boolean useNonPowerOfTwoTextures,
@@ -597,5 +555,56 @@ public class SunRenderer implements GLWallpaperService.Renderer {
     private float getLinearFactor(int value, float multiplier) {
         float scale = 1.0f / 127.0f;
         return scale * (value - 127) * multiplier;
+    }
+
+    private class SettingsUpdater implements
+            SharedPreferences.OnSharedPreferenceChangeListener {
+        private SunRenderer renderer;
+
+        public SettingsUpdater(SunRenderer renderer) {
+            this.renderer = renderer;
+        }
+
+        @Override
+        public void onSharedPreferenceChanged(
+                SharedPreferences sharedPreferences, String key) {
+            try {
+                boolean useSmallerTextures = sharedPreferences.getBoolean("use_smaller_textures", false);
+                boolean useNonPowerOfTwoTextures = sharedPreferences.getBoolean("use_non_power_of_two_textures", false);
+                boolean useNonSquareTextures = sharedPreferences.getBoolean("use_non_square_textures", false);
+
+                renderer.setCompatibilitySettings(useSmallerTextures,
+                        useNonPowerOfTwoTextures, useNonSquareTextures);
+
+                renderer.setSize(sharedPreferences.getInt("size", 200));
+
+                renderer.setCoronaSize(sharedPreferences.getInt("coronaSize", 127));
+
+                renderer.setCoronaOpacity(sharedPreferences.getInt("coronaOpacity", 127));
+
+                renderer.setCoronaTurbulence(sharedPreferences.getInt("coronaTurbulence", 127));
+                renderer.setCoronaHeight(sharedPreferences.getInt("coronaHeight", 127));
+                renderer.setCoronaSpeed(sharedPreferences.getInt("coronaSpeed", 127));
+
+                renderer.setColorAdd(sharedPreferences.getInt("baseBrightness", 16));
+                renderer.setColorMul(sharedPreferences.getInt("maxBrightness", 127));
+
+                renderer.setRotationSpeed(sharedPreferences.getInt("rotationSpeed", 127));
+                renderer.setAnimationSpeed(sharedPreferences.getInt("animationSpeed", 127));
+
+                renderer.setPostEffectsEnabled(sharedPreferences.getBoolean("postEnabled", true));
+                renderer.setRayDensity(sharedPreferences.getInt("rayDensity", 127));
+                renderer.setRayDecay(sharedPreferences.getInt("rayDecay", 127));
+                renderer.setRayWeight(sharedPreferences.getInt("rayWeight", 127));
+                renderer.setRayExposure(sharedPreferences.getInt("rayExposure", 127));
+                renderer.setRayQuality(Integer.parseInt(sharedPreferences.getString("rayQuality", "0")));
+
+                renderer.setTemperature(sharedPreferences.getInt("temperature", 7));
+                renderer.setTemperatureAnimation(sharedPreferences.getBoolean("animateTemperature", false));
+
+            } catch (final Exception e) {
+                Log.e(TAG, "PREF init error: " + e);
+            }
+        }
     }
 }

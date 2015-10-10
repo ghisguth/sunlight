@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
 import com.ghisguth.wallpaper.GLES20WallpaperService;
 import com.ghisguth.wallpaper.glwallpaperservice.GLWallpaperService;
 

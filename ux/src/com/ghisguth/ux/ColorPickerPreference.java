@@ -1,7 +1,12 @@
 package com.ghisguth.ux;
 
 import android.content.Context;
-import android.graphics.*;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.RectF;
+import android.graphics.Shader;
+import android.graphics.SweepGradient;
 import android.preference.DialogPreference;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -10,9 +15,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 public class ColorPickerPreference extends DialogPreference {
-    public interface OnColorChangedListener {
-        void colorChanged(int color);
-    }
+    private Context ctx_;
+    private int color_;
 
     public ColorPickerPreference(Context ctx, AttributeSet attrs) {
         super(ctx, attrs);
@@ -37,6 +41,10 @@ public class ColorPickerPreference extends DialogPreference {
         }
     }
 
+    public interface OnColorChangedListener {
+        void colorChanged(int color);
+    }
+
     private class ColorPicked implements OnColorChangedListener {
         public void colorChanged(int color) {
             color_ = color;
@@ -44,11 +52,14 @@ public class ColorPickerPreference extends DialogPreference {
     }
 
     private class ColorPickerView extends View {
+        private static final int CENTER_X = 100;
+        private static final int CENTER_Y = 100;
+        private static final int CENTER_RADIUS = 32;
+        private static final float PI = 3.1415926f;
+        private final int[] mColors;
         private Paint mPaint;
         private Paint mCenterPaint;
-        private final int[] mColors;
         private OnColorChangedListener mListener;
-
         ColorPickerView(Context c, OnColorChangedListener l, int color) {
             super(c);
             mListener = l;
@@ -82,10 +93,6 @@ public class ColorPickerPreference extends DialogPreference {
             setMeasuredDimension(CENTER_X * 2, CENTER_Y * 2);
         }
 
-        private static final int CENTER_X = 100;
-        private static final int CENTER_Y = 100;
-        private static final int CENTER_RADIUS = 32;
-
         private int ave(int s, int d, float p) {
             return s + java.lang.Math.round(p * (d - s));
         }
@@ -113,8 +120,6 @@ public class ColorPickerPreference extends DialogPreference {
             return Color.argb(a, r, g, b);
         }
 
-        private static final float PI = 3.1415926f;
-
         @Override
         public boolean onTouchEvent(MotionEvent event) {
             float x = event.getX() - CENTER_X;
@@ -136,7 +141,4 @@ public class ColorPickerPreference extends DialogPreference {
             return true;
         }
     }
-
-    private Context ctx_;
-    private int color_;
 }

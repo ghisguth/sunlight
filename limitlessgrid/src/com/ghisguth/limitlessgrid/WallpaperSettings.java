@@ -8,6 +8,7 @@ package com.ghisguth.limitlessgrid;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+
 import cxa.gridwallpaper.R;
 
 public class WallpaperSettings extends PreferenceActivity implements

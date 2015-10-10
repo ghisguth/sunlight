@@ -10,7 +10,14 @@ import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.os.SystemClock;
 import android.util.Log;
-import com.ghisguth.gfx.*;
+
+import com.ghisguth.gfx.ErrorHelper;
+import com.ghisguth.gfx.Program;
+import com.ghisguth.gfx.Shader;
+import com.ghisguth.gfx.ShaderManager;
+import com.ghisguth.gfx.Texture;
+import com.ghisguth.gfx.TextureManager;
+import com.ghisguth.gfx.VertexBuffer;
 import com.ghisguth.shared.ResourceHelper;
 
 import javax.microedition.khronos.egl.EGLConfig;

@@ -1,6 +1,7 @@
 package com.ghisguth.wallpaper;
 
 import android.util.Log;
+
 import com.ghisguth.wallpaper.glwallpaperservice.EGLConfigChooser;
 import com.ghisguth.wallpaper.glwallpaperservice.EGLContextFactory;
 import com.ghisguth.wallpaper.glwallpaperservice.GLWallpaperService;
@@ -13,6 +14,13 @@ import javax.microedition.khronos.egl.EGLDisplay;
 public class GLES20WallpaperService extends GLWallpaperService {
     private static final boolean DEBUG = false;
     private static String TAG = "Sunlight";
+
+    private static void checkEglError(String prompt, EGL10 egl) {
+        int error;
+        while ((error = egl.eglGetError()) != EGL10.EGL_SUCCESS) {
+            Log.e(TAG, String.format("%s: EGL error: 0x%x", prompt, error));
+        }
+    }
 
     public static class ContextFactory implements EGLContextFactory {
         private static int EGL_CONTEXT_CLIENT_VERSION = 0x3098;
@@ -201,13 +209,6 @@ public class GLES20WallpaperService extends GLWallpaperService {
                 return mValue[0];
             }
             return defaultValue;
-        }
-    }
-
-    private static void checkEglError(String prompt, EGL10 egl) {
-        int error;
-        while ((error = egl.eglGetError()) != EGL10.EGL_SUCCESS) {
-            Log.e(TAG, String.format("%s: EGL error: 0x%x", prompt, error));
         }
     }
 

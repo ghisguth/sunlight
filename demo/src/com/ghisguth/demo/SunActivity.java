@@ -92,6 +92,11 @@ public class SunActivity extends Activity {
         }
     }
 
+    public void setSurfaceView(GLSurfaceView glSurfaceView) {
+        this.glSurfaceView = glSurfaceView;
+        setContentView(glSurfaceView);
+    }
+
     private class TabHandler implements ActionBar.TabListener {
         private SunActivity activity;
 
@@ -112,11 +117,6 @@ public class SunActivity extends Activity {
         @Override
         public void onTabReselected(Tab tab, FragmentTransaction ft) {
         }
-    }
-
-    public void setSurfaceView(GLSurfaceView glSurfaceView) {
-        this.glSurfaceView = glSurfaceView;
-        setContentView(glSurfaceView);
     }
 
 

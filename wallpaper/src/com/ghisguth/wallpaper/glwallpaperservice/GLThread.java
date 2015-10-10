@@ -19,8 +19,9 @@ package com.ghisguth.wallpaper.glwallpaperservice;
 import android.util.Log;
 import android.view.SurfaceHolder;
 
-import javax.microedition.khronos.opengles.GL10;
 import java.util.ArrayList;
+
+import javax.microedition.khronos.opengles.GL10;
 
 // Original code provided by Robert Green
 // http://www.rbgrn.net/content/354-glsurfaceview-adapted-3d-live-wallpapers
