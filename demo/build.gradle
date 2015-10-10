@@ -55,4 +55,6 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile project(':gfx')
+    compile project(':shared')
 }
