@@ -89,6 +89,13 @@
             android:summaryOn="@string/settings_use_smaller_textures_summary_on"
             android:title="@string/settings_use_smaller_textures_title" />
 
+        <CheckBoxPreference
+            android:key="double_tab_settings"
+            android:summaryOff="@string/settings_double_tap_settings_summary_off"
+            android:summaryOn="@string/settings_double_tap_settings_summary_on"
+            android:title="@string/settings_double_tap_settings_title"
+            android:defaultValue="true" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>

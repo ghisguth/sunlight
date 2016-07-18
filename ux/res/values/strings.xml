@@ -1,2 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="settings_double_tap_settings_title">Double tap to open settings</string>
+    <string name="settings_double_tap_settings_summary_on">Gesture enabled</string>
+    <string name="settings_double_tap_settings_summary_off">Gesture disabled</string>
+</resources>
