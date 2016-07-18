@@ -55,6 +55,12 @@
             android:key="rotationspeed"
             android:summary="@string/settings_rotationspeed_summary"
             android:title="@string/settings_rotationspeed_title" />
+        <CheckBoxPreference
+            android:key="double_tab_settings"
+            android:summaryOff="@string/settings_double_tap_settings_summary_off"
+            android:summaryOn="@string/settings_double_tap_settings_summary_on"
+            android:title="@string/settings_double_tap_settings_title"
+            android:defaultValue="true" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/settings_general_compatibility">
         <CheckBoxPreference

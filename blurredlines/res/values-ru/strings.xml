@@ -42,4 +42,7 @@
     <string name="settings_lines_count_title">Колличество линий</string>
     <string name="settings_lines_count_summary">Влияет на качество и производительность. Чем больше линий, тем выглядит лучше. Но потребляет больше ресурсов.</string>
     <string name="settings_lines_count_dialog">Выберите колличество линий.</string>
+    <string name="settings_double_tap_settings_title">Открыть настройки по двойному нажатию</string>
+    <string name="settings_double_tap_settings_summary_on">Жест включен</string>
+    <string name="settings_double_tap_settings_summary_off">Жест выключен</string>
 </resources>
