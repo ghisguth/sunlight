@@ -258,12 +258,12 @@ public class SunRenderer implements GLWallpaperService.Renderer {
 
         try {
             ShaderManager shaderManager = ShaderManager.getSingletonObject();
-            Shader vertex = shaderManager.createVertexShader(ResourceHelper.loadRawString(openResource(R.raw.sun_vertex)));
-            Shader fragment = shaderManager.createFragmentShader(ResourceHelper.loadRawString(openResource(R.raw.sun_lookup_fragment)));
+            Shader vertex = shaderManager.createVertexShader(ResourceHelper.loadRawString(openResource(com.ghisguth.gfx.R.raw.sun_vertex)));
+            Shader fragment = shaderManager.createFragmentShader(ResourceHelper.loadRawString(openResource(com.ghisguth.gfx.R.raw.sun_lookup_fragment)));
             sunProgram = shaderManager.createShaderProgram(vertex, fragment);
 
-            vertex = shaderManager.createVertexShader(ResourceHelper.loadRawString(openResource(R.raw.sun_corona_vertex)));
-            fragment = shaderManager.createFragmentShader(ResourceHelper.loadRawString(openResource(R.raw.sun_corona_lookup_fragment)));
+            vertex = shaderManager.createVertexShader(ResourceHelper.loadRawString(openResource(com.ghisguth.gfx.R.raw.sun_corona_vertex)));
+            fragment = shaderManager.createFragmentShader(ResourceHelper.loadRawString(openResource(com.ghisguth.gfx.R.raw.sun_corona_lookup_fragment)));
             coronaProgram = shaderManager.createShaderProgram(vertex, fragment);
         } catch (Exception ex) {
             Log.e(TAG, "Unable to load shaders from resources " + ex.toString());
@@ -288,9 +288,9 @@ public class SunRenderer implements GLWallpaperService.Renderer {
             } else if (rayQuality == 2) {
                 postRayFragmentDefines = "#define HIGH_QUALITY\n";
             }
-            String postRayFragment = ResourceHelper.loadRawString(openResource(R.raw.sun_ray_fragment));
+            String postRayFragment = ResourceHelper.loadRawString(openResource(com.ghisguth.gfx.R.raw.sun_ray_fragment));
 
-            Shader vertex = shaderManager.createVertexShader(ResourceHelper.loadRawString(openResource(R.raw.sun_ray_vertex)));
+            Shader vertex = shaderManager.createVertexShader(ResourceHelper.loadRawString(openResource(com.ghisguth.gfx.R.raw.sun_ray_vertex)));
             Shader fragment = shaderManager.createFragmentShader(postRayFragmentDefines + postRayFragment);
 
             Log.e(TAG, "SHADERS: " + postRayFragmentDefines);

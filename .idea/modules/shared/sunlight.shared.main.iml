@@ -12,7 +12,7 @@
     </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_7">
-    <output url="file://$MODULE_DIR$/../../../shared/build/intermediates/javac/debug/classes" />
+    <output url="file://$MODULE_DIR$/../../../shared/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes" />
     <exclude-output />
     <content url="file://$MODULE_DIR$/../../../shared/AndroidManifest.xml" />
     <content url="file://$MODULE_DIR$/../../../shared/assets" />

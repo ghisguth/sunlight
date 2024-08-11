@@ -11,7 +11,7 @@
     </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_7">
-    <output url="file://$MODULE_DIR$/../../../blurredlines/build/intermediates/javac/debug/classes" />
+    <output url="file://$MODULE_DIR$/../../../blurredlines/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes" />
     <exclude-output />
     <content url="file://$MODULE_DIR$/../../../blurredlines/AndroidManifest.xml" />
     <content url="file://$MODULE_DIR$/../../../blurredlines/assets" />
