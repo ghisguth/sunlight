@@ -213,8 +213,8 @@ public class Cubes extends RendererBase {
 
         try {
             ShaderManager shaderManager = ShaderManager.getSingletonObject();
-            Shader vertex = shaderManager.createVertexShader(ResourceHelper.loadRawString(openResource(R.raw.deforming_cube_vertex)));
-            Shader fragment = shaderManager.createFragmentShader(ResourceHelper.loadRawString(openResource(R.raw.deforming_cube_fragment)));
+            Shader vertex = shaderManager.createVertexShader(ResourceHelper.loadRawString(openResource(com.ghisguth.gfx.R.raw.deforming_cube_vertex)));
+            Shader fragment = shaderManager.createFragmentShader(ResourceHelper.loadRawString(openResource(com.ghisguth.gfx.R.raw.deforming_cube_fragment)));
             spriteProgram = shaderManager.createShaderProgram(vertex, fragment);
         } catch (Exception ex) {
             Log.e(TAG, "Unable to load shaders from resources " + ex.toString());

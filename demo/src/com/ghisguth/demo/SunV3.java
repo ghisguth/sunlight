@@ -317,10 +317,10 @@ public class SunV3 extends RendererBase {
                 baseTexture = textureManager.createTexture(getResources(), R.raw.sun_surface_etc1, true, GLES20.GL_NEAREST, GLES20.GL_LINEAR, GLES20.GL_REPEAT, GLES20.GL_REPEAT);
             }
             if (noiseTexture == null) {
-                noiseTexture = textureManager.createTexture(getResources(), R.raw.noise_etc1, true, GLES20.GL_NEAREST, GLES20.GL_LINEAR, GLES20.GL_REPEAT, GLES20.GL_REPEAT);
+                noiseTexture = textureManager.createTexture(getResources(),R.raw.noise_etc1, true, GLES20.GL_NEAREST, GLES20.GL_LINEAR, GLES20.GL_REPEAT, GLES20.GL_REPEAT);
             }
             if (colorTexture == null) {
-                colorTexture = textureManager.createTexture(getResources(), R.raw.star_color_etc1, true, GLES20.GL_NEAREST, GLES20.GL_LINEAR, GLES20.GL_CLAMP_TO_EDGE, GLES20.GL_CLAMP_TO_EDGE);
+                colorTexture = textureManager.createTexture(getResources(),R.raw.star_color_etc1, true, GLES20.GL_NEAREST, GLES20.GL_LINEAR, GLES20.GL_CLAMP_TO_EDGE, GLES20.GL_CLAMP_TO_EDGE);
             }
         } catch (Exception ex) {
             Log.e(TAG, "Unable to load textures from resources " + ex.toString());
@@ -334,16 +334,16 @@ public class SunV3 extends RendererBase {
 
         try {
             ShaderManager shaderManager = ShaderManager.getSingletonObject();
-            Shader vertex = shaderManager.createVertexShader(ResourceHelper.loadRawString(openResource(R.raw.sun_vertex)));
-            Shader fragment = shaderManager.createFragmentShader(ResourceHelper.loadRawString(openResource(R.raw.sun_lookup_fragment)));
+            Shader vertex = shaderManager.createVertexShader(ResourceHelper.loadRawString(openResource(com.ghisguth.gfx.R.raw.sun_vertex)));
+            Shader fragment = shaderManager.createFragmentShader(ResourceHelper.loadRawString(openResource(com.ghisguth.gfx.R.raw.sun_lookup_fragment)));
             sunProgram = shaderManager.createShaderProgram(vertex, fragment);
 
-            vertex = shaderManager.createVertexShader(ResourceHelper.loadRawString(openResource(R.raw.sun_corona_vertex)));
-            fragment = shaderManager.createFragmentShader(ResourceHelper.loadRawString(openResource(R.raw.sun_corona_lookup_fragment)));
+            vertex = shaderManager.createVertexShader(ResourceHelper.loadRawString(openResource(com.ghisguth.gfx.R.raw.sun_corona_vertex)));
+            fragment = shaderManager.createFragmentShader(ResourceHelper.loadRawString(openResource(com.ghisguth.gfx.R.raw.sun_corona_lookup_fragment)));
             coronaProgram = shaderManager.createShaderProgram(vertex, fragment);
 
-            vertex = shaderManager.createVertexShader(ResourceHelper.loadRawString(openResource(R.raw.sun_ray_vertex)));
-            fragment = shaderManager.createFragmentShader(ResourceHelper.loadRawString(openResource(R.raw.sun_ray_fragment)));
+            vertex = shaderManager.createVertexShader(ResourceHelper.loadRawString(openResource(com.ghisguth.gfx.R.raw.sun_ray_vertex)));
+            fragment = shaderManager.createFragmentShader(ResourceHelper.loadRawString(openResource(com.ghisguth.gfx.R.raw.sun_ray_fragment)));
             postRayProgram = shaderManager.createShaderProgram(vertex, fragment);
         } catch (Exception ex) {
             Log.e(TAG, "Unable to load shaders from resources " + ex.toString());

@@ -469,16 +469,16 @@ public class SunV2 extends RendererBase {
 
         try {
             ShaderManager shaderManager = ShaderManager.getSingletonObject();
-            Shader vertex = shaderManager.createVertexShader(ResourceHelper.loadRawString(openResource(R.raw.sun_vertex)));
-            Shader fragment = shaderManager.createFragmentShader(ResourceHelper.loadRawString(openResource(R.raw.sun_fragment)));
+            Shader vertex = shaderManager.createVertexShader(ResourceHelper.loadRawString(openResource(com.ghisguth.gfx.R.raw.sun_vertex)));
+            Shader fragment = shaderManager.createFragmentShader(ResourceHelper.loadRawString(openResource(com.ghisguth.gfx.R.raw.sun_fragment)));
             program = shaderManager.createShaderProgram(vertex, fragment);
 
-            vertex = shaderManager.createVertexShader(ResourceHelper.loadRawString(openResource(R.raw.sun_corona_vertex)));
-            fragment = shaderManager.createFragmentShader(ResourceHelper.loadRawString(openResource(R.raw.sun_corona_fragment)));
+            vertex = shaderManager.createVertexShader(ResourceHelper.loadRawString(openResource(com.ghisguth.gfx.R.raw.sun_corona_vertex)));
+            fragment = shaderManager.createFragmentShader(ResourceHelper.loadRawString(openResource(com.ghisguth.gfx.R.raw.sun_corona_fragment)));
             coronaProgram = shaderManager.createShaderProgram(vertex, fragment);
 
-            vertex = shaderManager.createVertexShader(ResourceHelper.loadRawString(openResource(R.raw.sun_ray_vertex)));
-            fragment = shaderManager.createFragmentShader(ResourceHelper.loadRawString(openResource(R.raw.sun_ray_fragment)));
+            vertex = shaderManager.createVertexShader(ResourceHelper.loadRawString(openResource(com.ghisguth.gfx.R.raw.sun_ray_vertex)));
+            fragment = shaderManager.createFragmentShader(ResourceHelper.loadRawString(openResource(com.ghisguth.gfx.R.raw.sun_ray_fragment)));
             postRayProgram = shaderManager.createShaderProgram(vertex, fragment);
         } catch (Exception ex) {
             Log.e(TAG, "Unable to load shaders from resources " + ex.toString());

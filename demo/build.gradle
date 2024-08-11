@@ -1,15 +1,17 @@
 buildscript {
     repositories {
-        jcenter()
+        google() // Add this line to include the Google Maven repository
+        mavenCentral() // This is for other dependencies hosted on Maven Central
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.1.1'
+        classpath 'com.android.tools.build:gradle:8.1.4'
     }
 }
 apply plugin: 'com.android.application'
 
 repositories {
-    jcenter()
+    google() // Add this line
+    mavenCentral()
 }
 
 android {
@@ -18,9 +20,10 @@ android {
 
     defaultConfig {
         minSdkVersion 8
-        targetSdkVersion 22
+        targetSdkVersion 33
         versionCode 1
         versionName "1.0"
+        namespace "com.ghisguth.demo"
     }
 
     compileOptions {
@@ -40,7 +43,8 @@ android {
         }
 
         // Move the tests to tests/java, tests/res, etc...
-        instrumentTest.setRoot('tests')
+                // TODO: Revert
+//        instrumentTest.setRoot('tests')
 
         // Move the build types to build-types/<type>
         // For instance, build-types/debug/java, build-types/debug/AndroidManifest.xml, ...
@@ -54,7 +58,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(':gfx')
-    compile project(':shared')
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':gfx')
+    implementation project(':shared')
 }

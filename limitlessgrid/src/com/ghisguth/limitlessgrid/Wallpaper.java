@@ -41,7 +41,7 @@ public class Wallpaper extends GLES20WallpaperService {
         }
 
 
-        public Bundle onCommand(java.lang.String action, int x, int y, int z,
+        public Bundle onCommand(String action, int x, int y, int z,
                                 android.os.Bundle extras, boolean resultRequested) {
             if(!this.doubleTapEnabled) {
                 return null;

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module external.linked.project.id=":wallpaper:main" external.linked.project.path="$MODULE_DIR$/../../../wallpaper" external.root.project.path="$MODULE_DIR$/../../.." external.system.id="GRADLE" external.system.module.type="sourceSet" type="JAVA_MODULE" version="4">
+  <component name="FacetManager">
+    <facet external-system-id="GRADLE" type="android" name="Android">
+      <configuration>
+        <option name="SELECTED_BUILD_VARIANT" value="debug" />
+        <option name="ALLOW_USER_CONFIGURATION" value="false" />
+        <option name="RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/../../../wallpaper/res;file://$MODULE_DIR$/../../../wallpaper/build-types/debug/res;file://$MODULE_DIR$/../../../wallpaper/build/generated/res/resValues/debug" />
+        <option name="TEST_RES_FOLDERS_RELATIVE_PATH" value="" />
+        <option name="PROJECT_TYPE" value="1" />
+      </configuration>
+    </facet>
+  </component>
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_7">
+    <output url="file://$MODULE_DIR$/../../../wallpaper/build/intermediates/javac/debug/classes" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../../../wallpaper/AndroidManifest.xml" />
+    <content url="file://$MODULE_DIR$/../../../wallpaper/assets" />
+    <content url="file://$MODULE_DIR$/../../../wallpaper/build-types" />
+    <content url="file://$MODULE_DIR$/../../../wallpaper/build/generated/ap_generated_sources/debug/out" />
+    <content url="file://$MODULE_DIR$/../../../wallpaper/build/generated/res/resValues/debug" />
+    <content url="file://$MODULE_DIR$/../../../wallpaper/res">
+      <sourceFolder url="file://$MODULE_DIR$/../../../wallpaper/res" type="java-resource" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../../wallpaper/src">
+      <sourceFolder url="file://$MODULE_DIR$/../../../wallpaper/src" isTestSource="false" />
+    </content>
+    <orderEntry type="jdk" jdkName="Android API 22 Platform" jdkType="Android SDK" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>

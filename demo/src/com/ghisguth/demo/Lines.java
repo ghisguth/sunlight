@@ -299,12 +299,12 @@ public class Lines extends RendererBase {
 
         try {
             ShaderManager shaderManager = ShaderManager.getSingletonObject();
-            Shader vertex = shaderManager.createVertexShader(ResourceHelper.loadRawString(openResource(R.raw.phenix_line_vertex)));
-            Shader fragment = shaderManager.createFragmentShader(ResourceHelper.loadRawString(openResource(R.raw.phenix_line_fragment)));
+            Shader vertex = shaderManager.createVertexShader(ResourceHelper.loadRawString(openResource(com.ghisguth.gfx.R.raw.phenix_line_vertex)));
+            Shader fragment = shaderManager.createFragmentShader(ResourceHelper.loadRawString(openResource(com.ghisguth.gfx.R.raw.phenix_line_fragment)));
             phenixLineProgram = shaderManager.createShaderProgram(vertex, fragment);
 
-            vertex = shaderManager.createVertexShader(ResourceHelper.loadRawString(openResource(R.raw.post_blur_vertex)));
-            fragment = shaderManager.createFragmentShader(ResourceHelper.loadRawString(openResource(R.raw.post_blur_fragment)));
+            vertex = shaderManager.createVertexShader(ResourceHelper.loadRawString(openResource(com.ghisguth.gfx.R.raw.post_blur_vertex)));
+            fragment = shaderManager.createFragmentShader(ResourceHelper.loadRawString(openResource(com.ghisguth.gfx.R.raw.post_blur_fragment)));
             postProgram = shaderManager.createShaderProgram(vertex, fragment);
         } catch (Exception ex) {
             Log.e(TAG, "Unable to load shaders from resources " + ex.toString());

@@ -2,15 +2,39 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/blurredlines/blurredlines.iml" filepath="$PROJECT_DIR$/blurredlines/blurredlines.iml" />
-      <module fileurl="file://$PROJECT_DIR$/demo/demo.iml" filepath="$PROJECT_DIR$/demo/demo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/gfx/gfx.iml" filepath="$PROJECT_DIR$/gfx/gfx.iml" />
-      <module fileurl="file://$PROJECT_DIR$/limitlessgrid/limitlessgrid.iml" filepath="$PROJECT_DIR$/limitlessgrid/limitlessgrid.iml" />
-      <module fileurl="file://$PROJECT_DIR$/shared/shared.iml" filepath="$PROJECT_DIR$/shared/shared.iml" />
-      <module fileurl="file://$PROJECT_DIR$/sun/sun.iml" filepath="$PROJECT_DIR$/sun/sun.iml" />
       <module fileurl="file://$PROJECT_DIR$/sunlight.iml" filepath="$PROJECT_DIR$/sunlight.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ux/ux.iml" filepath="$PROJECT_DIR$/ux/ux.iml" />
-      <module fileurl="file://$PROJECT_DIR$/wallpaper/wallpaper.iml" filepath="$PROJECT_DIR$/wallpaper/wallpaper.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/blurredlines/sunlight.blurredlines.iml" filepath="$PROJECT_DIR$/.idea/modules/blurredlines/sunlight.blurredlines.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/blurredlines/sunlight.blurredlines.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/blurredlines/sunlight.blurredlines.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/blurredlines/sunlight.blurredlines.main.iml" filepath="$PROJECT_DIR$/.idea/modules/blurredlines/sunlight.blurredlines.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/blurredlines/sunlight.blurredlines.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/blurredlines/sunlight.blurredlines.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/demo/sunlight.demo.iml" filepath="$PROJECT_DIR$/.idea/modules/demo/sunlight.demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/demo/sunlight.demo.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/demo/sunlight.demo.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/demo/sunlight.demo.main.iml" filepath="$PROJECT_DIR$/.idea/modules/demo/sunlight.demo.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/demo/sunlight.demo.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/demo/sunlight.demo.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gfx/sunlight.gfx.iml" filepath="$PROJECT_DIR$/.idea/modules/gfx/sunlight.gfx.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gfx/sunlight.gfx.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/gfx/sunlight.gfx.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gfx/sunlight.gfx.main.iml" filepath="$PROJECT_DIR$/.idea/modules/gfx/sunlight.gfx.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gfx/sunlight.gfx.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/gfx/sunlight.gfx.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/limitlessgrid/sunlight.limitlessgrid.iml" filepath="$PROJECT_DIR$/.idea/modules/limitlessgrid/sunlight.limitlessgrid.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/limitlessgrid/sunlight.limitlessgrid.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/limitlessgrid/sunlight.limitlessgrid.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/limitlessgrid/sunlight.limitlessgrid.main.iml" filepath="$PROJECT_DIR$/.idea/modules/limitlessgrid/sunlight.limitlessgrid.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/limitlessgrid/sunlight.limitlessgrid.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/limitlessgrid/sunlight.limitlessgrid.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/shared/sunlight.shared.iml" filepath="$PROJECT_DIR$/.idea/modules/shared/sunlight.shared.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/shared/sunlight.shared.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/shared/sunlight.shared.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/shared/sunlight.shared.main.iml" filepath="$PROJECT_DIR$/.idea/modules/shared/sunlight.shared.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/shared/sunlight.shared.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/shared/sunlight.shared.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sun/sunlight.sun.iml" filepath="$PROJECT_DIR$/.idea/modules/sun/sunlight.sun.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sun/sunlight.sun.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/sun/sunlight.sun.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sun/sunlight.sun.main.iml" filepath="$PROJECT_DIR$/.idea/modules/sun/sunlight.sun.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sun/sunlight.sun.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/sun/sunlight.sun.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ux/sunlight.ux.iml" filepath="$PROJECT_DIR$/.idea/modules/ux/sunlight.ux.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ux/sunlight.ux.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/ux/sunlight.ux.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ux/sunlight.ux.main.iml" filepath="$PROJECT_DIR$/.idea/modules/ux/sunlight.ux.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ux/sunlight.ux.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/ux/sunlight.ux.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/wallpaper/sunlight.wallpaper.iml" filepath="$PROJECT_DIR$/.idea/modules/wallpaper/sunlight.wallpaper.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/wallpaper/sunlight.wallpaper.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/wallpaper/sunlight.wallpaper.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/wallpaper/sunlight.wallpaper.main.iml" filepath="$PROJECT_DIR$/.idea/modules/wallpaper/sunlight.wallpaper.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/wallpaper/sunlight.wallpaper.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/wallpaper/sunlight.wallpaper.unitTest.iml" />
     </modules>
   </component>
 </project>
