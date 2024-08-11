@@ -4,7 +4,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-           classpath 'com.android.tools.build:gradle:8.1.4'
+           classpath 'com.android.tools.build:gradle:8.5.0'
     }
 }
 apply plugin: 'com.android.library'
@@ -16,13 +16,10 @@ repositories {
 
 android {
     compileSdkVersion 22
-    buildToolsVersion "22.0.1"
 
     defaultConfig {
         minSdkVersion 8
         targetSdkVersion 33
-        versionCode 1
-        versionName "1.0"
         namespace "com.ghisguth.wallpaper"
     }
 

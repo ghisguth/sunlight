@@ -4,7 +4,7 @@ buildscript {
         mavenCentral() // This is for other dependencies hosted on Maven Central
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.1.4'
+        classpath 'com.android.tools.build:gradle:8.5.0'
     }
 }
 apply plugin: 'com.android.application'
@@ -16,7 +16,6 @@ repositories {
 
 android {
     compileSdkVersion 22
-    buildToolsVersion "22.0.1"
 
     defaultConfig {
         minSdkVersion 8
