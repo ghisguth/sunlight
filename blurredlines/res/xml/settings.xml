@@ -14,56 +14,72 @@
      limitations under the License.
 -->
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:key="wallpaper_settings"
     android:title="@string/wallpaper_settings">
 
-    <PreferenceCategory android:title="@string/settings_general_preferences">
-        <yuku.ambilwarna.widget.AmbilWarnaPreference
+    <androidx.preference.PreferenceCategory android:title="@string/settings_general_preferences">
+        <com.ghisguth.ux.ColorPickerPreference
             android:defaultValue="@integer/color_background_default"
             android:key="backgroundColor"
             android:summary="@string/settings_background_summary"
             android:title="@string/settings_background_title" />
-        <yuku.ambilwarna.widget.AmbilWarnaPreference
+        <com.ghisguth.ux.ColorPickerPreference
             android:defaultValue="@integer/color_lines_default"
             android:key="linesColor"
             android:summary="@string/settings_lines_summary"
             android:title="@string/settings_lines_title" />
 
-        <com.ghisguth.ux.SliderPreference
+        <androidx.preference.SeekBarPreference
+            app:min="0"
+            android:max="255"
+            app:showSeekBarValue="true"
             android:defaultValue="@integer/factor_default"
             android:key="brightness"
             android:summary="@string/settings_brightness_summary"
             android:title="@string/settings_brightness_title" />
-        <com.ghisguth.ux.SliderPreference
+        <androidx.preference.SeekBarPreference
+            app:min="0"
+            android:max="255"
+            app:showSeekBarValue="true"
             android:defaultValue="@integer/factor_default"
             android:key="blur"
             android:summary="@string/settings_blur_summary"
             android:title="@string/settings_blur_title" />
-        <com.ghisguth.ux.SliderPreference
+        <androidx.preference.SeekBarPreference
+            app:min="0"
+            android:max="255"
+            app:showSeekBarValue="true"
             android:defaultValue="@integer/factor_default"
             android:key="linewidth"
             android:summary="@string/settings_linewidth_summary"
             android:title="@string/settings_linewidth_title" />
-        <com.ghisguth.ux.SliderPreference
+        <androidx.preference.SeekBarPreference
+            app:min="0"
+            android:max="255"
+            app:showSeekBarValue="true"
             android:defaultValue="@integer/factor_default"
             android:key="speed"
             android:summary="@string/settings_speed_summary"
             android:title="@string/settings_speed_title" />
-        <com.ghisguth.ux.SliderPreference
+        <androidx.preference.SeekBarPreference
+            app:min="0"
+            android:max="255"
+            app:showSeekBarValue="true"
             android:defaultValue="@integer/factor_default"
             android:key="rotationspeed"
             android:summary="@string/settings_rotationspeed_summary"
             android:title="@string/settings_rotationspeed_title" />
-    </PreferenceCategory>
-    <PreferenceCategory android:title="@string/settings_general_compatibility">
-        <CheckBoxPreference
+    </androidx.preference.PreferenceCategory>
+    <androidx.preference.PreferenceCategory android:title="@string/settings_general_compatibility">
+        <androidx.preference.CheckBoxPreference
             android:key="use_one_framebuffer"
             android:summaryOff="@string/settings_use_one_framebuffer_summary_off"
             android:summaryOn="@string/settings_use_one_framebuffer_summary_on"
             android:title="@string/settings_use_one_framebuffer_title" />
 
-        <ListPreference
+        <androidx.preference.ListPreference
             android:defaultValue="3"
             android:dialogTitle="@string/settings_lines_count_dialog"
             android:entries="@array/lines_count_names"
@@ -72,7 +88,7 @@
             android:summary="@string/settings_lines_count_summary"
             android:title="@string/settings_lines_count_title" />
 
-        <CheckBoxPreference
+        <androidx.preference.CheckBoxPreference
             android:key="use_non_square_textures"
             android:summaryOff="@string/settings_use_non_square_textures_summary_off"
             android:summaryOn="@string/settings_use_non_square_textures_summary_on"
@@ -84,19 +100,19 @@
             android:summaryOn="@string/settings_use_non_power_of_two_textures_summary_on"
             android:summaryOff="@string/settings_use_non_power_of_two_textures_summary_off" /-->
 
-        <CheckBoxPreference
+        <androidx.preference.CheckBoxPreference
             android:key="use_smaller_textures"
             android:summaryOff="@string/settings_use_smaller_textures_summary_off"
             android:summaryOn="@string/settings_use_smaller_textures_summary_on"
             android:title="@string/settings_use_smaller_textures_title" />
 
-        <CheckBoxPreference
+        <androidx.preference.CheckBoxPreference
             android:key="double_tab_settings"
             android:summaryOff="@string/settings_double_tap_settings_summary_off"
             android:summaryOn="@string/settings_double_tap_settings_summary_on"
             android:title="@string/settings_double_tap_settings_title"
             android:defaultValue="true" />
 
-    </PreferenceCategory>
+    </androidx.preference.PreferenceCategory>
 
-</PreferenceScreen>
+</androidx.preference.PreferenceScreen>

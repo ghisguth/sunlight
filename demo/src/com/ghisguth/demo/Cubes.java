@@ -1,8 +1,7 @@
 /**
- * This file is a part of sunlight project
- * Copyright (c) $today.year sunlight authors (see file `COPYRIGHT` for the license)
+ * This file is a part of sunlight project Copyright (c) $today.year sunlight authors (see file
+ * `COPYRIGHT` for the license)
  */
-
 package com.ghisguth.demo;
 
 import android.content.Context;
@@ -12,7 +11,6 @@ import android.os.SystemClock;
 import android.util.Log;
 import com.ghisguth.gfx.*;
 import com.ghisguth.shared.ResourceHelper;
-
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
@@ -107,11 +105,9 @@ public class Cubes extends RendererBase {
             // lets make framebuffer have power of 2 dimension
             // and it should be less then display size
             frameBufferWidth = 1 << (int) (Math.log(width) / Math.log(2));
-            if (frameBufferWidth == surfaceWidth)
-                frameBufferWidth >>= 1;
+            if (frameBufferWidth == surfaceWidth) frameBufferWidth >>= 1;
             frameBufferHeight = 1 << (int) (Math.log(height) / Math.log(2));
-            if (frameBufferHeight == surfaceHeight)
-                frameBufferHeight >>= 1;
+            if (frameBufferHeight == surfaceHeight) frameBufferHeight >>= 1;
         } else {
             frameBufferWidth = surfaceWidth;
             frameBufferHeight = surfaceHeight;
@@ -132,8 +128,9 @@ public class Cubes extends RendererBase {
             frameBufferHeight >>= 1;
         }
 
-        Log.i("BL***", "frameBufferWidth=" + frameBufferWidth
-                + " frameBufferHeight=" + frameBufferHeight);
+        Log.i(
+                "BL***",
+                "frameBufferWidth=" + frameBufferWidth + " frameBufferHeight=" + frameBufferHeight);
 
         renderTexture.update(frameBufferWidth, frameBufferHeight);
     }
@@ -149,7 +146,6 @@ public class Cubes extends RendererBase {
         renderCube();
     }
 
-
     private void renderCube() {
         if (spriteProgram != null && baseTexture != null) {
             if (!spriteProgram.use() || !baseTexture.load()) {
@@ -157,12 +153,12 @@ public class Cubes extends RendererBase {
             }
 
             float angle = getTimeDeltaByScale(30000L);
-            //Matrix.setIdentityM(M_matrix, 0);
+            // Matrix.setIdentityM(M_matrix, 0);
             Matrix.setRotateM(M_matrix, 0, 90, 1, 0, 0);
             Matrix.rotateM(M_matrix, 0, 360 * angle, 0, 0, 1);
-            //Matrix.translateM(M_matrix, 0, 0, angle*10-5, 0);
+            // Matrix.translateM(M_matrix, 0, 0, angle*10-5, 0);
 
-            //Matrix.translateM(M_matrix, 0, 0, 0, 1.0f);
+            // Matrix.translateM(M_matrix, 0, 0, 0, 1.0f);
 
             Matrix.multiplyMM(MVP_matrix, 0, V_matrix, 0, M_matrix, 0);
             Matrix.multiplyMM(MVP_matrix, 0, P_matrix, 0, MVP_matrix, 0);
@@ -170,9 +166,10 @@ public class Cubes extends RendererBase {
             baseTexture.bind(GLES20.GL_TEXTURE0, spriteProgram, "sTexture");
             cubeVertices.bind(spriteProgram, "aPosition", "aTextureCoord");
 
-            GLES20.glUniformMatrix4fv(spriteProgram.getUniformLocation("uMVPMatrix"), 1, false, MVP_matrix, 0);
+            GLES20.glUniformMatrix4fv(
+                    spriteProgram.getUniformLocation("uMVPMatrix"), 1, false, MVP_matrix, 0);
 
-            //GLES20.glEnable(GLES20.GL_CULL_FACE);
+            // GLES20.glEnable(GLES20.GL_CULL_FACE);
             GLES20.glCullFace(GLES20.GL_BACK);
 
             GLES20.glEnable(GLES20.GL_POLYGON_OFFSET_FILL);
@@ -182,7 +179,7 @@ public class Cubes extends RendererBase {
 
             GLES20.glDisable(GLES20.GL_POLYGON_OFFSET_FILL);
 
-            //GLES20.glDisable(GLES20.GL_CULL_FACE);
+            // GLES20.glDisable(GLES20.GL_CULL_FACE);
 
             cubeVertices.unbind(spriteProgram, "aPosition", "aTextureCoord");
 
@@ -199,7 +196,15 @@ public class Cubes extends RendererBase {
         try {
             TextureManager textureManager = TextureManager.getSingletonObject();
             if (baseTexture == null) {
-                baseTexture = textureManager.createTexture(getResources(), R.raw.noise, false, GLES20.GL_NEAREST, GLES20.GL_LINEAR, GLES20.GL_REPEAT, GLES20.GL_REPEAT);
+                baseTexture =
+                        textureManager.createTexture(
+                                getResources(),
+                                com.ghisguth.demo.R.raw.noise,
+                                false,
+                                GLES20.GL_NEAREST,
+                                GLES20.GL_LINEAR,
+                                GLES20.GL_REPEAT,
+                                GLES20.GL_REPEAT);
             }
         } catch (Exception ex) {
             Log.e(TAG, "Unable to load textures from resources " + ex.toString());
@@ -213,8 +218,14 @@ public class Cubes extends RendererBase {
 
         try {
             ShaderManager shaderManager = ShaderManager.getSingletonObject();
-            Shader vertex = shaderManager.createVertexShader(ResourceHelper.loadRawString(openResource(R.raw.deforming_cube_vertex)));
-            Shader fragment = shaderManager.createFragmentShader(ResourceHelper.loadRawString(openResource(R.raw.deforming_cube_fragment)));
+            Shader vertex =
+                    shaderManager.createVertexShader(
+                            ResourceHelper.loadRawString(
+                                    openResource(com.ghisguth.gfx.R.raw.deforming_cube_vertex)));
+            Shader fragment =
+                    shaderManager.createFragmentShader(
+                            ResourceHelper.loadRawString(
+                                    openResource(com.ghisguth.gfx.R.raw.deforming_cube_fragment)));
             spriteProgram = shaderManager.createShaderProgram(vertex, fragment);
         } catch (Exception ex) {
             Log.e(TAG, "Unable to load shaders from resources " + ex.toString());
@@ -222,11 +233,8 @@ public class Cubes extends RendererBase {
     }
 
     private float getTimeDeltaByScale(long scale) {
-        if (scale < 1)
-            return 0.0f;
+        if (scale < 1) return 0.0f;
         long time = SystemClock.uptimeMillis() % scale;
         return (float) ((int) time) / (float) scale;
     }
-
-
 }

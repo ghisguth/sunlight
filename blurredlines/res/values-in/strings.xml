@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="wallpaper_lines">Garis Kabur</string>
+    <string name="app_name">Wallpaper Animasi Garis Kabur</string>
+    <string name="description">Garis abu-abu kabur yang digambar pada latar belakang hitam</string>
+    <string name="wallpaper_settings">Pengaturan</string>
+    <string name="wallpaper_settings_title">Pilih warna</string>
+    <string name="wallpaper_settings_summary">Pilih warna latar belakang dan latar depan</string>
+    <string name="settings_background_title">Latar Belakang</string>
+    <string name="settings_background_summary">Warna latar belakang</string>
+    <string name="settings_lines_title">Warna Garis</string>
+    <string name="settings_lines_summary">Warna garis-garis</string>
+    <string name="settings_blur_title">Kabur</string>
+    <string name="settings_blur_summary">Tingkat kekaburan garis</string>
+    <string name="settings_brightness_title">Kecerahan</string>
+    <string name="settings_brightness_summary">Kecerahan garis</string>
+    <string name="settings_linewidth_title">Ukuran</string>
+    <string name="settings_linewidth_summary">Ukuran garis</string>
+    <string name="settings_rotationspeed_title">Rotasi</string>
+    <string name="settings_rotationspeed_summary">Kecepatan rotasi</string>
+    <string name="settings_speed_title">Animasi</string>
+    <string name="settings_speed_summary">Kecepatan animasi</string>
+    <string name="settings_value">Nilai:</string>
+    <string name="settings_general_preferences">Umum</string>
+    <string name="settings_general_compatibility">Kompatibilitas dan performa</string>
+    <string name="settings_use_one_framebuffer_title">Gunakan hanya satu framebuffer</string>
+    <string name="settings_use_one_framebuffer_summary_on">Menggunakan satu tekstur render dan satu framebuffer. Memakan lebih sedikit sumber daya, tetapi mungkin tidak berfungsi pada beberapa perangkat.</string>
+    <string name="settings_use_one_framebuffer_summary_off">Menggunakan dua tekstur render dan dua framebuffer. Memakan lebih banyak sumber daya, tetapi akan berfungsi di semua perangkat.</string>
+    <string name="settings_use_non_square_textures_title">Gunakan tekstur tidak persegi</string>
+    <string name="settings_use_non_square_textures_summary_on">Akan menggunakan tekstur persegi panjang. Performa lebih baik, tetapi mungkin tidak berfungsi pada beberapa perangkat lama.</string>
+    <string name="settings_use_non_square_textures_summary_off">Hanya gunakan tekstur persegi. Memakan lebih banyak sumber daya, tetapi akan berfungsi di semua perangkat.</string>
+    <string name="settings_use_non_power_of_two_textures_title">Gunakan tekstur dengan dimensi bukan pangkat dua</string>
+    <string name="settings_use_non_power_of_two_textures_summary_on">Menggunakan tekstur yang bukan pangkat dua. Performa/tampilan lebih baik, tetapi mungkin tidak berfungsi pada beberapa perangkat.</string>
+    <string name="settings_use_non_power_of_two_textures_summary_off">Hanya gunakan tekstur dengan dimensi pangkat dua. Memakan lebih banyak sumber daya, tetapi akan berfungsi di semua perangkat.</string>
+    <string name="settings_use_smaller_textures_title">Kurangi ukuran framebuffer internal</string>
+    <string name="settings_use_smaller_textures_summary_on">Akan menggunakan tekstur render yang lebih kecil. Performa lebih baik, tetapi mungkin tidak terlihat sebagus pada resolusi penuh.</string>
+    <string name="settings_use_smaller_textures_summary_off">Gunakan resolusi tekstur penuh.</string>
+    <string name="settings_lines_count_title">Jumlah garis</string>
+    <string name="settings_lines_count_summary">Mempengaruhi kualitas dan performa. Terlihat lebih baik dengan lebih banyak garis, tetapi mungkin mempengaruhi performa.</string>
+    <string name="settings_lines_count_dialog">Pilih jumlah garis</string>
+    <string name="settings_double_tap_settings_title">Buka pengaturan dengan ketuk dua kali</string>
+    <string name="settings_double_tap_settings_summary_on">Gestur aktif</string>
+    <string name="settings_double_tap_settings_summary_off">Gestur dinonaktifkan</string>
+</resources>

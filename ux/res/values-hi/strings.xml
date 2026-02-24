@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_double_tap_settings_title">सेटिंग खोलने के लिए डबल टैप करें</string>
+    <string name="settings_double_tap_settings_summary_on">जेस्चर सक्षम</string>
+    <string name="settings_double_tap_settings_summary_off">जेस्चर अक्षम</string>
+</resources>

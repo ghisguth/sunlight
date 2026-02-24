@@ -1,26 +1,25 @@
 /**
- * This file is a part of sunlight project
- * Copyright (c) $today.year sunlight authors (see file `COPYRIGHT` for the license)
+ * This file is a part of sunlight project Copyright (c) $today.year sunlight authors (see file
+ * `COPYRIGHT` for the license)
  */
-
 package com.ghisguth.gfx;
 
 public class GeometryHelper {
 
     private static final float[] quadVerticesArray = {
-            // X, Y, Z, U, V
-            1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
-            0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
-            1.0f, 1.0f, 0.0f, 1.0f, 1.0f,
-            0.0f, 1.0f, 0.0f, 0.0f, 1.0f
+        // X, Y, Z, U, V
+        1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
+        0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+        1.0f, 1.0f, 0.0f, 1.0f, 1.0f,
+        0.0f, 1.0f, 0.0f, 0.0f, 1.0f
     };
 
     private static final float[] spriteVerticesArray = {
-            // X, Y, Z, U, V
-            1.0f, 0.0f, -1.0f, 1.0f, 1.0f,
-            0.0f, 0.0f, -0.5f, 0.0f, 1.0f,
-            1.0f, 1.0f, -1.0f, 1.0f, 0.0f,
-            0.0f, 1.0f, -1.0f, 0.0f, 0.0f
+        // X, Y, Z, U, V
+        1.0f, 0.0f, -1.0f, 1.0f, 1.0f,
+        0.0f, 0.0f, -0.5f, 0.0f, 1.0f,
+        1.0f, 1.0f, -1.0f, 1.0f, 0.0f,
+        0.0f, 1.0f, -1.0f, 0.0f, 0.0f
     };
 
     public static VertexBuffer createScreenQuad() {
@@ -43,7 +42,8 @@ public class GeometryHelper {
         final int sideVerticesCount = (resolution + 1) * (resolution - 1);
         final int otherSideVerticesCount = (resolution - 1) * (resolution - 1);
 
-        final int verticesCount = 2 * capVerticesCount + 2 * sideVerticesCount + 2 * otherSideVerticesCount;
+        final int verticesCount =
+                2 * capVerticesCount + 2 * sideVerticesCount + 2 * otherSideVerticesCount;
         final int indicesCount = 0;
 
         float[] vertices = new float[verticesCount * 5];

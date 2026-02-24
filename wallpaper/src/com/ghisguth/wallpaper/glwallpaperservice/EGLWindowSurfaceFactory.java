@@ -23,13 +23,15 @@ import javax.microedition.khronos.egl.EGLSurface;
 
 /**
  * An interface for customizing the eglCreateWindowSurface and eglDestroySurface calls.
- * <p/>
- * <p/>
- * This interface must be implemented by clients wishing to call
- * {@link GLWallpaperService#setEGLWindowSurfaceFactory(EGLWindowSurfaceFactory)}
+ *
+ * <p>
+ *
+ * <p>This interface must be implemented by clients wishing to call {@link
+ * GLWallpaperService#setEGLWindowSurfaceFactory(EGLWindowSurfaceFactory)}
  */
 public interface EGLWindowSurfaceFactory {
-    EGLSurface createWindowSurface(EGL10 egl, EGLDisplay display, EGLConfig config, Object nativeWindow);
+    EGLSurface createWindowSurface(
+            EGL10 egl, EGLDisplay display, EGLConfig config, Object nativeWindow);
 
     void destroySurface(EGL10 egl, EGLDisplay display, EGLSurface surface);
 }

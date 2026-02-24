@@ -1,8 +1,7 @@
 /**
- * This file is a part of sunlight project
- * Copyright (c) $today.year sunlight authors (see file `COPYRIGHT` for the license)
+ * This file is a part of sunlight project Copyright (c) $today.year sunlight authors (see file
+ * `COPYRIGHT` for the license)
  */
-
 package com.ghisguth.gfx;
 
 import android.opengl.GLES20;
@@ -15,7 +14,14 @@ public class RenderTexture extends Texture {
     private int height;
 
     public RenderTexture(int width, int height) {
-        super(null, 0, false, GLES20.GL_LINEAR, GLES20.GL_LINEAR, GLES20.GL_CLAMP_TO_EDGE, GLES20.GL_CLAMP_TO_EDGE);
+        super(
+                null,
+                0,
+                false,
+                GLES20.GL_LINEAR,
+                GLES20.GL_LINEAR,
+                GLES20.GL_CLAMP_TO_EDGE,
+                GLES20.GL_CLAMP_TO_EDGE);
         this.width = width;
         this.height = height;
     }
@@ -48,8 +54,16 @@ public class RenderTexture extends Texture {
     private void setUpRenderTexture() {
         bindTexture();
 
-        GLES20.glTexImage2D(GLES20.GL_TEXTURE_2D, 0, GLES20.GL_RGBA, width,
-                height, 0, GLES20.GL_RGBA, GLES20.GL_UNSIGNED_BYTE, null);
+        GLES20.glTexImage2D(
+                GLES20.GL_TEXTURE_2D,
+                0,
+                GLES20.GL_RGBA,
+                width,
+                height,
+                0,
+                GLES20.GL_RGBA,
+                GLES20.GL_UNSIGNED_BYTE,
+                null);
 
         ErrorHelper.checkGlError(TAG, "glTexImage2D texture");
 

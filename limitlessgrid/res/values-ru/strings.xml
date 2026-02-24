@@ -42,4 +42,7 @@
     <string name="settings_grid_density_title">Плотность сетки</string>
     <string name="settings_grid_density_summary">Большая плотность выглядит лучше, но может повлеять на производительность.</string>
     <string name="settings_grid_density_dialog">Выберите плотность сетки</string>
+    <string name="settings_double_tap_settings_title">Открыть настройки по двойному нажатию</string>
+    <string name="settings_double_tap_settings_summary_on">Жест включен</string>
+    <string name="settings_double_tap_settings_summary_off">Жест выключен</string>
 </resources>

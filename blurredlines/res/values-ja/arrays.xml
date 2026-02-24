@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="lines_count_names">
+        <item>"非常に少ない"</item>
+        <item>"とても少ない"</item>
+        <item>"少ない"</item>
+        <item>"普通"</item>
+        <item>"多い"</item>
+        <item>"とても多い"</item>
+        <item>"非常に多い"</item>
+    </string-array>
+</resources>

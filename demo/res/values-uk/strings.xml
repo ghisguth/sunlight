@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Sunlight Demo</string>
+    <string name="title">Sunlight Demo</string>
+    <string name="subtitle">Експерименти з Open GL ES 2.0</string>
+    <string name="tab_test">Тест</string>
+    <string name="tab_sunv1">Сонце v.1.</string>
+    <string name="tab_sunv2">Сонце v.2.</string>
+    <string name="tab_sunv3">Сонце v.3.</string>
+    <string name="tab_lines">Розмиті лінії</string>
+    <string name="tab_grid">Безмежна сітка</string>
+    <string name="tab_cubes">Куби, що світяться</string>
+</resources>

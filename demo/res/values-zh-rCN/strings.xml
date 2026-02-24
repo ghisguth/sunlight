@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Sunlight 演示</string>
+    <string name="title">Sunlight 演示</string>
+    <string name="subtitle">OpenGL ES 2.0 实验</string>
+    <string name="tab_test">测试</string>
+    <string name="tab_sunv1">太阳 v.1.</string>
+    <string name="tab_sunv2">太阳 v.2.</string>
+    <string name="tab_sunv3">太阳 v.3.</string>
+    <string name="tab_lines">模糊线条</string>
+    <string name="tab_grid">无限网格</string>
+    <string name="tab_cubes">发光立方体</string>
+</resources>

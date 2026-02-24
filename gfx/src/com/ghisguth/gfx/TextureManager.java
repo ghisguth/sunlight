@@ -1,12 +1,10 @@
 /**
- * This file is a part of sunlight project
- * Copyright (c) $today.year sunlight authors (see file `COPYRIGHT` for the license)
+ * This file is a part of sunlight project Copyright (c) $today.year sunlight authors (see file
+ * `COPYRIGHT` for the license)
  */
-
 package com.ghisguth.gfx;
 
 import android.content.res.Resources;
-
 import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.WeakReference;
@@ -16,11 +14,12 @@ public class TextureManager {
     private static TextureManager singletonObject;
     private HashSet<WeakReference<Texture>> textures = new HashSet<WeakReference<Texture>>();
     private ReferenceQueue<Texture> textureReferenceQueue = new ReferenceQueue<Texture>();
-    private HashSet<WeakReference<FrameBuffer>> frameBuffers = new HashSet<WeakReference<FrameBuffer>>();
-    private ReferenceQueue<FrameBuffer> frameBufferReferenceQueue = new ReferenceQueue<FrameBuffer>();
+    private HashSet<WeakReference<FrameBuffer>> frameBuffers =
+            new HashSet<WeakReference<FrameBuffer>>();
+    private ReferenceQueue<FrameBuffer> frameBufferReferenceQueue =
+            new ReferenceQueue<FrameBuffer>();
 
-    private TextureManager() {
-    }
+    private TextureManager() {}
 
     public static synchronized TextureManager getSingletonObject() {
         if (singletonObject == null) {
@@ -58,29 +57,38 @@ public class TextureManager {
         return new RenderTexture(width, height);
     }
 
-    public Texture createTexture(Resources resources, int resource, boolean compressed, int minFilter, int maxFilter, int wrapS, int wrapT) {
+    public Texture createTexture(
+            Resources resources,
+            int resource,
+            boolean compressed,
+            int minFilter,
+            int maxFilter,
+            int wrapS,
+            int wrapT) {
         return new Texture(resources, resource, compressed, minFilter, maxFilter, wrapS, wrapT);
     }
 
     public void registerFrameBuffer(FrameBuffer frameBuffer) {
         synchronized (frameBuffers) {
-            WeakReference<FrameBuffer> weakReference = new WeakReference<FrameBuffer>(frameBuffer, frameBufferReferenceQueue);
+            WeakReference<FrameBuffer> weakReference =
+                    new WeakReference<FrameBuffer>(frameBuffer, frameBufferReferenceQueue);
             frameBuffers.add(weakReference);
             processFrameBufferReferenceQueueImpl();
         }
     }
 
     private void processFrameBufferReferenceQueueImpl() {
-        Reference<?> reference = textureReferenceQueue.poll();
+        Reference<?> reference = frameBufferReferenceQueue.poll();
         while (reference != null) {
             frameBuffers.remove(reference);
-            reference = textureReferenceQueue.poll();
+            reference = frameBufferReferenceQueue.poll();
         }
     }
 
     public void registerTexture(Texture texture) {
         synchronized (textures) {
-            WeakReference<Texture> weakReference = new WeakReference<Texture>(texture, textureReferenceQueue);
+            WeakReference<Texture> weakReference =
+                    new WeakReference<Texture>(texture, textureReferenceQueue);
             textures.add(weakReference);
             processTextureReferenceQueueImpl();
         }
@@ -120,5 +128,4 @@ public class TextureManager {
             }
         }
     }
-
 }

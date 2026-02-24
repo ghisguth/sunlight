@@ -1,12 +1,10 @@
 /**
- * This file is a part of sunlight project
- * Copyright (c) $today.year sunlight authors (see file `COPYRIGHT` for the license)
+ * This file is a part of sunlight project Copyright (c) $today.year sunlight authors (see file
+ * `COPYRIGHT` for the license)
  */
-
 package com.ghisguth.gfx;
 
 import android.opengl.GLES20;
-
 import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.WeakReference;
@@ -19,8 +17,7 @@ public class ShaderManager {
     private HashSet<WeakReference<Program>> shaderPrograms = new HashSet<WeakReference<Program>>();
     private ReferenceQueue<Program> shaderProgramReferenceQueue = new ReferenceQueue<Program>();
 
-    private ShaderManager() {
-    }
+    private ShaderManager() {}
 
     public static synchronized ShaderManager getSingletonObject() {
         if (singletonObject == null) {
@@ -41,7 +38,7 @@ public class ShaderManager {
     }
 
     private void processShaderReferenceQueue() {
-        synchronized (shaderPrograms) {
+        synchronized (shaders) {
             processShaderReferenceQueueImpl();
         }
     }
@@ -64,7 +61,8 @@ public class ShaderManager {
 
     public void registerShader(Shader shader) {
         synchronized (shaders) {
-            WeakReference<Shader> weakReference = new WeakReference<Shader>(shader, shaderReferenceQueue);
+            WeakReference<Shader> weakReference =
+                    new WeakReference<Shader>(shader, shaderReferenceQueue);
             shaders.add(weakReference);
             processShaderReferenceQueueImpl();
         }
@@ -80,7 +78,8 @@ public class ShaderManager {
 
     public void registerShaderProgram(Program shaderProgram) {
         synchronized (shaderPrograms) {
-            WeakReference<Program> weakReference = new WeakReference<Program>(shaderProgram, shaderProgramReferenceQueue);
+            WeakReference<Program> weakReference =
+                    new WeakReference<Program>(shaderProgram, shaderProgramReferenceQueue);
             shaderPrograms.add(weakReference);
             processShaderProgramReferenceQueueImpl();
         }

@@ -61,4 +61,7 @@
         framerate.
     </string>
     <string name="settings_post_ray_quality_dialog">Select effect quality</string>
+    <string name="settings_double_tap_settings_title">Open settings on double tap</string>
+    <string name="settings_double_tap_settings_summary_on">Gesture enabled</string>
+    <string name="settings_double_tap_settings_summary_off">Gesture disabled</string>
 </resources>

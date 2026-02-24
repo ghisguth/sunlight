@@ -1,8 +1,7 @@
 /**
- * This file is a part of sunlight project
- * Copyright (c) $today.year sunlight authors (see file `COPYRIGHT` for the license)
+ * This file is a part of sunlight project Copyright (c) $today.year sunlight authors (see file
+ * `COPYRIGHT` for the license)
  */
-
 package com.ghisguth.demo;
 
 import android.content.Context;
@@ -10,7 +9,6 @@ import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.os.SystemClock;
 import android.util.Log;
-
 import com.ghisguth.gfx.ErrorHelper;
 import com.ghisguth.gfx.Program;
 import com.ghisguth.gfx.Shader;
@@ -19,18 +17,17 @@ import com.ghisguth.gfx.Texture;
 import com.ghisguth.gfx.TextureManager;
 import com.ghisguth.gfx.VertexBuffer;
 import com.ghisguth.shared.ResourceHelper;
-
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 public class SunV2 extends RendererBase {
     private static String TAG = "Sunlight";
     private final float[] quadVericesArray = {
-            // X, Y, Z, U, V
-            1.0f, 0.0f, -1.0f, 1.0f, 0.0f,
-            0.0f, 0.0f, -0.5f, 0.0f, 0.0f,
-            1.0f, 1.0f, -1.0f, 1.0f, 1.0f,
-            0.0f, 1.0f, -1.0f, 0.0f, 1.0f
+        // X, Y, Z, U, V
+        1.0f, 0.0f, -1.0f, 1.0f, 0.0f,
+        0.0f, 0.0f, -0.5f, 0.0f, 0.0f,
+        1.0f, 1.0f, -1.0f, 1.0f, 1.0f,
+        0.0f, 1.0f, -1.0f, 0.0f, 1.0f
     };
     private final int horizontalResolution = 64;
     private final int verticalResolution = 32;
@@ -165,56 +162,55 @@ public class SunV2 extends RendererBase {
         }
 
         target_texture_ = new int[2];
-        target_texture_[0] = createTargetTexture(gl, framebuffer_width_,
-                framebuffer_height_);
+        target_texture_[0] = createTargetTexture(gl, framebuffer_width_, framebuffer_height_);
         if (target_texture_[0] == 0) {
             Log.e(TAG, "Could not create render texture");
             throw new RuntimeException("Could not create render texture");
         }
         if (!useOneFramebuffer_) {
-            target_texture_[1] = createTargetTexture(gl, framebuffer_width_,
-                    framebuffer_height_);
+            target_texture_[1] = createTargetTexture(gl, framebuffer_width_, framebuffer_height_);
             if (target_texture_[1] == 0) {
                 Log.e(TAG, "Could not create second render texture");
-                throw new RuntimeException(
-                        "Could not create second render texture");
+                throw new RuntimeException("Could not create second render texture");
             }
         }
 
         framebuffer_ = new int[2];
-        framebuffer_[0] = createFrameBuffer(gl, framebuffer_width_,
-                framebuffer_height_, target_texture_[0]);
+        framebuffer_[0] =
+                createFrameBuffer(gl, framebuffer_width_, framebuffer_height_, target_texture_[0]);
         if (framebuffer_[0] == 0) {
             Log.e(TAG, "Could not create frame buffer");
             throw new RuntimeException("Could not create frame buffer");
         }
 
         if (!useOneFramebuffer_) {
-            framebuffer_[1] = createFrameBuffer(gl, framebuffer_width_,
-                    framebuffer_height_, target_texture_[1]);
+            framebuffer_[1] =
+                    createFrameBuffer(
+                            gl, framebuffer_width_, framebuffer_height_, target_texture_[1]);
             if (framebuffer_[0] == 0) {
                 Log.e(TAG, "Could not create second frame buffer");
-                throw new RuntimeException(
-                        "Could not create second frame buffer");
+                throw new RuntimeException("Could not create second frame buffer");
             }
         }
     }
 
-    private int createFrameBuffer(GL10 gl, int width, int height,
-                                  int targetTextureId) {
+    private int createFrameBuffer(GL10 gl, int width, int height, int targetTextureId) {
         int framebuffer;
         int[] framebuffers = new int[1];
         GLES20.glGenFramebuffers(1, framebuffers, 0);
         framebuffer = framebuffers[0];
         GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, framebuffer);
 
-        GLES20.glFramebufferTexture2D(GLES20.GL_FRAMEBUFFER,
-                GLES20.GL_COLOR_ATTACHMENT0, GL10.GL_TEXTURE_2D,
-                targetTextureId, 0);
+        GLES20.glFramebufferTexture2D(
+                GLES20.GL_FRAMEBUFFER,
+                GLES20.GL_COLOR_ATTACHMENT0,
+                GL10.GL_TEXTURE_2D,
+                targetTextureId,
+                0);
         int status = GLES20.glCheckFramebufferStatus(GLES20.GL_FRAMEBUFFER);
         if (status != GLES20.GL_FRAMEBUFFER_COMPLETE) {
-            throw new RuntimeException("Framebuffer is not complete: "
-                    + Integer.toHexString(status));
+            throw new RuntimeException(
+                    "Framebuffer is not complete: " + Integer.toHexString(status));
         }
         GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, 0);
         return framebuffer;
@@ -247,11 +243,9 @@ public class SunV2 extends RendererBase {
             // lets make framebuffer have power of 2 dimension
             // and it should be less then display size
             framebuffer_width_ = 1 << (int) (Math.log(width) / Math.log(2));
-            if (framebuffer_width_ == surface_width_)
-                framebuffer_width_ >>= 1;
+            if (framebuffer_width_ == surface_width_) framebuffer_width_ >>= 1;
             framebuffer_height_ = 1 << (int) (Math.log(height) / Math.log(2));
-            if (framebuffer_height_ == surface_height_)
-                framebuffer_height_ >>= 1;
+            if (framebuffer_height_ == surface_height_) framebuffer_height_ >>= 1;
         } else {
             framebuffer_width_ = surface_width_;
             framebuffer_height_ = surface_height_;
@@ -272,15 +266,18 @@ public class SunV2 extends RendererBase {
             framebuffer_height_ >>= 1;
         }
 
-        Log.i("BL***", "framebuffer_width_=" + framebuffer_width_
-                + " framebuffer_height_=" + framebuffer_height_);
+        Log.i(
+                "BL***",
+                "framebuffer_width_="
+                        + framebuffer_width_
+                        + " framebuffer_height_="
+                        + framebuffer_height_);
 
-        updateTargetTexture(unused, target_texture_[0], framebuffer_width_,
-                framebuffer_height_);
+        updateTargetTexture(unused, target_texture_[0], framebuffer_width_, framebuffer_height_);
 
         if (!useOneFramebuffer_) {
-            updateTargetTexture(unused, target_texture_[1], framebuffer_width_,
-                    framebuffer_height_);
+            updateTargetTexture(
+                    unused, target_texture_[1], framebuffer_width_, framebuffer_height_);
         }
 
         target_texture_index_ = 0;
@@ -289,12 +286,20 @@ public class SunV2 extends RendererBase {
 
     private void updateTargetTexture(GL10 gl, int texture, int width, int height) {
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texture);
-        GLES20.glTexImage2D(GLES20.GL_TEXTURE_2D, 0, GLES20.GL_RGBA, width,
-                height, 0, GLES20.GL_RGBA, GLES20.GL_UNSIGNED_BYTE, null);
-        GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D,
-                GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_LINEAR);
-        GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D,
-                GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
+        GLES20.glTexImage2D(
+                GLES20.GL_TEXTURE_2D,
+                0,
+                GLES20.GL_RGBA,
+                width,
+                height,
+                0,
+                GLES20.GL_RGBA,
+                GLES20.GL_UNSIGNED_BYTE,
+                null);
+        GLES20.glTexParameterf(
+                GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_LINEAR);
+        GLES20.glTexParameterf(
+                GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
     }
 
     @Override
@@ -306,15 +311,14 @@ public class SunV2 extends RendererBase {
             resetFramebuffers_ = false;
 
             if (!useOneFramebuffer_) {
-                GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER,
-                        framebuffer_[1 - target_texture_index_]);
+                GLES20.glBindFramebuffer(
+                        GLES20.GL_FRAMEBUFFER, framebuffer_[1 - target_texture_index_]);
                 GLES20.glViewport(0, 0, framebuffer_width_, framebuffer_height_);
                 GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
             }
         }
 
-        GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER,
-                framebuffer_[target_texture_index_]);
+        GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, framebuffer_[target_texture_index_]);
         GLES20.glViewport(0, 0, framebuffer_width_, framebuffer_height_);
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 
@@ -334,14 +338,12 @@ public class SunV2 extends RendererBase {
         if (!useOneFramebuffer_) {
             target_texture_index_ = 1 - target_texture_index_;
         }
-
     }
 
     private void renderPostEffect(int textureIndex) {
         if (postRayProgram.use()) {
             GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
-            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D,
-                    target_texture_[textureIndex]);
+            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, target_texture_[textureIndex]);
 
             GLES20.glUniform1i(postRayProgram.getUniformLocation("sTexture"), 0);
             GLES20.glUniform1f(postRayProgram.getUniformLocation("uDecay"), 0.95f);
@@ -351,7 +353,8 @@ public class SunV2 extends RendererBase {
 
             quadVertices.bind(postRayProgram, "aPosition", "aTextureCoord");
 
-            GLES20.glUniformMatrix4fv(postRayProgram.getUniformLocation("uMVPMatrix"), 1, false, quad_matrix_, 0);
+            GLES20.glUniformMatrix4fv(
+                    postRayProgram.getUniformLocation("uMVPMatrix"), 1, false, quad_matrix_, 0);
 
             quadVertices.draw(GLES20.GL_TRIANGLE_STRIP);
 
@@ -366,24 +369,23 @@ public class SunV2 extends RendererBase {
             }
 
             float angle = getTimeDeltaByScale(600000L);
-            //Matrix.setIdentityM(M_matrix, 0);
+            // Matrix.setIdentityM(M_matrix, 0);
             Matrix.setRotateM(M_matrix, 0, 90, 1, 0, 0);
             Matrix.rotateM(M_matrix, 0, 360 * angle, 0, 0, 1);
-            //Matrix.translateM(M_matrix, 0, 0, angle*10-5, 0);
+            // Matrix.translateM(M_matrix, 0, 0, angle*10-5, 0);
 
-            //Matrix.translateM(M_matrix, 0, 0, 0, 1.0f);
+            // Matrix.translateM(M_matrix, 0, 0, 0, 1.0f);
 
             Matrix.multiplyMM(MVP_matrix, 0, V_matrix, 0, M_matrix, 0);
             Matrix.multiplyMM(MVP_matrix, 0, P_matrix, 0, MVP_matrix, 0);
-
 
             baseTexture.bind(GLES20.GL_TEXTURE0, program, "sBaseTexture");
             noiseTexture.bind(GLES20.GL_TEXTURE1, program, "sNoiseTexture");
 
             sphereVertices.bind(program, "aPosition", "aTextureCoord");
 
-            GLES20.glUniformMatrix4fv(program.getUniformLocation("uMVPMatrix"), 1, false, MVP_matrix, 0);
-
+            GLES20.glUniformMatrix4fv(
+                    program.getUniformLocation("uMVPMatrix"), 1, false, MVP_matrix, 0);
 
             float animationTime = getTimeDeltaByScale(790000L);
             GLES20.glUniform1f(program.getUniformLocation("uTime"), animationTime);
@@ -417,7 +419,8 @@ public class SunV2 extends RendererBase {
                 noiseTexture.bind(GLES20.GL_TEXTURE1, coronaProgram, "sNoiseTexture");
 
                 sphereVertices.bind(coronaProgram, "aPosition", "aTextureCoord");
-                GLES20.glUniformMatrix4fv(coronaProgram.getUniformLocation("uMVPMatrix"), 1, false, MVP_matrix, 0);
+                GLES20.glUniformMatrix4fv(
+                        coronaProgram.getUniformLocation("uMVPMatrix"), 1, false, MVP_matrix, 0);
                 GLES20.glUniform1f(coronaProgram.getUniformLocation("uTime"), animationTime);
                 GLES20.glUniform1f(coronaProgram.getUniformLocation("uTime2"), animationTime2);
                 GLES20.glUniform1f(coronaProgram.getUniformLocation("uTime3"), animationTime3);
@@ -437,8 +440,7 @@ public class SunV2 extends RendererBase {
     }
 
     private float getTimeDeltaByScale(long scale) {
-        if (scale < 1)
-            return 0.0f;
+        if (scale < 1) return 0.0f;
         long time = SystemClock.uptimeMillis() % scale;
         return (float) ((int) time) / (float) scale;
     }
@@ -452,10 +454,26 @@ public class SunV2 extends RendererBase {
         try {
             TextureManager textureManager = TextureManager.getSingletonObject();
             if (baseTexture == null) {
-                baseTexture = textureManager.createTexture(getResources(), R.raw.base_etc1, true, GLES20.GL_NEAREST, GLES20.GL_LINEAR, GLES20.GL_REPEAT, GLES20.GL_REPEAT);
+                baseTexture =
+                        textureManager.createTexture(
+                                getResources(),
+                                com.ghisguth.demo.R.raw.base_etc1,
+                                true,
+                                GLES20.GL_NEAREST,
+                                GLES20.GL_LINEAR,
+                                GLES20.GL_REPEAT,
+                                GLES20.GL_REPEAT);
             }
             if (noiseTexture == null) {
-                noiseTexture = textureManager.createTexture(getResources(), R.raw.noise_etc1, true, GLES20.GL_NEAREST, GLES20.GL_LINEAR, GLES20.GL_REPEAT, GLES20.GL_REPEAT);
+                noiseTexture =
+                        textureManager.createTexture(
+                                getResources(),
+                                com.ghisguth.demo.R.raw.noise_etc1,
+                                true,
+                                GLES20.GL_NEAREST,
+                                GLES20.GL_LINEAR,
+                                GLES20.GL_REPEAT,
+                                GLES20.GL_REPEAT);
             }
         } catch (Exception ex) {
             Log.e(TAG, "Unable to load textures from resources " + ex.toString());
@@ -469,16 +487,34 @@ public class SunV2 extends RendererBase {
 
         try {
             ShaderManager shaderManager = ShaderManager.getSingletonObject();
-            Shader vertex = shaderManager.createVertexShader(ResourceHelper.loadRawString(openResource(R.raw.sun_vertex)));
-            Shader fragment = shaderManager.createFragmentShader(ResourceHelper.loadRawString(openResource(R.raw.sun_fragment)));
+            Shader vertex =
+                    shaderManager.createVertexShader(
+                            ResourceHelper.loadRawString(
+                                    openResource(com.ghisguth.gfx.R.raw.sun_vertex)));
+            Shader fragment =
+                    shaderManager.createFragmentShader(
+                            ResourceHelper.loadRawString(
+                                    openResource(com.ghisguth.gfx.R.raw.sun_fragment)));
             program = shaderManager.createShaderProgram(vertex, fragment);
 
-            vertex = shaderManager.createVertexShader(ResourceHelper.loadRawString(openResource(R.raw.sun_corona_vertex)));
-            fragment = shaderManager.createFragmentShader(ResourceHelper.loadRawString(openResource(R.raw.sun_corona_fragment)));
+            vertex =
+                    shaderManager.createVertexShader(
+                            ResourceHelper.loadRawString(
+                                    openResource(com.ghisguth.gfx.R.raw.sun_corona_vertex)));
+            fragment =
+                    shaderManager.createFragmentShader(
+                            ResourceHelper.loadRawString(
+                                    openResource(com.ghisguth.gfx.R.raw.sun_corona_fragment)));
             coronaProgram = shaderManager.createShaderProgram(vertex, fragment);
 
-            vertex = shaderManager.createVertexShader(ResourceHelper.loadRawString(openResource(R.raw.sun_ray_vertex)));
-            fragment = shaderManager.createFragmentShader(ResourceHelper.loadRawString(openResource(R.raw.sun_ray_fragment)));
+            vertex =
+                    shaderManager.createVertexShader(
+                            ResourceHelper.loadRawString(
+                                    openResource(com.ghisguth.gfx.R.raw.sun_ray_vertex)));
+            fragment =
+                    shaderManager.createFragmentShader(
+                            ResourceHelper.loadRawString(
+                                    openResource(com.ghisguth.gfx.R.raw.sun_ray_fragment)));
             postRayProgram = shaderManager.createShaderProgram(vertex, fragment);
         } catch (Exception ex) {
             Log.e(TAG, "Unable to load shaders from resources " + ex.toString());

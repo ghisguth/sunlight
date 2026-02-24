@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Sunlight Demo</string>
+    <string name="title">Sunlight Demo</string>
+    <string name="subtitle">Thử nghiệm OpenGL ES 2.0</string>
+    <string name="tab_test">Kiểm tra</string>
+    <string name="tab_sunv1">Mặt trời v.1.</string>
+    <string name="tab_sunv2">Mặt trời v.2.</string>
+    <string name="tab_sunv3">Mặt trời v.3.</string>
+    <string name="tab_lines">Đường kẻ mờ</string>
+    <string name="tab_grid">Lưới vô tận</string>
+    <string name="tab_cubes">Khối lập phương phát sáng</string>
+</resources>

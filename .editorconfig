@@ -1,0 +1,46 @@
+root = true
+
+# All files
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# XML Files
+[*.xml]
+indent_style = space
+indent_size = 4
+
+# Gradle Files
+[*.{gradle,kts}]
+indent_style = space
+indent_size = 4
+
+# Java Files
+[*.java]
+indent_style = space
+indent_size = 4
+tab_width = 4
+
+# Organize Imports
+ij_java_imports_layout = android.**, androidx.**, com.**, junit.**, net.**, org.**, java.**, javax.**, *, ^
+ij_java_layout_static_imports_separate_from_nonstatic = true
+
+# Standard Java Naming Rules for Android
+ij_java_naming_conventions_local_variables = [a-z][a-zA-Z0-9]*
+ij_java_naming_conventions_parameters = [a-z][a-zA-Z0-9]*
+ij_java_naming_conventions_fields = [a-z][a-zA-Z0-9]*
+ij_java_naming_conventions_static_fields = s[A-Z][a-zA-Z0-9]*
+ij_java_naming_conventions_constants = [A-Z][A-Z0-9]*(_[A-Z0-9]+)*
+
+# Disable Hungarian notation/prefixes entirely for modern Java
+ij_java_name_prefix_field = 
+ij_java_name_prefix_static_field = s
+ij_java_name_suffix_field = 
+
+# JetBrains/IntelliJ/Android Studio specific properties to treat style as errors
+ij_any_spaces_around_assignment_operators = true
+ij_java_blank_lines_after_imports = 1
+ij_java_class_count_to_use_import_on_demand = 999
+ij_java_names_count_to_use_import_on_demand = 999

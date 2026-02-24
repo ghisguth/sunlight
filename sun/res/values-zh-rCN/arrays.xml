@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="post_effect_quality_names">
+        <item>"低"</item>
+        <item>"中"</item>
+        <item>"高"</item>
+    </string-array>
+</resources>

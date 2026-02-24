@@ -52,5 +52,7 @@
     <string name="settings_lines_count_title">Lines number</string>
     <string name="settings_lines_count_summary">Affects quality and performance. It looks better with more lines, but may affect performance.</string>
     <string name="settings_lines_count_dialog">Select number of lines</string>
-
+    <string name="settings_double_tap_settings_title">Open settings on double tap</string>
+    <string name="settings_double_tap_settings_summary_on">Gesture enabled</string>
+    <string name="settings_double_tap_settings_summary_off">Gesture disabled</string>
 </resources>

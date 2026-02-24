@@ -1,13 +1,11 @@
 /**
- * This file is a part of sunlight project
- * Copyright (c) $today.year sunlight authors (see file `COPYRIGHT` for the license)
+ * This file is a part of sunlight project Copyright (c) $today.year sunlight authors (see file
+ * `COPYRIGHT` for the license)
  */
-
 package com.ghisguth.gfx;
 
 import android.opengl.GLES20;
 import android.util.Log;
-
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
@@ -25,16 +23,16 @@ public class VertexBuffer {
 
     public VertexBuffer(float[] vertexArray, short[] indexArray, boolean hasUv) {
         this.hasUv = hasUv;
-        vertices = ByteBuffer
-                .allocateDirect(
-                        vertexArray.length * FLOAT_SIZE_BYTES)
-                .order(ByteOrder.nativeOrder()).asFloatBuffer();
+        vertices =
+                ByteBuffer.allocateDirect(vertexArray.length * FLOAT_SIZE_BYTES)
+                        .order(ByteOrder.nativeOrder())
+                        .asFloatBuffer();
         vertices.put(vertexArray).position(0);
 
-        indices = ByteBuffer
-                .allocateDirect(
-                        indexArray.length * SHORT_SIZE_BYTES)
-                .order(ByteOrder.nativeOrder()).asShortBuffer();
+        indices =
+                ByteBuffer.allocateDirect(indexArray.length * SHORT_SIZE_BYTES)
+                        .order(ByteOrder.nativeOrder())
+                        .asShortBuffer();
         indices.put(indexArray).position(0);
 
         verticesCount = vertexArray.length / getStride();
@@ -56,7 +54,13 @@ public class VertexBuffer {
         int stride = getStride() * FLOAT_SIZE_BYTES;
 
         vertices.position(offset);
-        GLES20.glVertexAttribPointer(program.getAttributeLocation(position), 3, GLES20.GL_FLOAT, false, stride, vertices);
+        GLES20.glVertexAttribPointer(
+                program.getAttributeLocation(position),
+                3,
+                GLES20.GL_FLOAT,
+                false,
+                stride,
+                vertices);
         ErrorHelper.checkGlError(TAG, "glVertexAttribPointer " + position);
         GLES20.glEnableVertexAttribArray(program.getAttributeLocation(position));
         ErrorHelper.checkGlError(TAG, "glEnableVertexAttribArray " + position);
@@ -65,7 +69,8 @@ public class VertexBuffer {
 
         if (hasUv) {
             vertices.position(offset);
-            GLES20.glVertexAttribPointer(program.getAttributeLocation(uv), 2, GLES20.GL_FLOAT, false, stride, vertices);
+            GLES20.glVertexAttribPointer(
+                    program.getAttributeLocation(uv), 2, GLES20.GL_FLOAT, false, stride, vertices);
             ErrorHelper.checkGlError(TAG, "glVertexAttribPointer " + uv);
             GLES20.glEnableVertexAttribArray(program.getAttributeLocation(uv));
             ErrorHelper.checkGlError(TAG, "glEnableVertexAttribArray " + uv);
@@ -85,7 +90,13 @@ public class VertexBuffer {
     public void draw(int primitiveType, int start, int count) {
         if (indicesCount == 0) {
             if (start < 0 || (start + count) > verticesCount) {
-                String message = "VertexBuffer::draw called with invalid start/count: start=" + start + " count=" + count + " verticesCount=" + verticesCount;
+                String message =
+                        "VertexBuffer::draw called with invalid start/count: start="
+                                + start
+                                + " count="
+                                + count
+                                + " verticesCount="
+                                + verticesCount;
                 Log.e(TAG, message);
                 throw new RuntimeException(message);
             }
@@ -94,7 +105,8 @@ public class VertexBuffer {
             ErrorHelper.checkGlError(TAG, "glDrawArrays");
         } else {
             Log.e(TAG, "VertexBuffer::draw called with start/count for indexed buffer");
-            throw new RuntimeException("VertexBuffer::draw called with start/count for indexed buffer");
+            throw new RuntimeException(
+                    "VertexBuffer::draw called with start/count for indexed buffer");
         }
     }
 
@@ -115,5 +127,4 @@ public class VertexBuffer {
     public int getIndexCount() {
         return this.indicesCount;
     }
-
 }

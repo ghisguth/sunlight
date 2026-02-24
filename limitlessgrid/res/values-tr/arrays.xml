@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="grid_density_names">
+        <item>"Aşırı Düşük"</item>
+        <item>"Çok Düşük"</item>
+        <item>"Düşük"</item>
+        <item>"Orta"</item>
+        <item>"Yüksek"</item>
+        <item>"Çok Yüksek"</item>
+        <item>"Aşırı Yüksek"</item>
+    </string-array>
+</resources>

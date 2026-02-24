@@ -1,45 +1,68 @@
-/**
- * This file is a part of sunlight project
- * Copyright (c) $today.year sunlight authors (see file `COPYRIGHT` for the license)
- */
-
 package com.ghisguth.limitlessgrid;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
-
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceFragmentCompat;
 import cxa.gridwallpaper.R;
 
-public class WallpaperSettings extends PreferenceActivity implements
-        SharedPreferences.OnSharedPreferenceChangeListener {
+public class WallpaperSettings extends AppCompatActivity {
 
     @Override
-    protected void onCreate(Bundle icicle) {
-        super.onCreate(icicle);
-        getPreferenceManager().setSharedPreferencesName(
-                Wallpaper.SHARED_PREF_NAME);
-
-        addPreferencesFromResource(R.xml.settings);
-
-        getPreferenceManager().getSharedPreferences()
-                .registerOnSharedPreferenceChangeListener(this);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(android.R.id.content, new SettingsFragment())
+                .commit();
     }
 
-    @Override
-    protected void onDestroy() {
-        getPreferenceManager().getSharedPreferences()
-                .unregisterOnSharedPreferenceChangeListener(this);
-        super.onDestroy();
-    }
+    public static class SettingsFragment extends PreferenceFragmentCompat
+            implements SharedPreferences.OnSharedPreferenceChangeListener {
+        @Override
+        public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                getPreferenceManager().setStorageDeviceProtected();
+            }
+            getPreferenceManager().setSharedPreferencesName(Wallpaper.SHARED_PREF_NAME);
+            setPreferencesFromResource(R.xml.settings, rootKey);
+        }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
+        @Override
+        public void onResume() {
+            super.onResume();
+            getPreferenceScreen()
+                    .getSharedPreferences()
+                    .registerOnSharedPreferenceChangeListener(this);
+        }
 
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
-                                          String key) {
-    }
+        @Override
+        public void onPause() {
+            super.onPause();
+            getPreferenceScreen()
+                    .getSharedPreferences()
+                    .unregisterOnSharedPreferenceChangeListener(this);
+        }
 
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {}
+
+        @SuppressWarnings("deprecation")
+        @Override
+        public void onDisplayPreferenceDialog(Preference preference) {
+            if (preference instanceof com.ghisguth.ux.ColorPickerPreference) {
+                DialogFragment dialogFragment =
+                        com.ghisguth.ux.ColorPickerPreferenceFragmentCompat.newInstance(
+                                preference.getKey());
+                dialogFragment.setTargetFragment(this, 0);
+                dialogFragment.show(
+                        getParentFragmentManager(),
+                        "androidx.preference.PreferenceFragment.DIALOG");
+            } else {
+                super.onDisplayPreferenceDialog(preference);
+            }
+        }
+    }
 }

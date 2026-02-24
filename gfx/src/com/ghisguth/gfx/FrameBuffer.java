@@ -1,13 +1,11 @@
 /**
- * This file is a part of sunlight project
- * Copyright (c) $today.year sunlight authors (see file `COPYRIGHT` for the license)
+ * This file is a part of sunlight project Copyright (c) $today.year sunlight authors (see file
+ * `COPYRIGHT` for the license)
  */
-
 package com.ghisguth.gfx;
 
 import android.opengl.GLES20;
 import android.util.Log;
-
 import javax.microedition.khronos.opengles.GL10;
 
 public class FrameBuffer {
@@ -40,7 +38,9 @@ public class FrameBuffer {
                 GLES20.glDeleteFramebuffers(1, frameBuffers, 0);
                 ErrorHelper.checkGlError(TAG, "glDeleteFramebuffers");
             } else {
-                Log.w(TAG, "unable to delete frameBuffer " + frameBuffer + " because it is not valid");
+                Log.w(
+                        TAG,
+                        "unable to delete frameBuffer " + frameBuffer + " because it is not valid");
             }
             frameBuffer = 0;
         }
@@ -73,14 +73,17 @@ public class FrameBuffer {
 
         GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, frameBuffer);
 
-        GLES20.glFramebufferTexture2D(GLES20.GL_FRAMEBUFFER,
-                GLES20.GL_COLOR_ATTACHMENT0, GL10.GL_TEXTURE_2D,
-                renderTexture.getTexture(), 0);
+        GLES20.glFramebufferTexture2D(
+                GLES20.GL_FRAMEBUFFER,
+                GLES20.GL_COLOR_ATTACHMENT0,
+                GL10.GL_TEXTURE_2D,
+                renderTexture.getTexture(),
+                0);
 
         int status = GLES20.glCheckFramebufferStatus(GLES20.GL_FRAMEBUFFER);
         if (status != GLES20.GL_FRAMEBUFFER_COMPLETE) {
-            throw new RuntimeException("Framebuffer is not complete: "
-                    + Integer.toHexString(status));
+            throw new RuntimeException(
+                    "Framebuffer is not complete: " + Integer.toHexString(status));
         }
         GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, 0);
 
@@ -90,5 +93,4 @@ public class FrameBuffer {
     public void unbind() {
         GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, 0);
     }
-
 }

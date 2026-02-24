@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Démo Sunlight</string>
+    <string name="title">Démo Sunlight</string>
+    <string name="subtitle">Expériences OpenGL ES 2.0</string>
+    <string name="tab_test">Test</string>
+    <string name="tab_sunv1">Soleil v.1.</string>
+    <string name="tab_sunv2">Soleil v.2.</string>
+    <string name="tab_sunv3">Soleil v.3.</string>
+    <string name="tab_lines">Lignes Floues</string>
+    <string name="tab_grid">Grille Illimitée</string>
+    <string name="tab_cubes">Cubes Lumineux</string>
+</resources>

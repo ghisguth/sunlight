@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_double_tap_settings_title">ダブルタップして設定を開く</string>
+    <string name="settings_double_tap_settings_summary_on">ジェスチャー有効</string>
+    <string name="settings_double_tap_settings_summary_off">ジェスチャー無効</string>
+</resources>

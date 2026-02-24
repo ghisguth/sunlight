@@ -25,14 +25,14 @@ import javax.microedition.khronos.egl.EGLSurface;
 // http://www.rbgrn.net/content/354-glsurfaceview-adapted-3d-live-wallpapers
 class DefaultWindowSurfaceFactory implements EGLWindowSurfaceFactory {
 
-    public EGLSurface createWindowSurface(EGL10 egl, EGLDisplay
-            display, EGLConfig config, Object nativeWindow) {
-        // this is a bit of a hack to work around Droid init problems - if you don't have this, it'll get hung up on orientation changes
+    public EGLSurface createWindowSurface(
+            EGL10 egl, EGLDisplay display, EGLConfig config, Object nativeWindow) {
+        // this is a bit of a hack to work around Droid init problems - if you don't have this,
+        // it'll get hung up on orientation changes
         EGLSurface eglSurface = null;
         while (eglSurface == null) {
             try {
-                eglSurface = egl.eglCreateWindowSurface(display,
-                        config, nativeWindow, null);
+                eglSurface = egl.eglCreateWindowSurface(display, config, nativeWindow, null);
             } catch (Throwable t) {
             } finally {
                 if (eglSurface == null) {

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="wallpaper_grid">असीमित ग्रिड</string>
+    <string name="app_name">असीमित ग्रिड लाइव वॉलपेपर</string>
+    <string name="description">काले बैकग्राउंड पर खींचा गया ग्रे लाइन ग्रिड</string>
+    <string name="wallpaper_settings">सेटिंग्स</string>
+    <string name="wallpaper_settings_title">रंग चुनें</string>
+    <string name="wallpaper_settings_summary">बैकग्राउंड और फोरग्राउंड का रंग चुनें</string>
+    <string name="settings_background_title">बैकग्राउंड</string>
+    <string name="settings_background_summary">बैकग्राउंड का रंग</string>
+    <string name="settings_lines_title">लाइन का रंग</string>
+    <string name="settings_lines_summary">लाइनों का रंग</string>
+    <string name="settings_blur_title">धुंधलापन</string>
+    <string name="settings_blur_summary">लाइनों की धुंधलापन</string>
+    <string name="settings_brightness_title">चमक</string>
+    <string name="settings_brightness_summary">लाइनों की चमक</string>
+    <string name="settings_linewidth_title">आकार</string>
+    <string name="settings_linewidth_summary">लाइनों का आकार</string>
+    <string name="settings_rotationspeed_title">रोटेशन</string>
+    <string name="settings_rotationspeed_summary">रोटेशन की गति</string>
+    <string name="settings_speed_title">एनिमेशन</string>
+    <string name="settings_speed_summary">एनिमेशन की गति</string>
+    <string name="settings_value">मान:</string>
+    <string name="settings_general_preferences">सामान्य</string>
+    <string name="settings_general_compatibility">अनुकूलता और प्रदर्शन</string>
+    <string name="settings_use_one_framebuffer_title">केवल एक फ्रेमबफर का उपयोग करें</string>
+    <string name="settings_use_one_framebuffer_summary_on">एक रेंडर बनावट और एक फ्रेमबफर का उपयोग करता है। कम संसाधनों का उपयोग करता है, लेकिन कुछ उपकरणों पर काम नहीं कर सकता है।</string>
+    <string name="settings_use_one_framebuffer_summary_off">दो रेंडर बनावट और फ्रेमबफर का उपयोग करता है। अधिक संसाधनों का उपयोग करता है, लेकिन सभी उपकरणों पर काम करेगा।</string>
+    <string name="settings_use_non_square_textures_title">गैर-वर्गाकार बनावट का उपयोग करें</string>
+    <string name="settings_use_non_square_textures_summary_on">आयताकार बनावट का उपयोग करेगा। बेहतर प्रदर्शन, लेकिन कुछ पुराने उपकरणों पर काम नहीं कर सकता है।</string>
+    <string name="settings_use_non_square_textures_summary_off">केवल वर्गाकार बनावट का उपयोग करें। अधिक संसाधनों का उपयोग करता है, लेकिन सभी उपकरणों पर काम करेगा।</string>
+    <string name="settings_use_non_power_of_two_textures_title">गैर-दो की शक्ति वाली बनावट का उपयोग करें</string>
+    <string name="settings_use_non_power_of_two_textures_summary_on">ऐसी बनावट का उपयोग करता है जो दो की शक्ति नहीं हैं। बेहतर प्रदर्शन/दृश्य, लेकिन कुछ उपकरणों पर काम नहीं कर सकता है।</string>
+    <string name="settings_use_non_power_of_two_textures_summary_off">केवल उन बनावटों का उपयोग करें जो दो की शक्ति हैं। अधिक संसाधनों का उपयोग करता है, लेकिन सभी उपकरणों पर काम करेगा।</string>
+    <string name="settings_use_smaller_textures_title">आंतरिक फ्रेमबफर आकार कम करें</string>
+    <string name="settings_use_smaller_textures_summary_on">छोटे रेंडर बनावट का उपयोग करेंगे। बेहतर प्रदर्शन, लेकिन पूर्ण रिज़ॉल्यूशन जितना अच्छा नहीं लग सकता है।</string>
+    <string name="settings_use_smaller_textures_summary_off">पूर्ण बनावट रिज़ॉल्यूशन का उपयोग करें।</string>
+    <string name="settings_grid_density_title">ग्रिड घनत्व</string>
+    <string name="settings_grid_density_summary">अधिक घनत्व बेहतर लगेगा, लेकिन यह प्रदर्शन को प्रभावित कर सकता है।</string>
+    <string name="settings_grid_density_dialog">ग्रिड घनत्व चुनें</string>
+    <string name="settings_double_tap_settings_title">डबल टैप पर सेटिंग्स खोलें</string>
+    <string name="settings_double_tap_settings_summary_on">जेस्चर सक्षम</string>
+    <string name="settings_double_tap_settings_summary_off">जेस्चर अक्षम</string>
+</resources>

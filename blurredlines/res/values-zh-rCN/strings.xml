@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="wallpaper_lines">模糊线条</string>
+    <string name="app_name">模糊线条动态壁纸</string>
+    <string name="description">黑色背景上的模糊灰色线条</string>
+    <string name="wallpaper_settings">设置</string>
+    <string name="wallpaper_settings_title">选择颜色</string>
+    <string name="wallpaper_settings_summary">选择背景和前景颜色</string>
+    <string name="settings_background_title">背景</string>
+    <string name="settings_background_summary">背景颜色</string>
+    <string name="settings_lines_title">线条颜色</string>
+    <string name="settings_lines_summary">线条颜色</string>
+    <string name="settings_blur_title">模糊</string>
+    <string name="settings_blur_summary">线条模糊程度</string>
+    <string name="settings_brightness_title">亮度</string>
+    <string name="settings_brightness_summary">线条亮度</string>
+    <string name="settings_linewidth_title">大小</string>
+    <string name="settings_linewidth_summary">线条大小</string>
+    <string name="settings_rotationspeed_title">旋转</string>
+    <string name="settings_rotationspeed_summary">旋转速度</string>
+    <string name="settings_speed_title">动画</string>
+    <string name="settings_speed_summary">动画速度</string>
+    <string name="settings_value">数值:</string>
+    <string name="settings_general_preferences">通用</string>
+    <string name="settings_general_compatibility">兼容性与性能</string>
+    <string name="settings_use_one_framebuffer_title">仅使用一个帧缓冲</string>
+    <string name="settings_use_one_framebuffer_summary_on">使用一个渲染纹理和一个帧缓冲。消耗较少资源，但在某些设备上可能无法工作。</string>
+    <string name="settings_use_one_framebuffer_summary_off">使用两个渲染纹理和帧缓冲。消耗更多资源，但可在所有设备上工作。</string>
+    <string name="settings_use_non_square_textures_title">使用非正方形纹理</string>
+    <string name="settings_use_non_square_textures_summary_on">将使用矩形纹理。性能更好，但在某些旧设备上可能无法工作。</string>
+    <string name="settings_use_non_square_textures_summary_off">仅使用正方形纹理。消耗更多资源，但可在所有设备上工作。</string>
+    <string name="settings_use_non_power_of_two_textures_title">使用非 2 的幂次纹理</string>
+    <string name="settings_use_non_power_of_two_textures_summary_on">使用非 2 的幂次纹理。性能/视觉效果更好，但在某些设备上可能无法工作。</string>
+    <string name="settings_use_non_power_of_two_textures_summary_off">仅使用 2 的幂次纹理。消耗更多资源，但可在所有设备上工作。</string>
+    <string name="settings_use_smaller_textures_title">减小内部帧缓冲大小</string>
+    <string name="settings_use_smaller_textures_summary_on">将使用较小的渲染纹理。性能更好，但看起来可能不如全分辨率。</string>
+    <string name="settings_use_smaller_textures_summary_off">使用全纹理分辨率。</string>
+    <string name="settings_lines_count_title">线条数量</string>
+    <string name="settings_lines_count_summary">影响质量和性能。线条越多看起来越好，但可能会影响性能。</string>
+    <string name="settings_lines_count_dialog">选择线条数量</string>
+    <string name="settings_double_tap_settings_title">双击打开设置</string>
+    <string name="settings_double_tap_settings_summary_on">手势已启用</string>
+    <string name="settings_double_tap_settings_summary_off">手势已禁用</string>
+</resources>

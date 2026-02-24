@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="wallpaper_lines">Líneas Difusas</string>
+    <string name="app_name">Fondo de Pantallas Animado Líneas Difusas</string>
+    <string name="description">Líneas de color gris difuso dibujadas sobre un fondo negro</string>
+    <string name="wallpaper_settings">Ajustes</string>
+    <string name="wallpaper_settings_title">Seleccionar colores</string>
+    <string name="wallpaper_settings_summary">Elige el color del fondo y del primer plano</string>
+    <string name="settings_background_title">Fondo</string>
+    <string name="settings_background_summary">Color del fondo</string>
+    <string name="settings_lines_title">Color de la línea</string>
+    <string name="settings_lines_summary">Color de las líneas</string>
+    <string name="settings_blur_title">Desenfoque</string>
+    <string name="settings_blur_summary">Nivel de desenfoque de las líneas</string>
+    <string name="settings_brightness_title">Brillo</string>
+    <string name="settings_brightness_summary">Brillo de las líneas</string>
+    <string name="settings_linewidth_title">Tamaño</string>
+    <string name="settings_linewidth_summary">Tamaño de las líneas</string>
+    <string name="settings_rotationspeed_title">Rotación</string>
+    <string name="settings_rotationspeed_summary">Velocidad de rotación</string>
+    <string name="settings_speed_title">Animación</string>
+    <string name="settings_speed_summary">Velocidad de la animación</string>
+    <string name="settings_value">Valor:</string>
+    <string name="settings_general_preferences">General</string>
+    <string name="settings_general_compatibility">Compatibilidad y rendimiento</string>
+    <string name="settings_use_one_framebuffer_title">Usar un solo framebuffer</string>
+    <string name="settings_use_one_framebuffer_summary_on">Usa una textura de renderizado y un framebuffer. Consume menos recursos, pero puede no funcionar en algunos dispositivos.</string>
+    <string name="settings_use_one_framebuffer_summary_off">Usa dos texturas de renderizado y framebuffers. Consume más recursos, pero funcionará en todos los dispositivos.</string>
+    <string name="settings_use_non_square_textures_title">Usar texturas no cuadradas</string>
+    <string name="settings_use_non_square_textures_summary_on">Utilizará texturas rectangulares. Mejor rendimiento, pero puede no funcionar en algunos dispositivos antiguos.</string>
+    <string name="settings_use_non_square_textures_summary_off">Usar solo texturas cuadradas. Consume más recursos, pero funcionará en todos los dispositivos.</string>
+    <string name="settings_use_non_power_of_two_textures_title">Usar texturas que no sean potencia de dos</string>
+    <string name="settings_use_non_power_of_two_textures_summary_on">Usa texturas que no sean potencias de dos. Mejor rendimiento/visual, pero puede no funcionar en algunos dispositivos.</string>
+    <string name="settings_use_non_power_of_two_textures_summary_off">Deselectores solo texturas que sean potencias de dos. Consume más recursos, pero funcionará en todos los dispositivos.</string>
+    <string name="settings_use_smaller_textures_title">Reducir el tamaño del framebuffer interno</string>
+    <string name="settings_use_smaller_textures_summary_on">Utilizará texturas de renderizado más pequeñas. Mejor rendimiento, pero puede no verse tan bien como en resolución completa.</string>
+    <string name="settings_use_smaller_textures_summary_off">Usar resolución de textura completa.</string>
+    <string name="settings_lines_count_title">Número de líneas</string>
+    <string name="settings_lines_count_summary">Afecta la calidad y el rendimiento. Se ve mejor con más líneas, pero puede afectar el rendimiento.</string>
+    <string name="settings_lines_count_dialog">Seleccionar el número de líneas</string>
+    <string name="settings_double_tap_settings_title">Abrir ajustes con doble toque</string>
+    <string name="settings_double_tap_settings_summary_on">Gesto activado</string>
+    <string name="settings_double_tap_settings_summary_off">Gesto desactivado</string>
+</resources>
