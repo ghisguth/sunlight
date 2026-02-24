@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="post_effect_quality_names">
+        <item>"Rendah"</item>
+        <item>"Sedang"</item>
+        <item>"Tinggi"</item>
+    </string-array>
+</resources>

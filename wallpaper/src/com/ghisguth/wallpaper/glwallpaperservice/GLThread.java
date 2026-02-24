@@ -18,17 +18,16 @@ package com.ghisguth.wallpaper.glwallpaperservice;
 
 import android.util.Log;
 import android.view.SurfaceHolder;
-
 import java.util.ArrayList;
-
 import javax.microedition.khronos.opengles.GL10;
 
 // Original code provided by Robert Green
 // http://www.rbgrn.net/content/354-glsurfaceview-adapted-3d-live-wallpapers
+@SuppressWarnings("deprecation")
 class GLThread extends Thread {
-    public final static int DEBUG_CHECK_GL_ERROR = 1;
-    public final static int DEBUG_LOG_GL_CALLS = 2;
-    private final static boolean LOG_THREADS = false;
+    public static final int DEBUG_CHECK_GL_ERROR = 1;
+    public static final int DEBUG_LOG_GL_CALLS = 2;
+    private static final boolean LOG_THREADS = false;
     private final GLThreadManager sGLThreadManager = new GLThreadManager();
     public SurfaceHolder mHolder;
     // Once the thread is started, all accesses to the following member
@@ -54,8 +53,12 @@ class GLThread extends Thread {
     private ArrayList<Runnable> mEventQueue = new ArrayList<Runnable>();
     private EglHelper mEglHelper;
 
-    GLThread(GLWallpaperService.Renderer renderer, EGLConfigChooser chooser, EGLContextFactory contextFactory,
-             EGLWindowSurfaceFactory surfaceFactory, GLWrapper wrapper) {
+    GLThread(
+            GLWallpaperService.Renderer renderer,
+            EGLConfigChooser chooser,
+            EGLContextFactory contextFactory,
+            EGLWindowSurfaceFactory surfaceFactory,
+            GLWrapper wrapper) {
         super();
         mDone = false;
         mWidth = 0;
@@ -76,7 +79,8 @@ class GLThread extends Thread {
     }
 
     public void setRenderMode(int renderMode) {
-        if (!((GLWallpaperService.GLEngine.RENDERMODE_WHEN_DIRTY <= renderMode) && (renderMode <= GLWallpaperService.GLEngine.RENDERMODE_CONTINUOUSLY))) {
+        if (!((GLWallpaperService.GLEngine.RENDERMODE_WHEN_DIRTY <= renderMode)
+                && (renderMode <= GLWallpaperService.GLEngine.RENDERMODE_CONTINUOUSLY))) {
             throw new IllegalArgumentException("renderMode");
         }
         synchronized (sGLThreadManager) {
@@ -164,19 +168,24 @@ class GLThread extends Thread {
     }
 
     private void guardedRun() throws InterruptedException {
-        mEglHelper = new EglHelper(mEGLConfigChooser, mEGLContextFactory, mEGLWindowSurfaceFactory, mGLWrapper);
+        mEglHelper =
+                new EglHelper(
+                        mEGLConfigChooser,
+                        mEGLContextFactory,
+                        mEGLWindowSurfaceFactory,
+                        mGLWrapper);
         try {
             GL10 gl = null;
             boolean tellRendererSurfaceCreated = true;
             boolean tellRendererSurfaceChanged = true;
 
             /*
-                * This is our main activity thread's loop, we go until asked to quit.
-                */
+             * This is our main activity thread's loop, we go until asked to quit.
+             */
             while (!isDone()) {
                 /*
-                     * Update the asynchronous state (window size)
-                     */
+                 * Update the asynchronous state (window size)
+                 */
                 int w = 0;
                 int h = 0;
                 boolean changed = false;
@@ -222,8 +231,15 @@ class GLThread extends Thread {
                             break;
                         }
 
-                        if ((!mPaused) && mHasSurface && mHaveEgl && (mWidth > 0) && (mHeight > 0)
-                                && (mRequestRender || (mRenderMode == GLWallpaperService.GLEngine.RENDERMODE_CONTINUOUSLY))) {
+                        if ((!mPaused)
+                                && mHasSurface
+                                && mHaveEgl
+                                && (mWidth > 0)
+                                && (mHeight > 0)
+                                && (mRequestRender
+                                        || (mRenderMode
+                                                == GLWallpaperService.GLEngine
+                                                        .RENDERMODE_CONTINUOUSLY))) {
                             changed = mSizeChanged;
                             w = mWidth;
                             h = mHeight;
@@ -247,8 +263,8 @@ class GLThread extends Thread {
                 } // end of synchronized(sGLThreadManager)
 
                 /*
-                     * Handle queued events
-                     */
+                 * Handle queued events
+                 */
                 if (eventsWaiting) {
                     Runnable r;
                     while ((r = getEvent()) != null) {
@@ -282,17 +298,17 @@ class GLThread extends Thread {
                     mRenderer.onDrawFrame(gl);
 
                     /*
-                          * Once we're done with GL, we need to call swapBuffers() to instruct the system to display the
-                          * rendered frame
-                          */
+                     * Once we're done with GL, we need to call swapBuffers() to instruct the system to display the
+                     * rendered frame
+                     */
                     mEglHelper.swap();
                     Thread.sleep(10);
                 }
             }
         } finally {
             /*
-                * clean-up everything...
-                */
+             * clean-up everything...
+             */
             synchronized (sGLThreadManager) {
                 stopEglLocked();
                 mEglHelper.finish();
@@ -305,7 +321,6 @@ class GLThread extends Thread {
             if (mEventQueue.size() > 0) {
                 return mEventQueue.remove(0);
             }
-
         }
         return null;
     }
@@ -317,8 +332,8 @@ class GLThread extends Thread {
     }
 
     /*
-      * This private method should only be called inside a synchronized(sGLThreadManager) block.
-      */
+     * This private method should only be called inside a synchronized(sGLThreadManager) block.
+     */
     private void stopEglLocked() {
         if (mHaveEgl) {
             mHaveEgl = false;
@@ -369,10 +384,10 @@ class GLThread extends Thread {
         }
 
         /*
-           * Tries once to acquire the right to use an EGL surface. Does not block.
-           *
-           * @return true if the right to use an EGL surface was acquired.
-           */
+         * Tries once to acquire the right to use an EGL surface. Does not block.
+         *
+         * @return true if the right to use an EGL surface was acquired.
+         */
         public synchronized boolean tryAcquireEglSurface(GLThread thread) {
             if (mEglOwner == thread || mEglOwner == null) {
                 mEglOwner = thread;

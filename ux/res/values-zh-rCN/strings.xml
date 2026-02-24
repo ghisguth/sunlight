@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_double_tap_settings_title">双击打开设置</string>
+    <string name="settings_double_tap_settings_summary_on">手势已启用</string>
+    <string name="settings_double_tap_settings_summary_off">手势已禁用</string>
+</resources>

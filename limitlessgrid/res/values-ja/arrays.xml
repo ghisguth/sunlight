@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="grid_density_names">
+        <item>"非常に低い"</item>
+        <item>"とても低い"</item>
+        <item>"低い"</item>
+        <item>"普通"</item>
+        <item>"高い"</item>
+        <item>"とても高い"</item>
+        <item>"非常に高い"</item>
+    </string-array>
+</resources>

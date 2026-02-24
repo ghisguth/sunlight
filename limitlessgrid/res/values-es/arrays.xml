@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="grid_density_names">
+        <item>"Extremadamente Baja"</item>
+        <item>"Muy Baja"</item>
+        <item>"Baja"</item>
+        <item>"Media"</item>
+        <item>"Alta"</item>
+        <item>"Muy Alta"</item>
+        <item>"Extremadamente Alta"</item>
+    </string-array>
+</resources>

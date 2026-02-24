@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Sunlight Demo</string>
+    <string name="title">Sunlight Demo</string>
+    <string name="subtitle">Eksperimen OpenGL ES 2.0</string>
+    <string name="tab_test">Uji</string>
+    <string name="tab_sunv1">Matahari v.1.</string>
+    <string name="tab_sunv2">Matahari v.2.</string>
+    <string name="tab_sunv3">Matahari v.3.</string>
+    <string name="tab_lines">Garis Kabur</string>
+    <string name="tab_grid">Kisi Tanpa Batas</string>
+    <string name="tab_cubes">Kubus Bercahaya</string>
+</resources>

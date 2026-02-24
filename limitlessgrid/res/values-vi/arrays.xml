@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="grid_density_names">
+        <item>"Cực kỳ thấp"</item>
+        <item>"Rất thấp"</item>
+        <item>"Thấp"</item>
+        <item>"Trung bình"</item>
+        <item>"Cao"</item>
+        <item>"Rất cao"</item>
+        <item>"Cực kỳ cao"</item>
+    </string-array>
+</resources>

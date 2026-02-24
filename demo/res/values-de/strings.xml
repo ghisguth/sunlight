@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Sunlight Demo</string>
+    <string name="title">Sunlight Demo</string>
+    <string name="subtitle">OpenGL ES 2.0 Experimente</string>
+    <string name="tab_test">Test</string>
+    <string name="tab_sunv1">Sonne v.1.</string>
+    <string name="tab_sunv2">Sonne v.2.</string>
+    <string name="tab_sunv3">Sonne v.3.</string>
+    <string name="tab_lines">Verschwommene Linien</string>
+    <string name="tab_grid">Grenzenloses Gitter</string>
+    <string name="tab_cubes">Leuchtende Würfel</string>
+</resources>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="wallpaper_grid">Lưới vô tận</string>
+    <string name="app_name">Hình nền động Lưới vô tận</string>
+    <string name="description">Lưới đường kẻ màu xám được vẽ trên nền đen</string>
+    <string name="wallpaper_settings">Cài đặt</string>
+    <string name="wallpaper_settings_title">Chọn màu sắc</string>
+    <string name="wallpaper_settings_summary">Chọn màu nền và màu tiền cảnh</string>
+    <string name="settings_background_title">Nền</string>
+    <string name="settings_background_summary">Màu nền</string>
+    <string name="settings_lines_title">Màu đường kẻ</string>
+    <string name="settings_lines_summary">Màu của các đường kẻ</string>
+    <string name="settings_blur_title">Độ mờ</string>
+    <string name="settings_blur_summary">Độ mờ của các đường kẻ</string>
+    <string name="settings_brightness_title">Độ sáng</string>
+    <string name="settings_brightness_summary">Độ sáng của các đường kẻ</string>
+    <string name="settings_linewidth_title">Kích thước</string>
+    <string name="settings_linewidth_summary">Kích thước của các đường kẻ</string>
+    <string name="settings_rotationspeed_title">Xoay</string>
+    <string name="settings_rotationspeed_summary">Tốc độ xoay</string>
+    <string name="settings_speed_title">Hoạt họa</string>
+    <string name="settings_speed_summary">Tốc độ hoạt họa</string>
+    <string name="settings_value">Giá trị:</string>
+    <string name="settings_general_preferences">Chung</string>
+    <string name="settings_general_compatibility">Khả năng tương thích và hiệu suất</string>
+    <string name="settings_use_one_framebuffer_title">Chỉ sử dụng một framebuffer</string>
+    <string name="settings_use_one_framebuffer_summary_on">Sử dụng một kết cấu kết xuất và một framebuffer. Tiêu tốn ít tài nguyên hơn, nhưng có thể không hoạt động trên một số thiết bị.</string>
+    <string name="settings_use_one_framebuffer_summary_off">Sử dụng hai kết cấu kết xuất và hai framebuffer. Tiêu tốn nhiều tài nguyên hơn, nhưng sẽ hoạt động trên tất cả các thiết bị.</string>
+    <string name="settings_use_non_square_textures_title">Sử dụng kết cấu không phải hình vuông</string>
+    <string name="settings_use_non_square_textures_summary_on">Sẽ sử dụng kết cấu hình chữ nhật. Hiệu suất tốt hơn, nhưng có thể không hoạt động trên một số thiết bị cũ.</string>
+    <string name="settings_use_non_square_textures_summary_off">Chỉ sử dụng kết cấu hình vuông. Tiêu tốn nhiều tài nguyên hơn, nhưng sẽ hoạt động trên tất cả các thiết bị.</string>
+    <string name="settings_use_non_power_of_two_textures_title">Sử dụng kết cấu có kích thước không phải lũy thừa của hai</string>
+    <string name="settings_use_non_power_of_two_textures_summary_on">Sử dụng kết cấu không phải lũy thừa của hai. Hiệu suất/hình ảnh tốt hơn, nhưng có thể không hoạt động trên một số thiết bị.</string>
+    <string name="settings_use_non_power_of_two_textures_summary_off">Chỉ sử dụng kết cấu là lũy thừa của hai. Tiêu tốn nhiều tài nguyên hơn, nhưng sẽ hoạt động trên tất cả các thiết bị.</string>
+    <string name="settings_use_smaller_textures_title">Giảm kích thước framebuffer nội bộ</string>
+    <string name="settings_use_smaller_textures_summary_on">Sẽ sử dụng các kết cấu kết xuất nhỏ hơn. Hiệu suất tốt hơn, nhưng có thể trông không đẹp bằng độ phân giải đầy đủ.</string>
+    <string name="settings_use_smaller_textures_summary_off">Sử dụng độ phân giải kết cấu đầy đủ.</string>
+    <string name="settings_grid_density_title">Mật độ lưới</string>
+    <string name="settings_grid_density_summary">Mật độ cao hơn sẽ trông đẹp hơn, nhưng nó có thể ảnh hưởng đến hiệu suất.</string>
+    <string name="settings_grid_density_dialog">Chọn mật độ lưới</string>
+    <string name="settings_double_tap_settings_title">Mở cài đặt khi chạm hai lần</string>
+    <string name="settings_double_tap_settings_summary_on">Cử chỉ đã bật</string>
+    <string name="settings_double_tap_settings_summary_off">Cử chỉ đã tắt</string>
+</resources>

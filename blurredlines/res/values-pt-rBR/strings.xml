@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="wallpaper_lines">Linhas Desfocadas</string>
+    <string name="app_name">Papel de Parede Animado Linhas Desfocadas</string>
+    <string name="description">Linhas cinzas desfocadas desenhadas em um fundo preto</string>
+    <string name="wallpaper_settings">Configurações</string>
+    <string name="wallpaper_settings_title">Selecionar cores</string>
+    <string name="wallpaper_settings_summary">Escolha as cores do fundo e do primeiro plano</string>
+    <string name="settings_background_title">Fundo</string>
+    <string name="settings_background_summary">Cor do fundo</string>
+    <string name="settings_lines_title">Cor da linha</string>
+    <string name="settings_lines_summary">Cor das linhas</string>
+    <string name="settings_blur_title">Desfoque</string>
+    <string name="settings_blur_summary">Nível de desfoque das linhas</string>
+    <string name="settings_brightness_title">Brilho</string>
+    <string name="settings_brightness_summary">Brilho das linhas</string>
+    <string name="settings_linewidth_title">Tamanho</string>
+    <string name="settings_linewidth_summary">Tamanho das linhas</string>
+    <string name="settings_rotationspeed_title">Rotação</string>
+    <string name="settings_rotationspeed_summary">Velocidade de rotação</string>
+    <string name="settings_speed_title">Animação</string>
+    <string name="settings_speed_summary">Velocidade da animação</string>
+    <string name="settings_value">Valor:</string>
+    <string name="settings_general_preferences">Geral</string>
+    <string name="settings_general_compatibility">Compatibilidade e desempenho</string>
+    <string name="settings_use_one_framebuffer_title">Usar apenas um framebuffer</string>
+    <string name="settings_use_one_framebuffer_summary_on">Usa uma textura de renderização e um framebuffer. Consome menos recursos, mas pode não funcionar em alguns dispositivos.</string>
+    <string name="settings_use_one_framebuffer_summary_off">Usa duas texturas de renderização e framebuffers. Consome mais recursos, mas funcionará em todos os dispositivos.</string>
+    <string name="settings_use_non_square_textures_title">Usar texturas não quadradas</string>
+    <string name="settings_use_non_square_textures_summary_on">Usará texturas retangulares. Melhor desempenho, mas pode não funcionar em alguns dispositivos antigos.</string>
+    <string name="settings_use_non_square_textures_summary_off">Usar apenas texturas quadradas. Consome mais recursos, mas funcionará em todos os dispositivos.</string>
+    <string name="settings_use_non_power_of_two_textures_title">Usar texturas com dimensões não potências de dois</string>
+    <string name="settings_use_non_power_of_two_textures_summary_on">Usa texturas que não são potências de dois. Melhor desempenho/visual, mas pode não funcionar em alguns dispositivos.</string>
+    <string name="settings_use_non_power_of_two_textures_summary_off">Usar apenas texturas que são potências de dois. Consome mais recursos, mas funcionará em todos os dispositivos.</string>
+    <string name="settings_use_smaller_textures_title">Reduzir o tamanho do framebuffer interno</string>
+    <string name="settings_use_smaller_textures_summary_on">Usará texturas de renderização menores. Melhor desempenho, mas pode não parecer tão bom quanto na resolução total.</string>
+    <string name="settings_use_smaller_textures_summary_off">Usar resolução total de textura.</string>
+    <string name="settings_lines_count_title">Número de linhas</string>
+    <string name="settings_lines_count_summary">Afeta a qualidade e o desempenho. Parece melhor com mais linhas, mas pode afetar o desempenho.</string>
+    <string name="settings_lines_count_dialog">Selecionar o número de linhas</string>
+    <string name="settings_double_tap_settings_title">Abrir configurações com toque duplo</string>
+    <string name="settings_double_tap_settings_summary_on">Gesto ativado</string>
+    <string name="settings_double_tap_settings_summary_off">Gesto desativado</string>
+</resources>

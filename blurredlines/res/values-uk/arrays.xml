@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="lines_count_names">
+        <item>"Надзвичайно низька"</item>
+        <item>"Дуже низька"</item>
+        <item>"Низька"</item>
+        <item>"Середня"</item>
+        <item>"Висока"</item>
+        <item>"Дуже висока"</item>
+        <item>"Надзвичайно висока"</item>
+    </string-array>
+</resources>

@@ -1,8 +1,7 @@
 /**
- * This file is a part of sunlight project
- * Copyright (c) $today.year sunlight authors (see file `COPYRIGHT` for the license)
+ * This file is a part of sunlight project Copyright (c) $today.year sunlight authors (see file
+ * `COPYRIGHT` for the license)
  */
-
 package com.ghisguth.gfx;
 
 import android.content.res.Resources;
@@ -12,7 +11,6 @@ import android.opengl.ETC1Util;
 import android.opengl.GLES20;
 import android.opengl.GLUtils;
 import android.util.Log;
-
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -27,7 +25,14 @@ public class Texture {
     private int wrapS;
     private int wrapT;
 
-    public Texture(Resources resources, int resource, boolean compressed, int minFilter, int maxFilter, int wrapS, int wrapT) {
+    public Texture(
+            Resources resources,
+            int resource,
+            boolean compressed,
+            int minFilter,
+            int maxFilter,
+            int wrapS,
+            int wrapT) {
         this.resources = resources;
         this.resource = resource;
         this.compressed = compressed;
@@ -99,8 +104,13 @@ public class Texture {
 
         try {
             if (compressed) {
-                ETC1Util.loadTexture(GLES20.GL_TEXTURE_2D, 0, 0,
-                        GLES20.GL_RGB, GLES20.GL_UNSIGNED_SHORT_5_6_5, is);
+                ETC1Util.loadTexture(
+                        GLES20.GL_TEXTURE_2D,
+                        0,
+                        0,
+                        GLES20.GL_RGB,
+                        GLES20.GL_UNSIGNED_SHORT_5_6_5,
+                        is);
                 ErrorHelper.checkGlError(TAG, "ETC1Util.loadTexture");
             } else {
                 Bitmap bitmap = BitmapFactory.decodeStream(is);

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="grid_density_names">
+        <item>"Дуже низька"</item>
+        <item>"Низька"</item>
+        <item>"Середня"</item>
+        <item>"Висока"</item>
+        <item>"Дуже висока"</item>
+    </string-array>
+</resources>

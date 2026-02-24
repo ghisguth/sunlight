@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="wallpaper_lines">Bulanık Çizgiler</string>
+    <string name="app_name">Bulanık Çizgiler Canlı Duvar Kağıdı</string>
+    <string name="description">Siyah arka plan üzerine çizilmiş bulanık gri çizgiler</string>
+    <string name="wallpaper_settings">Ayarlar</string>
+    <string name="wallpaper_settings_title">Renkleri seçin</string>
+    <string name="wallpaper_settings_summary">Arka plan ve ön plan renklerini seçin</string>
+    <string name="settings_background_title">Arka Plan</string>
+    <string name="settings_background_summary">Arka plan rengi</string>
+    <string name="settings_lines_title">Çizgi Rengi</string>
+    <string name="settings_lines_summary">Çizgilerin rengi</string>
+    <string name="settings_blur_title">Bulanıklık</string>
+    <string name="settings_blur_summary">Çizgilerin bulanıklık seviyesi</string>
+    <string name="settings_brightness_title">Parlaklık</string>
+    <string name="settings_brightness_summary">Çizgilerin parlaklığı</string>
+    <string name="settings_linewidth_title">Boyut</string>
+    <string name="settings_linewidth_summary">Çizgilerin boyutu</string>
+    <string name="settings_rotationspeed_title">Dönüş</string>
+    <string name="settings_rotationspeed_summary">Dönüş hızı</string>
+    <string name="settings_speed_title">Animasyon</string>
+    <string name="settings_speed_summary">Animasyon hızı</string>
+    <string name="settings_value">Değer:</string>
+    <string name="settings_general_preferences">Genel</string>
+    <string name="settings_general_compatibility">Uyumluluk ve performans</string>
+    <string name="settings_use_one_framebuffer_title">Yalnızca bir framebuffer kullan</string>
+    <string name="settings_use_one_framebuffer_summary_on">Bir render dokusu ve bir framebuffer kullanır. Daha az kaynak tüketir, ancak bazı cihazlarda çalışmayabilir.</string>
+    <string name="settings_use_one_framebuffer_summary_off">İki render dokusu ve iki framebuffer kullanır. Daha fazla kaynak tüketir, ancak tüm cihazlarda çalışacaktır.</string>
+    <string name="settings_use_non_square_textures_title">Kare olmayan dokular kullan</string>
+    <string name="settings_use_non_square_textures_summary_on">Dikdörtgen dokular kullanacaktır. Daha iyi performans sağlar, ancak bazı eski cihazlarda çalışmayabilir.</string>
+    <string name="settings_use_non_square_textures_summary_off">Yalnızca kare dokular kullan. Daha fazla kaynak tüketir, ancak tüm cihazlarda çalışacaktır.</string>
+    <string name="settings_use_non_power_of_two_textures_title">İkinin kuvveti olmayan boyutlu dokular kullan</string>
+    <string name="settings_use_non_power_of_two_textures_summary_on">İkinin kuvveti olmayan dokular kullanır. Daha iyi performans/görünüm sağlar, ancak bazı cihazlarda çalışmayabilir.</string>
+    <string name="settings_use_non_power_of_two_textures_summary_off">Yalnızca ikinin kuvveti olan dokuları kullan. Daha fazla kaynak tüketir, ancak tüm cihazlarda çalışacaktır.</string>
+    <string name="settings_use_smaller_textures_title">Dahili framebuffer boyutunu azalt</string>
+    <string name="settings_use_smaller_textures_summary_on">Daha küçük render dokuları kullanacaktır. Daha iyi performans sağlar, ancak tam çözünürlük kadar iyi görünmeyebilir.</string>
+    <string name="settings_use_smaller_textures_summary_off">Tam doku çözünürlüğünü kullan.</string>
+    <string name="settings_lines_count_title">Çizgi sayısı</string>
+    <string name="settings_lines_count_summary">Kaliteyi ve performansı etkiler. Daha fazla çizgi ile daha iyi görünür, ancak performansı etkileyebilir.</string>
+    <string name="settings_lines_count_dialog">Çizgi sayısını seçin</string>
+    <string name="settings_double_tap_settings_title">Çift dokunuşla ayarları aç</string>
+    <string name="settings_double_tap_settings_summary_on">Hareket etkin</string>
+    <string name="settings_double_tap_settings_summary_off">Hareket devre dışı</string>
+</resources>

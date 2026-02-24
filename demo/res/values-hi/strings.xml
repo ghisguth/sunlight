@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Sunlight Demo</string>
+    <string name="title">Sunlight Demo</string>
+    <string name="subtitle">OpenGL ES 2.0 प्रयोग</string>
+    <string name="tab_test">परीक्षण</string>
+    <string name="tab_sunv1">सूर्य v.1.</string>
+    <string name="tab_sunv2">सूर्य v.2.</string>
+    <string name="tab_sunv3">सूर्य v.3.</string>
+    <string name="tab_lines">धुंधली रेखाएं</string>
+    <string name="tab_grid">असीमित ग्रिड</string>
+    <string name="tab_cubes">चमकदार क्यूब्स</string>
+</resources>

@@ -1,130 +1,85 @@
-/**
- * This file is a part of sunlight project
- * Copyright (c) $today.year sunlight authors (see file `COPYRIGHT` for the license)
- */
-
 package com.ghisguth.demo;
 
-import android.app.ActionBar;
-import android.app.ActionBar.Tab;
-import android.app.Activity;
-import android.app.FragmentTransaction;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import androidx.appcompat.app.AppCompatActivity;
+import com.google.android.material.tabs.TabLayout;
 
-
-public class SunActivity extends Activity {
-    private GLSurfaceView glSurfaceView;
-    private TabHandler tabHandler;
+public class SunActivity extends AppCompatActivity {
+    private GLSurfaceView glSurfaceView_;
+    private LinearLayout root_;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        int currentApiVersion = android.os.Build.VERSION.SDK_INT;
+        root_ = new LinearLayout(this);
+        root_.setOrientation(LinearLayout.VERTICAL);
 
-        if (currentApiVersion >= android.os.Build.VERSION_CODES.HONEYCOMB) {
-            Tab tab;
-            ActionBar actionBar = getActionBar();
+        TabLayout tabLayout = new TabLayout(this);
+        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
 
-            actionBar.setTitle(R.string.title);
-            actionBar.setSubtitle(R.string.subtitle);
-            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_cubes).setTag(new Cubes(this)));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_grid).setTag(new Grid(this)));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_lines).setTag(new Lines(this)));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_test).setTag(new Test(this)));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_sunv1).setTag(new SunV1(this)));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_sunv2).setTag(new SunV2(this)));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_sunv3).setTag(new SunV3(this)));
 
-            tabHandler = new TabHandler(this);
+        tabLayout.addOnTabSelectedListener(
+                new TabLayout.OnTabSelectedListener() {
+                    @Override
+                    public void onTabSelected(TabLayout.Tab tab) {
+                        setSurfaceView((GLSurfaceView) tab.getTag());
+                    }
 
-            tab = actionBar.newTab();
-            tab.setTabListener(tabHandler);
-            tab.setText(R.string.tab_cubes);
-            tab.setTag(new Cubes(this));
-            actionBar.addTab(tab);
+                    @Override
+                    public void onTabUnselected(TabLayout.Tab tab) {}
 
-            tab = actionBar.newTab();
-            tab.setTabListener(tabHandler);
-            tab.setText(R.string.tab_grid);
-            tab.setTag(new Grid(this));
-            actionBar.addTab(tab);
+                    @Override
+                    public void onTabReselected(TabLayout.Tab tab) {}
+                });
 
+        root_.addView(
+                tabLayout,
+                new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
-            tab = actionBar.newTab();
-            tab.setTabListener(tabHandler);
-            tab.setText(R.string.tab_lines);
-            tab.setTag(new Lines(this));
-            actionBar.addTab(tab);
+        setContentView(root_);
 
-            tab = actionBar.newTab();
-            tab.setTabListener(tabHandler);
-            tab.setText(R.string.tab_test);
-            tab.setTag(new Test(this));
-            actionBar.addTab(tab);
+        tabLayout.selectTab(tabLayout.getTabAt(0));
+    }
 
-            tab = actionBar.newTab();
-            tab.setTabListener(tabHandler);
-            tab.setText(R.string.tab_sunv1);
-            tab.setTag(new SunV1(this));
-            actionBar.addTab(tab);
-
-            tab = actionBar.newTab();
-            tab.setTabListener(tabHandler);
-            tab.setText(R.string.tab_sunv2);
-            tab.setTag(new SunV2(this));
-            actionBar.addTab(tab);
-
-            tab = actionBar.newTab();
-            tab.setTabListener(tabHandler);
-            tab.setText(R.string.tab_sunv3);
-            tab.setTag(new SunV3(this));
-            actionBar.addTab(tab);
-
-        } else {
-            glSurfaceView = new Test(this);
-            setContentView(glSurfaceView);
+    public void setSurfaceView(GLSurfaceView newSurfaceView) {
+        if (glSurfaceView_ != null) {
+            glSurfaceView_.onPause();
+            root_.removeView(glSurfaceView_);
         }
-
+        glSurfaceView_ = newSurfaceView;
+        if (glSurfaceView_ != null) {
+            root_.addView(
+                    glSurfaceView_,
+                    new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1.0f));
+            glSurfaceView_.onResume();
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (glSurfaceView != null) {
-            glSurfaceView.onResume();
+        if (glSurfaceView_ != null) {
+            glSurfaceView_.onResume();
         }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        if (glSurfaceView != null) {
-            glSurfaceView.onPause();
+        if (glSurfaceView_ != null) {
+            glSurfaceView_.onPause();
         }
     }
-
-    public void setSurfaceView(GLSurfaceView glSurfaceView) {
-        this.glSurfaceView = glSurfaceView;
-        setContentView(glSurfaceView);
-    }
-
-    private class TabHandler implements ActionBar.TabListener {
-        private SunActivity activity;
-
-        public TabHandler(SunActivity activity) {
-            this.activity = activity;
-        }
-
-        @Override
-        public void onTabSelected(Tab tab, FragmentTransaction fragmentTransaction) {
-            GLSurfaceView glSurfaceView = (GLSurfaceView) tab.getTag();
-            activity.setSurfaceView(glSurfaceView);
-        }
-
-        @Override
-        public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-        }
-
-        @Override
-        public void onTabReselected(Tab tab, FragmentTransaction ft) {
-        }
-    }
-
-
 }

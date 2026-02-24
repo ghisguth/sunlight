@@ -51,5 +51,7 @@
     <string name="settings_use_smaller_textures_summary_off">Use full texture resolution.</string>
     <string name="settings_grid_density_title">Grid density</string>
     <string name="settings_grid_density_summary">Higher density will look better, but it may affect performance.</string>
-    <string name="settings_grid_density_dialog">Select grid density</string>
+    <string name="settings_grid_density_dialog">Select grid density</string>    <string name="settings_double_tap_settings_title">Open settings on double tap</string>
+    <string name="settings_double_tap_settings_summary_on">Gesture enabled</string>
+    <string name="settings_double_tap_settings_summary_off">Gesture disabled</string>
 </resources>

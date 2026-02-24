@@ -1,31 +1,18 @@
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:1.1.1'
-    }
-}
-apply plugin: 'com.android.library'
-
-repositories {
-    jcenter()
+plugins {
+    id 'com.android.library'
 }
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    namespace = 'com.ghisguth.wallpaper'
+    compileSdk = 36
 
     defaultConfig {
-        minSdkVersion 8
-        targetSdkVersion 22
-        versionCode 1
-        versionName "1.0"
+        minSdk = 24
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
 
     sourceSets {
@@ -39,20 +26,24 @@ android {
             assets.srcDirs = ['assets']
         }
 
-        // Move the tests to tests/java, tests/res, etc...
-        instrumentTest.setRoot('tests')
-
-        // Move the build types to build-types/<type>
-        // For instance, build-types/debug/java, build-types/debug/AndroidManifest.xml, ...
-        // This moves them out of them default location under src/<type>/... which would
-        // conflict with src/ being used by the main source set.
-        // Adding new build types or product flavors should be accompanied
-        // by a similar customization.
+        androidTest.setRoot('tests')
+        test {
+            java.srcDirs = ['test']
+            resources.srcDirs = ['test']
+        }
         debug.setRoot('build-types/debug')
         release.setRoot('build-types/release')
+    }
+    lint {
+        targetSdk 36
+    }
+    testOptions {
+        targetSdk 36
     }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.mockito:mockito-core:5.11.0'
 }

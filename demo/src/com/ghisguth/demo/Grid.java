@@ -1,8 +1,7 @@
 /**
- * This file is a part of sunlight project
- * Copyright (c) $today.year sunlight authors (see file `COPYRIGHT` for the license)
+ * This file is a part of sunlight project Copyright (c) $today.year sunlight authors (see file
+ * `COPYRIGHT` for the license)
  */
-
 package com.ghisguth.demo;
 
 import android.content.Context;
@@ -10,7 +9,6 @@ import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.os.SystemClock;
 import android.util.Log;
-
 import com.ghisguth.gfx.FrameBuffer;
 import com.ghisguth.gfx.GeometryHelper;
 import com.ghisguth.gfx.Program;
@@ -20,16 +18,13 @@ import com.ghisguth.gfx.ShaderManager;
 import com.ghisguth.gfx.TextureManager;
 import com.ghisguth.gfx.VertexBuffer;
 import com.ghisguth.shared.ResourceHelper;
-
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 public class Grid extends RendererBase {
     private static final int GRID_DIM = 13;
-    private static final int MOVING_LINE_COUNT = (GRID_DIM + 1)
-            * (GRID_DIM + 1) * 2 * 2;
-    private static final int STALE_LINE_COUNT = (GRID_DIM + 1) * (GRID_DIM + 1)
-            * 2;
+    private static final int MOVING_LINE_COUNT = (GRID_DIM + 1) * (GRID_DIM + 1) * 2 * 2;
+    private static final int STALE_LINE_COUNT = (GRID_DIM + 1) * (GRID_DIM + 1) * 2;
     private static final int LINE_COUNT = MOVING_LINE_COUNT + STALE_LINE_COUNT;
     private static String TAG = "Lines";
     private Program phenixLineProgram;
@@ -68,7 +63,6 @@ public class Grid extends RendererBase {
     private float blurFactor = 1.0f;
     private float brightness = 0.15f;
     private float brightnessFactor = 1.0f;
-
 
     private float lineWidth = 1.5f;
     private float lineWidthFactor = 1.0f;
@@ -160,7 +154,8 @@ public class Grid extends RendererBase {
         int numberOfRequiredTextures = useOneFramebuffer ? 1 : 2;
 
         for (int i = 0; i < numberOfRequiredTextures; ++i) {
-            renderTextures[i] = textureManager.createRenderTexture(frameBufferWidth, frameBufferHeight);
+            renderTextures[i] =
+                    textureManager.createRenderTexture(frameBufferWidth, frameBufferHeight);
 
             if (!renderTextures[i].load()) {
                 Log.e(TAG, "Could not create render texture");
@@ -192,11 +187,9 @@ public class Grid extends RendererBase {
             // lets make framebuffer have power of 2 dimension
             // and it should be less then display size
             frameBufferWidth = 1 << (int) (Math.log(width) / Math.log(2));
-            if (frameBufferWidth == surfaceWidth)
-                frameBufferWidth >>= 1;
+            if (frameBufferWidth == surfaceWidth) frameBufferWidth >>= 1;
             frameBufferHeight = 1 << (int) (Math.log(height) / Math.log(2));
-            if (frameBufferHeight == surfaceHeight)
-                frameBufferHeight >>= 1;
+            if (frameBufferHeight == surfaceHeight) frameBufferHeight >>= 1;
         } else {
             frameBufferWidth = surfaceWidth;
             frameBufferHeight = surfaceHeight;
@@ -217,8 +210,9 @@ public class Grid extends RendererBase {
             frameBufferHeight >>= 1;
         }
 
-        Log.i("BL***", "frameBufferWidth=" + frameBufferWidth
-                + " frameBufferHeight=" + frameBufferHeight);
+        Log.i(
+                "BL***",
+                "frameBufferWidth=" + frameBufferWidth + " frameBufferHeight=" + frameBufferHeight);
 
         for (int i = 0; i < renderTextures.length; ++i) {
             if (renderTextures[i] != null) {
@@ -267,7 +261,8 @@ public class Grid extends RendererBase {
 
             GLES20.glUniform1f(postProgram.getUniformLocation("uBlur"), blur * blurFactor);
 
-            GLES20.glUniformMatrix4fv(postProgram.getUniformLocation("uMVPMatrix"), 1, false, Q_matrix, 0);
+            GLES20.glUniformMatrix4fv(
+                    postProgram.getUniformLocation("uMVPMatrix"), 1, false, Q_matrix, 0);
 
             GLES20.glEnable(GLES20.GL_BLEND);
             GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE);
@@ -288,7 +283,10 @@ public class Grid extends RendererBase {
                 return;
             }
 
-            float angle = 360.0f * getTimeDeltaByScale((long) (1 * 50000L / speedFactor / rotationSpeedFactor));
+            float angle =
+                    360.0f
+                            * getTimeDeltaByScale(
+                                    (long) (1 * 50000L / speedFactor / rotationSpeedFactor));
             Matrix.setRotateM(M_matrix, 0, angle, 0, 0, 1.0f);
 
             Matrix.multiplyMM(MVP_matrix, 0, V_matrix, 0, M_matrix, 0);
@@ -298,11 +296,18 @@ public class Grid extends RendererBase {
 
             lineVertices.bind(phenixLineProgram, "aPosition", null);
 
-            GLES20.glUniformMatrix4fv(phenixLineProgram.getUniformLocation("uMVPMatrix"), 1, false, MVP_matrix, 0);
+            GLES20.glUniformMatrix4fv(
+                    phenixLineProgram.getUniformLocation("uMVPMatrix"), 1, false, MVP_matrix, 0);
 
             GLES20.glUniform1f(phenixLineProgram.getUniformLocation("uDelta"), delta);
-            GLES20.glUniform1f(phenixLineProgram.getUniformLocation("uBrightness"), brightness * brightnessFactor);
-            GLES20.glUniform3f(phenixLineProgram.getUniformLocation("uColor"), linesColorRed, linesColorGreen, linesColorBlue);
+            GLES20.glUniform1f(
+                    phenixLineProgram.getUniformLocation("uBrightness"),
+                    brightness * brightnessFactor);
+            GLES20.glUniform3f(
+                    phenixLineProgram.getUniformLocation("uColor"),
+                    linesColorRed,
+                    linesColorGreen,
+                    linesColorBlue);
 
             GLES20.glEnable(GLES20.GL_BLEND);
             GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE);
@@ -321,8 +326,7 @@ public class Grid extends RendererBase {
     }
 
     private float getTimeDeltaByScale(long scale) {
-        if (scale < 1)
-            return 0.0f;
+        if (scale < 1) return 0.0f;
         long time = SystemClock.uptimeMillis() % scale;
         return (float) ((int) time) / (float) scale;
     }
@@ -338,12 +342,24 @@ public class Grid extends RendererBase {
 
         try {
             ShaderManager shaderManager = ShaderManager.getSingletonObject();
-            Shader vertex = shaderManager.createVertexShader(ResourceHelper.loadRawString(openResource(R.raw.phenix_line_vertex)));
-            Shader fragment = shaderManager.createFragmentShader(ResourceHelper.loadRawString(openResource(R.raw.phenix_line_fragment)));
+            Shader vertex =
+                    shaderManager.createVertexShader(
+                            ResourceHelper.loadRawString(
+                                    openResource(com.ghisguth.gfx.R.raw.phenix_line_vertex)));
+            Shader fragment =
+                    shaderManager.createFragmentShader(
+                            ResourceHelper.loadRawString(
+                                    openResource(com.ghisguth.gfx.R.raw.phenix_line_fragment)));
             phenixLineProgram = shaderManager.createShaderProgram(vertex, fragment);
 
-            vertex = shaderManager.createVertexShader(ResourceHelper.loadRawString(openResource(R.raw.post_blur_vertex)));
-            fragment = shaderManager.createFragmentShader(ResourceHelper.loadRawString(openResource(R.raw.post_blur_fragment)));
+            vertex =
+                    shaderManager.createVertexShader(
+                            ResourceHelper.loadRawString(
+                                    openResource(com.ghisguth.gfx.R.raw.post_blur_vertex)));
+            fragment =
+                    shaderManager.createFragmentShader(
+                            ResourceHelper.loadRawString(
+                                    openResource(com.ghisguth.gfx.R.raw.post_blur_fragment)));
             postProgram = shaderManager.createShaderProgram(vertex, fragment);
         } catch (Exception ex) {
             Log.e(TAG, "Unable to load shaders from resources " + ex.toString());

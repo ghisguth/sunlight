@@ -1,13 +1,11 @@
 /**
- * This file is a part of sunlight project
- * Copyright (c) $today.year sunlight authors (see file `COPYRIGHT` for the license)
+ * This file is a part of sunlight project Copyright (c) $today.year sunlight authors (see file
+ * `COPYRIGHT` for the license)
  */
-
 package com.ghisguth.gfx;
 
 import android.opengl.GLES20;
 import android.util.Log;
-
 import java.util.HashMap;
 
 public class Program {

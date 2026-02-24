@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="lines_count_names">
+        <item>"极低"</item>
+        <item>"很低"</item>
+        <item>"低"</item>
+        <item>"中"</item>
+        <item>"高"</item>
+        <item>"很高"</item>
+        <item>"极高"</item>
+    </string-array>
+</resources>

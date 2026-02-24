@@ -14,81 +14,115 @@
      limitations under the License.
 -->
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:key="wallpaper_settings"
     android:title="@string/wallpaper_settings">
-    <PreferenceCategory android:title="@string/settings_sun">
-        <com.ghisguth.ux.SliderPreference
+    <androidx.preference.PreferenceCategory android:title="@string/settings_sun">
+        <androidx.preference.SeekBarPreference
+            app:min="0"
+            android:max="255"
+            app:showSeekBarValue="true"
             android:defaultValue="@integer/default_size"
             android:key="size"
             android:summary="@string/settings_sun_size_summary"
             android:title="@string/settings_sun_size" />
-        <com.ghisguth.ux.SliderPreference
+        <androidx.preference.SeekBarPreference
+            app:min="0"
+            android:max="255"
+            app:showSeekBarValue="true"
             android:defaultValue="@integer/sun_temperature"
             android:key="temperature"
             android:summary="@string/settings_sun_temperature_summary"
             android:title="@string/settings_sun_temperature" />
-        <CheckBoxPreference
+        <androidx.preference.CheckBoxPreference
             android:key="animateTemperature"
             android:summaryOff="@string/settings_sun_temperature_animate_summary_off"
             android:summaryOn="@string/settings_sun_temperature_animate_summary_on"
             android:title="@string/settings_sun_temperature_animate" />
-        <com.ghisguth.ux.SliderPreference
+        <androidx.preference.SeekBarPreference
+            app:min="0"
+            android:max="255"
+            app:showSeekBarValue="true"
             android:defaultValue="@integer/base_brightness"
             android:key="baseBrightness"
             android:summary="@string/settings_sun_base_brightness_summary"
             android:title="@string/settings_sun_base_brightness" />
-        <com.ghisguth.ux.SliderPreference
+        <androidx.preference.SeekBarPreference
+            app:min="0"
+            android:max="255"
+            app:showSeekBarValue="true"
             android:defaultValue="@integer/medium"
             android:key="maxBrightness"
             android:summary="@string/settings_sun_max_brightness_summary"
             android:title="@string/settings_sun_max_brightness" />
-        <com.ghisguth.ux.SliderPreference
+        <androidx.preference.SeekBarPreference
+            app:min="0"
+            android:max="255"
+            app:showSeekBarValue="true"
             android:defaultValue="@integer/medium"
             android:key="rotationSpeed"
             android:summary="@string/settings_sun_rotation_speed_summary"
             android:title="@string/settings_sun_rotation_speed" />
-        <com.ghisguth.ux.SliderPreference
+        <androidx.preference.SeekBarPreference
+            app:min="0"
+            android:max="255"
+            app:showSeekBarValue="true"
             android:defaultValue="@integer/medium"
             android:key="animationSpeed"
             android:summary="@string/settings_sun_animation_speed_summary"
             android:title="@string/settings_sun_animation_speed" />
-    </PreferenceCategory>
-    <PreferenceCategory android:title="@string/settings_sun_corona">
-        <com.ghisguth.ux.SliderPreference
+    </androidx.preference.PreferenceCategory>
+    <androidx.preference.PreferenceCategory android:title="@string/settings_sun_corona">
+        <androidx.preference.SeekBarPreference
+            app:min="0"
+            android:max="255"
+            app:showSeekBarValue="true"
             android:defaultValue="@integer/medium"
             android:key="coronaSize"
             android:summary="@string/settings_sun_corona_size_summary"
             android:title="@string/settings_sun_corona_size" />
-        <com.ghisguth.ux.SliderPreference
+        <androidx.preference.SeekBarPreference
+            app:min="0"
+            android:max="255"
+            app:showSeekBarValue="true"
             android:defaultValue="@integer/medium"
             android:key="coronaOpacity"
             android:summary="@string/settings_sun_corona_opacity_summary"
             android:title="@string/settings_sun_corona_opacity" />
-        <com.ghisguth.ux.SliderPreference
+        <androidx.preference.SeekBarPreference
+            app:min="0"
+            android:max="255"
+            app:showSeekBarValue="true"
             android:defaultValue="@integer/medium"
             android:key="coronaTurbulence"
             android:summary="@string/settings_sun_corona_turbulence_strength_summary"
             android:title="@string/settings_sun_corona_turbulence_strength" />
-        <com.ghisguth.ux.SliderPreference
+        <androidx.preference.SeekBarPreference
+            app:min="0"
+            android:max="255"
+            app:showSeekBarValue="true"
             android:defaultValue="@integer/medium"
             android:key="coronaHeight"
             android:summary="@string/settings_sun_corona_turbulence_size_summary"
             android:title="@string/settings_sun_corona_turbulence_size" />
-        <com.ghisguth.ux.SliderPreference
+        <androidx.preference.SeekBarPreference
+            app:min="0"
+            android:max="255"
+            app:showSeekBarValue="true"
             android:defaultValue="@integer/medium"
             android:key="coronaSpeed"
             android:summary="@string/settings_sun_corona_speed_summary"
             android:title="@string/settings_sun_corona_speed" />
-    </PreferenceCategory>
-    <PreferenceCategory android:title="@string/settings_post_effects">
-        <CheckBoxPreference
+    </androidx.preference.PreferenceCategory>
+    <androidx.preference.PreferenceCategory android:title="@string/settings_post_effects">
+        <androidx.preference.CheckBoxPreference
             android:defaultValue="true"
             android:key="postEnabled"
             android:summaryOff="@string/settings_post_enabled_summary_off"
             android:summaryOn="@string/settings_post_enabled_summary_on"
             android:title="@string/settings_post_enabled" />
-        <ListPreference
+        <androidx.preference.ListPreference
             android:defaultValue="0"
             android:dialogTitle="@string/settings_post_ray_quality_dialog"
             android:entries="@array/post_effect_quality_names"
@@ -96,47 +130,59 @@
             android:key="rayQuality"
             android:summary="@string/settings_post_ray_quality_summary"
             android:title="@string/settings_post_ray_quality" />
-        <com.ghisguth.ux.SliderPreference
+        <androidx.preference.SeekBarPreference
+            app:min="0"
+            android:max="255"
+            app:showSeekBarValue="true"
             android:defaultValue="@integer/medium"
             android:key="rayExposure"
             android:summary="@string/settings_post_ray_exposure_summary"
             android:title="@string/settings_post_ray_exposure" />
-        <com.ghisguth.ux.SliderPreference
+        <androidx.preference.SeekBarPreference
+            app:min="0"
+            android:max="255"
+            app:showSeekBarValue="true"
             android:defaultValue="@integer/medium"
             android:key="rayDensity"
             android:summary="@string/settings_post_ray_density_summary"
             android:title="@string/settings_post_ray_density" />
-        <com.ghisguth.ux.SliderPreference
+        <androidx.preference.SeekBarPreference
+            app:min="0"
+            android:max="255"
+            app:showSeekBarValue="true"
             android:defaultValue="@integer/medium"
             android:key="rayDecay"
             android:summary="@string/settings_post_ray_decay_summary"
             android:title="@string/settings_post_ray_decay" />
-        <com.ghisguth.ux.SliderPreference
+        <androidx.preference.SeekBarPreference
+            app:min="0"
+            android:max="255"
+            app:showSeekBarValue="true"
             android:defaultValue="@integer/medium"
             android:key="rayWeight"
             android:summary="@string/settings_post_ray_weight_summary"
             android:title="@string/settings_post_ray_weight" />
-    </PreferenceCategory>
-    <PreferenceCategory android:title="@string/settings_general_compatibility">
-        <CheckBoxPreference
+    </androidx.preference.PreferenceCategory>
+    <androidx.preference.PreferenceCategory android:title="@string/settings_general_compatibility">
+        <androidx.preference.CheckBoxPreference
             android:key="use_non_square_textures"
             android:summaryOff="@string/settings_use_non_square_textures_summary_off"
             android:summaryOn="@string/settings_use_non_square_textures_summary_on"
             android:title="@string/settings_use_non_square_textures_title" />
 
-        <CheckBoxPreference
+        <androidx.preference.CheckBoxPreference
             android:key="use_smaller_textures"
             android:summaryOff="@string/settings_use_smaller_textures_summary_off"
             android:summaryOn="@string/settings_use_smaller_textures_summary_on"
             android:title="@string/settings_use_smaller_textures_title" />
 
-        <CheckBoxPreference
+        <androidx.preference.CheckBoxPreference
             android:key="double_tab_settings"
             android:summaryOff="@string/settings_double_tap_settings_summary_off"
             android:summaryOn="@string/settings_double_tap_settings_summary_on"
             android:title="@string/settings_double_tap_settings_title"
             android:defaultValue="true" />
 
-    </PreferenceCategory>
+    </androidx.preference.PreferenceCategory>
 
-</PreferenceScreen>
+</androidx.preference.PreferenceScreen>

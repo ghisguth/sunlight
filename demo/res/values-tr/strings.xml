@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Sunlight Demo</string>
+    <string name="title">Sunlight Demo</string>
+    <string name="subtitle">OpenGL ES 2.0 deneyleri</string>
+    <string name="tab_test">Test</string>
+    <string name="tab_sunv1">Güneş v.1.</string>
+    <string name="tab_sunv2">Güneş v.2.</string>
+    <string name="tab_sunv3">Güneş v.3.</string>
+    <string name="tab_lines">Bulanık Çizgiler</string>
+    <string name="tab_grid">Sınırsız Izgara</string>
+    <string name="tab_cubes">Parlayan küpler</string>
+</resources>

@@ -1,15 +1,13 @@
 /**
- * This file is a part of sunlight project
- * Copyright (c) $today.year sunlight authors (see file `COPYRIGHT` for the license)
+ * This file is a part of sunlight project Copyright (c) $today.year sunlight authors (see file
+ * `COPYRIGHT` for the license)
  */
-
 package com.ghisguth.demo;
 
 import android.content.Context;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.util.Log;
-
 import com.ghisguth.gfx.FrameBuffer;
 import com.ghisguth.gfx.GeometryHelper;
 import com.ghisguth.gfx.Program;
@@ -20,7 +18,6 @@ import com.ghisguth.gfx.Texture;
 import com.ghisguth.gfx.TextureManager;
 import com.ghisguth.gfx.VertexBuffer;
 import com.ghisguth.shared.ResourceHelper;
-
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
@@ -109,11 +106,9 @@ public class Test extends RendererBase {
             // lets make framebuffer have power of 2 dimension
             // and it should be less then display size
             frameBufferWidth = 1 << (int) (Math.log(width) / Math.log(2));
-            if (frameBufferWidth == surfaceWidth)
-                frameBufferWidth >>= 1;
+            if (frameBufferWidth == surfaceWidth) frameBufferWidth >>= 1;
             frameBufferHeight = 1 << (int) (Math.log(height) / Math.log(2));
-            if (frameBufferHeight == surfaceHeight)
-                frameBufferHeight >>= 1;
+            if (frameBufferHeight == surfaceHeight) frameBufferHeight >>= 1;
         } else {
             frameBufferWidth = surfaceWidth;
             frameBufferHeight = surfaceHeight;
@@ -134,8 +129,9 @@ public class Test extends RendererBase {
             frameBufferHeight >>= 1;
         }
 
-        Log.i("BL***", "frameBufferWidth=" + frameBufferWidth
-                + " frameBufferHeight=" + frameBufferHeight);
+        Log.i(
+                "BL***",
+                "frameBufferWidth=" + frameBufferWidth + " frameBufferHeight=" + frameBufferHeight);
 
         renderTexture.update(frameBufferWidth, frameBufferHeight);
     }
@@ -157,7 +153,8 @@ public class Test extends RendererBase {
             baseTexture.bind(GLES20.GL_TEXTURE0, spriteProgram, "sTexture");
             quadVertices.bind(spriteProgram, "aPosition", "aTextureCoord");
 
-            GLES20.glUniformMatrix4fv(spriteProgram.getUniformLocation("uMVPMatrix"), 1, false, Q_matrix, 0);
+            GLES20.glUniformMatrix4fv(
+                    spriteProgram.getUniformLocation("uMVPMatrix"), 1, false, Q_matrix, 0);
 
             quadVertices.draw(GLES20.GL_TRIANGLE_STRIP);
         }
@@ -172,7 +169,15 @@ public class Test extends RendererBase {
         try {
             TextureManager textureManager = TextureManager.getSingletonObject();
             if (baseTexture == null) {
-                baseTexture = textureManager.createTexture(getResources(), R.raw.noise, false, GLES20.GL_NEAREST, GLES20.GL_LINEAR, GLES20.GL_REPEAT, GLES20.GL_REPEAT);
+                baseTexture =
+                        textureManager.createTexture(
+                                getResources(),
+                                com.ghisguth.demo.R.raw.noise,
+                                false,
+                                GLES20.GL_NEAREST,
+                                GLES20.GL_LINEAR,
+                                GLES20.GL_REPEAT,
+                                GLES20.GL_REPEAT);
             }
         } catch (Exception ex) {
             Log.e(TAG, "Unable to load textures from resources " + ex.toString());
@@ -186,8 +191,14 @@ public class Test extends RendererBase {
 
         try {
             ShaderManager shaderManager = ShaderManager.getSingletonObject();
-            Shader vertex = shaderManager.createVertexShader(ResourceHelper.loadRawString(openResource(R.raw.sprite_vertex)));
-            Shader fragment = shaderManager.createFragmentShader(ResourceHelper.loadRawString(openResource(R.raw.sprite_fragment)));
+            Shader vertex =
+                    shaderManager.createVertexShader(
+                            ResourceHelper.loadRawString(
+                                    openResource(com.ghisguth.gfx.R.raw.sprite_vertex)));
+            Shader fragment =
+                    shaderManager.createFragmentShader(
+                            ResourceHelper.loadRawString(
+                                    openResource(com.ghisguth.gfx.R.raw.sprite_fragment)));
             spriteProgram = shaderManager.createShaderProgram(vertex, fragment);
         } catch (Exception ex) {
             Log.e(TAG, "Unable to load shaders from resources " + ex.toString());

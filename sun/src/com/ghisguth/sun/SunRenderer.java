@@ -6,7 +6,6 @@ import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.os.SystemClock;
 import android.util.Log;
-
 import com.ghisguth.gfx.FrameBuffer;
 import com.ghisguth.gfx.GeometryHelper;
 import com.ghisguth.gfx.Program;
@@ -18,12 +17,9 @@ import com.ghisguth.gfx.TextureManager;
 import com.ghisguth.gfx.VertexBuffer;
 import com.ghisguth.shared.ResourceHelper;
 import com.ghisguth.wallpaper.glwallpaperservice.GLWallpaperService;
-
 import java.io.InputStream;
-
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
-
 
 public class SunRenderer implements GLWallpaperService.Renderer {
 
@@ -91,7 +87,8 @@ public class SunRenderer implements GLWallpaperService.Renderer {
 
     public SunRenderer(Context context) {
         this.context = context;
-        sphereVertices = GeometryHelper.createSphere(sunHorizontalResolution, sunVerticalResolution);
+        sphereVertices =
+                GeometryHelper.createSphere(sunHorizontalResolution, sunVerticalResolution);
         quadVertices = GeometryHelper.createScreenQuad();
     }
 
@@ -140,11 +137,9 @@ public class SunRenderer implements GLWallpaperService.Renderer {
             // lets make framebuffer have power of 2 dimension
             // and it should be less then display size
             frameBufferWidth = 1 << (int) (Math.log(width) / Math.log(2));
-            if (frameBufferWidth == surfaceWidth)
-                frameBufferWidth >>= 1;
+            if (frameBufferWidth == surfaceWidth) frameBufferWidth >>= 1;
             frameBufferHeight = 1 << (int) (Math.log(height) / Math.log(2));
-            if (frameBufferHeight == surfaceHeight)
-                frameBufferHeight >>= 1;
+            if (frameBufferHeight == surfaceHeight) frameBufferHeight >>= 1;
         } else {
             frameBufferWidth = surfaceWidth;
             frameBufferHeight = surfaceHeight;
@@ -170,11 +165,31 @@ public class SunRenderer implements GLWallpaperService.Renderer {
 
     @Override
     public void onSurfaceCreated(GL10 unused, EGLConfig config) {
-        ShaderManager.getSingletonObject().unloadAll();
-        ShaderManager.getSingletonObject().cleanUp();
-
-        TextureManager.getSingletonObject().unloadAll();
-        TextureManager.getSingletonObject().cleanUp();
+        // Ensure current instance resources are reloaded if context was lost
+        if (sunProgram != null) {
+            sunProgram.unload();
+        }
+        if (coronaProgram != null) {
+            coronaProgram.unload();
+        }
+        if (postRayProgram != null) {
+            postRayProgram.unload();
+        }
+        if (baseTexture != null) {
+            baseTexture.unload();
+        }
+        if (noiseTexture != null) {
+            noiseTexture.unload();
+        }
+        if (colorTexture != null) {
+            colorTexture.unload();
+        }
+        if (renderTexture != null) {
+            renderTexture.unload();
+        }
+        if (frameBuffer != null) {
+            frameBuffer.unload();
+        }
 
         loadResources();
 
@@ -190,7 +205,7 @@ public class SunRenderer implements GLWallpaperService.Renderer {
             postRayProgram.load();
         }
 
-        ShaderManager.getSingletonObject().unloadAllShaders();
+        // ShaderManager.getSingletonObject().unloadAllShaders();
 
         if (baseTexture != null) {
             baseTexture.load();
@@ -238,13 +253,37 @@ public class SunRenderer implements GLWallpaperService.Renderer {
         try {
             TextureManager textureManager = TextureManager.getSingletonObject();
             if (baseTexture == null) {
-                baseTexture = textureManager.createTexture(context.getResources(), R.raw.sun_surface_etc1, true, GLES20.GL_NEAREST, GLES20.GL_LINEAR, GLES20.GL_REPEAT, GLES20.GL_REPEAT);
+                baseTexture =
+                        textureManager.createTexture(
+                                context.getResources(),
+                                com.ghisguth.sun.R.raw.sun_surface_etc1,
+                                true,
+                                GLES20.GL_NEAREST,
+                                GLES20.GL_LINEAR,
+                                GLES20.GL_REPEAT,
+                                GLES20.GL_REPEAT);
             }
             if (noiseTexture == null) {
-                noiseTexture = textureManager.createTexture(context.getResources(), R.raw.noise_etc1, true, GLES20.GL_NEAREST, GLES20.GL_LINEAR, GLES20.GL_REPEAT, GLES20.GL_REPEAT);
+                noiseTexture =
+                        textureManager.createTexture(
+                                context.getResources(),
+                                com.ghisguth.sun.R.raw.noise_etc1,
+                                true,
+                                GLES20.GL_NEAREST,
+                                GLES20.GL_LINEAR,
+                                GLES20.GL_REPEAT,
+                                GLES20.GL_REPEAT);
             }
             if (colorTexture == null) {
-                colorTexture = textureManager.createTexture(context.getResources(), R.raw.star_color_etc1, true, GLES20.GL_NEAREST, GLES20.GL_LINEAR, GLES20.GL_CLAMP_TO_EDGE, GLES20.GL_CLAMP_TO_EDGE);
+                colorTexture =
+                        textureManager.createTexture(
+                                context.getResources(),
+                                com.ghisguth.sun.R.raw.star_color_etc1,
+                                true,
+                                GLES20.GL_NEAREST,
+                                GLES20.GL_LINEAR,
+                                GLES20.GL_CLAMP_TO_EDGE,
+                                GLES20.GL_CLAMP_TO_EDGE);
             }
         } catch (Exception ex) {
             Log.e(TAG, "Unable to load textures from resources " + ex.toString());
@@ -252,18 +291,27 @@ public class SunRenderer implements GLWallpaperService.Renderer {
     }
 
     private void loadShaders() {
-        if (sunProgram != null && coronaProgram != null) {
-            return;
-        }
-
         try {
             ShaderManager shaderManager = ShaderManager.getSingletonObject();
-            Shader vertex = shaderManager.createVertexShader(ResourceHelper.loadRawString(openResource(R.raw.sun_vertex)));
-            Shader fragment = shaderManager.createFragmentShader(ResourceHelper.loadRawString(openResource(R.raw.sun_lookup_fragment)));
+            Shader vertex =
+                    shaderManager.createVertexShader(
+                            ResourceHelper.loadRawString(
+                                    openResource(com.ghisguth.gfx.R.raw.sun_vertex)));
+            Shader fragment =
+                    shaderManager.createFragmentShader(
+                            ResourceHelper.loadRawString(
+                                    openResource(com.ghisguth.gfx.R.raw.sun_lookup_fragment)));
             sunProgram = shaderManager.createShaderProgram(vertex, fragment);
 
-            vertex = shaderManager.createVertexShader(ResourceHelper.loadRawString(openResource(R.raw.sun_corona_vertex)));
-            fragment = shaderManager.createFragmentShader(ResourceHelper.loadRawString(openResource(R.raw.sun_corona_lookup_fragment)));
+            vertex =
+                    shaderManager.createVertexShader(
+                            ResourceHelper.loadRawString(
+                                    openResource(com.ghisguth.gfx.R.raw.sun_corona_vertex)));
+            fragment =
+                    shaderManager.createFragmentShader(
+                            ResourceHelper.loadRawString(
+                                    openResource(
+                                            com.ghisguth.gfx.R.raw.sun_corona_lookup_fragment)));
             coronaProgram = shaderManager.createShaderProgram(vertex, fragment);
         } catch (Exception ex) {
             Log.e(TAG, "Unable to load shaders from resources " + ex.toString());
@@ -275,10 +323,6 @@ public class SunRenderer implements GLWallpaperService.Renderer {
     }
 
     private void loadPostEffectShaders() {
-        if (postRayProgram != null) {
-            return;
-        }
-
         try {
             ShaderManager shaderManager = ShaderManager.getSingletonObject();
 
@@ -288,10 +332,16 @@ public class SunRenderer implements GLWallpaperService.Renderer {
             } else if (rayQuality == 2) {
                 postRayFragmentDefines = "#define HIGH_QUALITY\n";
             }
-            String postRayFragment = ResourceHelper.loadRawString(openResource(R.raw.sun_ray_fragment));
+            String postRayFragment =
+                    ResourceHelper.loadRawString(
+                            openResource(com.ghisguth.gfx.R.raw.sun_ray_fragment));
 
-            Shader vertex = shaderManager.createVertexShader(ResourceHelper.loadRawString(openResource(R.raw.sun_ray_vertex)));
-            Shader fragment = shaderManager.createFragmentShader(postRayFragmentDefines + postRayFragment);
+            Shader vertex =
+                    shaderManager.createVertexShader(
+                            ResourceHelper.loadRawString(
+                                    openResource(com.ghisguth.gfx.R.raw.sun_ray_vertex)));
+            Shader fragment =
+                    shaderManager.createFragmentShader(postRayFragmentDefines + postRayFragment);
 
             Log.e(TAG, "SHADERS: " + postRayFragmentDefines);
 
@@ -306,12 +356,19 @@ public class SunRenderer implements GLWallpaperService.Renderer {
             renderTexture.bind(GLES20.GL_TEXTURE0, postRayProgram, "sTexture");
             quadVertices.bind(postRayProgram, "aPosition", "aTextureCoord");
 
-            GLES20.glUniform1f(postRayProgram.getUniformLocation("uDecay"), rayDecay * preferenceRayDecay);
-            GLES20.glUniform1f(postRayProgram.getUniformLocation("uWeight"), rayWeight * preferenceRayWeight);
-            GLES20.glUniform1f(postRayProgram.getUniformLocation("uDensity"), rayDensity * preferenceRayDensity);
-            GLES20.glUniform1f(postRayProgram.getUniformLocation("uExposure"), rayExposure * preferenceRayExposure);
+            GLES20.glUniform1f(
+                    postRayProgram.getUniformLocation("uDecay"), rayDecay * preferenceRayDecay);
+            GLES20.glUniform1f(
+                    postRayProgram.getUniformLocation("uWeight"), rayWeight * preferenceRayWeight);
+            GLES20.glUniform1f(
+                    postRayProgram.getUniformLocation("uDensity"),
+                    rayDensity * preferenceRayDensity);
+            GLES20.glUniform1f(
+                    postRayProgram.getUniformLocation("uExposure"),
+                    rayExposure * preferenceRayExposure);
 
-            GLES20.glUniformMatrix4fv(postRayProgram.getUniformLocation("uMVPMatrix"), 1, false, Q_matrix, 0);
+            GLES20.glUniformMatrix4fv(
+                    postRayProgram.getUniformLocation("uMVPMatrix"), 1, false, Q_matrix, 0);
 
             quadVertices.draw(GLES20.GL_TRIANGLE_STRIP);
 
@@ -322,8 +379,14 @@ public class SunRenderer implements GLWallpaperService.Renderer {
     }
 
     private void renderSun() {
-        if (sunProgram != null && baseTexture != null && noiseTexture != null && colorTexture != null) {
-            if (!sunProgram.use() || !baseTexture.load() || !noiseTexture.load() || !colorTexture.load()) {
+        if (sunProgram != null
+                && baseTexture != null
+                && noiseTexture != null
+                && colorTexture != null) {
+            if (!sunProgram.use()
+                    || !baseTexture.load()
+                    || !noiseTexture.load()
+                    || !colorTexture.load()) {
                 return;
             }
 
@@ -345,7 +408,8 @@ public class SunRenderer implements GLWallpaperService.Renderer {
 
             sphereVertices.bind(sunProgram, "aPosition", "aTextureCoord");
 
-            GLES20.glUniformMatrix4fv(sunProgram.getUniformLocation("uMVPMatrix"), 1, false, MVP_matrix, 0);
+            GLES20.glUniformMatrix4fv(
+                    sunProgram.getUniformLocation("uMVPMatrix"), 1, false, MVP_matrix, 0);
 
             float animationTime = getTimeDeltaByScale((long) (790000.0 / finalAnimationSpeed));
             float animationTime2 = getTimeDeltaByScale((long) (669000.0 / finalAnimationSpeed));
@@ -360,7 +424,10 @@ public class SunRenderer implements GLWallpaperService.Renderer {
             float surfaceColorMul = colorMul * preferenceColorMul;
 
             if (preferenceAnimateTemperature) {
-                surfaceColorOffset = (float) (Math.cos(getTimeDeltaByScale(190000L) * Math.PI * 2.0) * 0.5 + 0.5);
+                surfaceColorOffset =
+                        (float)
+                                (Math.cos(getTimeDeltaByScale(190000L) * Math.PI * 2.0) * 0.5
+                                        + 0.5);
             }
 
             GLES20.glUniform1f(sunProgram.getUniformLocation("uColorOffset"), surfaceColorOffset);
@@ -395,7 +462,8 @@ public class SunRenderer implements GLWallpaperService.Renderer {
                 colorTexture.bind(GLES20.GL_TEXTURE2, coronaProgram, "sColorTexture");
 
                 sphereVertices.bind(coronaProgram, "aPosition", "aTextureCoord");
-                GLES20.glUniformMatrix4fv(coronaProgram.getUniformLocation("uMVPMatrix"), 1, false, MVP_matrix, 0);
+                GLES20.glUniformMatrix4fv(
+                        coronaProgram.getUniformLocation("uMVPMatrix"), 1, false, MVP_matrix, 0);
                 GLES20.glUniform1f(coronaProgram.getUniformLocation("uTime"), animationTime2);
                 GLES20.glUniform1f(coronaProgram.getUniformLocation("uTime2"), animationTime3);
 
@@ -412,7 +480,8 @@ public class SunRenderer implements GLWallpaperService.Renderer {
                 float turbulence = coronaTurbulence * preferenceCoronaTurbulence;
                 GLES20.glUniform1f(coronaProgram.getUniformLocation("uTurbulence"), turbulence);
 
-                GLES20.glUniform1f(coronaProgram.getUniformLocation("uColorOffset"), surfaceColorOffset);
+                GLES20.glUniform1f(
+                        coronaProgram.getUniformLocation("uColorOffset"), surfaceColorOffset);
                 GLES20.glUniform1f(coronaProgram.getUniformLocation("uColorAdd"), surfaceColorAdd);
                 GLES20.glUniform1f(coronaProgram.getUniformLocation("uColorMul"), surfaceColorMul);
 
@@ -432,8 +501,7 @@ public class SunRenderer implements GLWallpaperService.Renderer {
     }
 
     private float getTimeDeltaByScale(long scale) {
-        if (scale < 1)
-            return 0.0f;
+        if (scale < 1) return 0.0f;
         long time = SystemClock.uptimeMillis() % scale;
         return (float) ((int) time) / (float) scale;
     }
@@ -490,16 +558,16 @@ public class SunRenderer implements GLWallpaperService.Renderer {
 
     private void setRayDensity(int value) {
         preferenceRayDensity = getScaledFactor(value, 1.0f);
-
     }
 
     private void setPostEffectsEnabled(boolean value) {
         postEffectsEnabled = value;
     }
 
-    public void setCompatibilitySettings(boolean useSmallerTextures,
-                                         boolean useNonPowerOfTwoTextures,
-                                         boolean useNonSquareTextures) {
+    public void setCompatibilitySettings(
+            boolean useSmallerTextures,
+            boolean useNonPowerOfTwoTextures,
+            boolean useNonSquareTextures) {
         useSmallerTextures_ = useSmallerTextures;
         useNonPowerOfTwoTextures_ = useNonPowerOfTwoTextures;
         useNonSquareTextures_ = useNonSquareTextures;
@@ -557,8 +625,7 @@ public class SunRenderer implements GLWallpaperService.Renderer {
         return scale * (value - 127) * multiplier;
     }
 
-    private class SettingsUpdater implements
-            SharedPreferences.OnSharedPreferenceChangeListener {
+    private class SettingsUpdater implements SharedPreferences.OnSharedPreferenceChangeListener {
         private SunRenderer renderer;
 
         public SettingsUpdater(SunRenderer renderer) {
@@ -566,15 +633,17 @@ public class SunRenderer implements GLWallpaperService.Renderer {
         }
 
         @Override
-        public void onSharedPreferenceChanged(
-                SharedPreferences sharedPreferences, String key) {
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             try {
-                boolean useSmallerTextures = sharedPreferences.getBoolean("use_smaller_textures", false);
-                boolean useNonPowerOfTwoTextures = sharedPreferences.getBoolean("use_non_power_of_two_textures", false);
-                boolean useNonSquareTextures = sharedPreferences.getBoolean("use_non_square_textures", false);
+                boolean useSmallerTextures =
+                        sharedPreferences.getBoolean("use_smaller_textures", false);
+                boolean useNonPowerOfTwoTextures =
+                        sharedPreferences.getBoolean("use_non_power_of_two_textures", false);
+                boolean useNonSquareTextures =
+                        sharedPreferences.getBoolean("use_non_square_textures", false);
 
-                renderer.setCompatibilitySettings(useSmallerTextures,
-                        useNonPowerOfTwoTextures, useNonSquareTextures);
+                renderer.setCompatibilitySettings(
+                        useSmallerTextures, useNonPowerOfTwoTextures, useNonSquareTextures);
 
                 renderer.setSize(sharedPreferences.getInt("size", 200));
 
@@ -597,10 +666,12 @@ public class SunRenderer implements GLWallpaperService.Renderer {
                 renderer.setRayDecay(sharedPreferences.getInt("rayDecay", 127));
                 renderer.setRayWeight(sharedPreferences.getInt("rayWeight", 127));
                 renderer.setRayExposure(sharedPreferences.getInt("rayExposure", 127));
-                renderer.setRayQuality(Integer.parseInt(sharedPreferences.getString("rayQuality", "0")));
+                renderer.setRayQuality(
+                        Integer.parseInt(sharedPreferences.getString("rayQuality", "0")));
 
                 renderer.setTemperature(sharedPreferences.getInt("temperature", 7));
-                renderer.setTemperatureAnimation(sharedPreferences.getBoolean("animateTemperature", false));
+                renderer.setTemperatureAnimation(
+                        sharedPreferences.getBoolean("animateTemperature", false));
 
             } catch (final Exception e) {
                 Log.e(TAG, "PREF init error: " + e);

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="lines_count_names">
+        <item>"Extremadamente Bajo"</item>
+        <item>"Muy Bajo"</item>
+        <item>"Bajo"</item>
+        <item>"Medio"</item>
+        <item>"Alto"</item>
+        <item>"Muy Alto"</item>
+        <item>"Extremadamente Alto"</item>
+    </string-array>
+</resources>

@@ -1,1 +1,4 @@
+plugins {
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '1.0.0'
+}
 include ':blurredlines', ':demo', ':gfx', ':limitlessgrid', ':shared', ':sun', ':ux', ':wallpaper'

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="post_effect_quality_names">
+        <item>"Düşük"</item>
+        <item>"Orta"</item>
+        <item>"Yüksek"</item>
+    </string-array>
+</resources>

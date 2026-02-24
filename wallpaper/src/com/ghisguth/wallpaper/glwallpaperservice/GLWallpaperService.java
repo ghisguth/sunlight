@@ -19,7 +19,6 @@ package com.ghisguth.wallpaper.glwallpaperservice;
 import android.service.wallpaper.WallpaperService;
 import android.util.Log;
 import android.view.SurfaceHolder;
-
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
@@ -43,8 +42,8 @@ public class GLWallpaperService extends WallpaperService {
     }
 
     public class GLEngine extends Engine {
-        public final static int RENDERMODE_WHEN_DIRTY = 0;
-        public final static int RENDERMODE_CONTINUOUSLY = 1;
+        public static final int RENDERMODE_WHEN_DIRTY = 0;
+        public static final int RENDERMODE_CONTINUOUSLY = 1;
         private GLThread mGLThread;
         private EGLConfigChooser mEGLConfigChooser;
         private EGLContextFactory mEGLContextFactory;
@@ -113,6 +112,14 @@ public class GLWallpaperService extends WallpaperService {
         @Override
         public void onSurfaceCreated(SurfaceHolder holder) {
             Log.d(TAG, "onSurfaceCreated()");
+
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+                // Set explicit preferred frame rate for the live wallpaper surface (60hz to save
+                // battery)
+                holder.getSurface()
+                        .setFrameRate(60f, android.view.Surface.FRAME_RATE_COMPATIBILITY_DEFAULT);
+            }
+
             mGLThread.surfaceCreated(holder);
             super.onSurfaceCreated(holder);
         }
@@ -141,10 +148,16 @@ public class GLWallpaperService extends WallpaperService {
             mEGLConfigChooser = configChooser;
         }
 
-        public void setEGLConfigChooser(int redSize, int greenSize, int blueSize, int alphaSize, int depthSize,
-                                        int stencilSize) {
-            setEGLConfigChooser(new BaseConfigChooser.ComponentSizeChooser(redSize, greenSize, blueSize, alphaSize, depthSize,
-                    stencilSize));
+        public void setEGLConfigChooser(
+                int redSize,
+                int greenSize,
+                int blueSize,
+                int alphaSize,
+                int depthSize,
+                int stencilSize) {
+            setEGLConfigChooser(
+                    new BaseConfigChooser.ComponentSizeChooser(
+                            redSize, greenSize, blueSize, alphaSize, depthSize, stencilSize));
         }
 
         public void setEGLContextFactory(EGLContextFactory factory) {
@@ -157,9 +170,7 @@ public class GLWallpaperService extends WallpaperService {
             mEGLWindowSurfaceFactory = factory;
         }
 
-        /**
-         * An EGL helper class.
-         */
+        /** An EGL helper class. */
         public void setGLWrapper(GLWrapper glWrapper) {
             mGLWrapper = glWrapper;
         }
@@ -175,13 +186,20 @@ public class GLWallpaperService extends WallpaperService {
             if (mEGLWindowSurfaceFactory == null) {
                 mEGLWindowSurfaceFactory = new DefaultWindowSurfaceFactory();
             }
-            mGLThread = new GLThread(renderer, mEGLConfigChooser, mEGLContextFactory, mEGLWindowSurfaceFactory, mGLWrapper);
+            mGLThread =
+                    new GLThread(
+                            renderer,
+                            mEGLConfigChooser,
+                            mEGLContextFactory,
+                            mEGLWindowSurfaceFactory,
+                            mGLWrapper);
             mGLThread.start();
         }
 
         private void checkRenderThreadState() {
             if (mGLThread != null) {
-                throw new IllegalStateException("setRenderer has already been called for this instance.");
+                throw new IllegalStateException(
+                        "setRenderer has already been called for this instance.");
             }
         }
     }

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_double_tap_settings_title">Toque duas vezes para abrir as configurações</string>
+    <string name="settings_double_tap_settings_summary_on">Gesto ativado</string>
+    <string name="settings_double_tap_settings_summary_off">Gesto desativado</string>
+</resources>

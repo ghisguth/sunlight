@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_double_tap_settings_title">Ayarları açmak için iki kez dokunun</string>
+    <string name="settings_double_tap_settings_summary_on">Hareket etkin</string>
+    <string name="settings_double_tap_settings_summary_off">Hareket devre dışı</string>
+</resources>
