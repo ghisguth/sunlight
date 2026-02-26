@@ -4,8 +4,12 @@
 /.idea/libraries
 .DS_Store
 /build
+bin/
 /blurredlines/release/
 /limitlessgrid/release/
 /sun/release/
 *~
-
+.classpath
+.gradle/
+.project
+.settings/
