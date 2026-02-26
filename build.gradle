@@ -7,7 +7,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:9.0.1'
-        classpath 'com.diffplug.spotless:spotless-plugin-gradle:6.25.0'
+        classpath 'com.diffplug.spotless:spotless-plugin-gradle:8.2.1'
     }
 }
 
@@ -16,16 +16,18 @@ allprojects {
         google()
         mavenCentral()
     }
-    
+}
+
+subprojects {
     apply plugin: 'com.diffplug.spotless'
     spotless {
         java {
-            target '**/*.java'
+            target 'src/**/*.java', 'test/**/*.java'
             googleJavaFormat().aosp()
             removeUnusedImports()
         }
     }
-    
+
     tasks.withType(JavaCompile).configureEach {
         options.compilerArgs << "-Xlint:deprecation"
     }
